@@ -1,314 +1,217 @@
-<!DOCTYPE html>
-
-<html dir="rtl" lang="ar">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>Cloud Ready - مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v9</title>
-<style>
-:root{--bg:#f4f1e8;--card:rgba(255,255,255,.92);--line:#ddd4c3;--ink:#24342b;--mut:#6f776f;--pri:#31533d;--pri2:#456f52;--soft:#eef3eb;--gold:#b88a37;--red:#a33b32;--blue:#315c7a;--shadow:0 10px 26px rgba(55,70,50,.12);--r:14px}
-*{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Tahoma,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f8f4ea,#eef3eb);font-size:13px}body:before{content:"";position:fixed;inset:0;z-index:-2;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='620' viewBox='0 0 900 620'%3E%3Cdefs%3E%3ClinearGradient id='w' x1='0' x2='1'%3E%3Cstop stop-color='%2375583b'/%3E%3Cstop offset='1' stop-color='%23b08758'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='900' height='620' fill='%23efe3ca'/%3E%3Cg opacity='.78'%3E%3Cpolygon points='80,260 260,120 450,260' fill='%239a6d40'/%3E%3Crect x='105' y='260' width='320' height='190' fill='url(%23w)'/%3E%3Cg stroke='%23533b2a' stroke-width='10'%3E%3Cline x1='135' y1='260' x2='135' y2='450'/%3E%3Cline x1='205' y1='260' x2='205' y2='450'/%3E%3Cline x1='275' y1='260' x2='275' y2='450'/%3E%3Cline x1='345' y1='260' x2='345' y2='450'/%3E%3C/g%3E%3Crect x='220' y='318' width='92' height='132' fill='%23392922'/%3E%3Ccircle cx='180' cy='500' r='24' fill='%23d9a64d'/%3E%3Ccircle cx='202' cy='486' r='15' fill='%23d9a64d'/%3E%3Cpolygon points='214,486 236,478 218,496' fill='%23c95833'/%3E%3Ccircle cx='205' cy='482' r='3' fill='%23200'/%3E%3Cpolygon points='170,523 158,545 178,525' fill='%2380602c'/%3E%3Cpolygon points='188,523 198,545 186,525' fill='%2380602c'/%3E%3Cpolygon points='470,290 660,155 825,290' fill='%2387653e'/%3E%3Crect x='500' y='290' width='280' height='160' fill='%23a77b4f'/%3E%3Cg stroke='%23523a28' stroke-width='9'%3E%3Cline x1='535' y1='290' x2='535' y2='450'/%3E%3Cline x1='600' y1='290' x2='600' y2='450'/%3E%3Cline x1='665' y1='290' x2='665' y2='450'/%3E%3Cline x1='730' y1='290' x2='730' y2='450'/%3E%3C/g%3E%3Crect x='620' y='340' width='74' height='110' fill='%23392922'/%3E%3Ccircle cx='700' cy='505' r='22' fill='%23d9a64d'/%3E%3Ccircle cx='720' cy='492' r='14' fill='%23d9a64d'/%3E%3Cpolygon points='732,492 755,485 736,502' fill='%23c95833'/%3E%3Ccircle cx='723' cy='488' r='3' fill='%23200'/%3E%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center;opacity:.16}body:after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(250,248,242,.72)}button,input,select,textarea{font:inherit}button{border:0;border-radius:10px;padding:8px 11px;font-weight:700;cursor:pointer}.primary{background:var(--pri);color:#fff}.primary:hover{background:var(--pri2)}.secondary{background:#edf2eb;color:var(--pri);border:1px solid #cbd9ca}.danger{background:#fff2ef;color:var(--red);border:1px solid #efc6bd}.excel{background:#e9f4ec;color:#1e6933;border:1px solid #c7e2cc}.pdf{background:#f7ecea;color:#8b2c25;border:1px solid #e7c8c2}.hidden{display:none!important}.cover{min-height:100vh;display:grid;place-items:center;padding:25px}.cover-card{max-width:780px;text-align:center;background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.8);border-radius:26px;padding:34px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}.cover h1{font-size:clamp(28px,5vw,52px);margin:8px 0;color:var(--pri)}.kicker{color:var(--gold);font-weight:900}.app{display:grid;grid-template-areas:'top top' 'nav main';grid-template-columns:230px 1fr;min-height:100vh}.top{grid-area:top;position:sticky;top:0;z-index:5;background:rgba(49,83,61,.94);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 18px rgba(0,0,0,.12);backdrop-filter:blur(9px)}.top h2{font-size:16px;margin:0}.top small{opacity:.82}.menu{display:none;background:rgba(255,255,255,.14);color:#fff;font-size:20px}.nav{grid-area:nav;position:sticky;top:56px;height:calc(100vh - 56px);overflow:auto;padding:10px;background:rgba(38,63,47,.95);display:flex;flex-direction:column;gap:6px}.nav button{text-align:right;color:#e8f2e8;background:transparent;border:1px solid transparent;padding:7px 9px;border-radius:10px;font-size:12px}.nav button.active,.nav button:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.18)}main{grid-area:main;width:100%;max-width:1500px;margin:auto;padding:12px}.page{display:none}.page.active{display:block}.panel,.hero{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px;box-shadow:var(--shadow);backdrop-filter:blur(5px)}.hero{background:linear-gradient(135deg,rgba(255,255,255,.93),rgba(238,243,235,.88))}.hero h1{margin:0;color:var(--pri);font-size:24px}.mut{color:var(--mut)}h2{font-size:18px;margin:0 0 10px;color:var(--pri)}h3{font-size:15px;margin:12px 0 8px;color:#375742}.grid{display:grid;gap:9px}.two{grid-template-columns:360px 1fr}.three{grid-template-columns:repeat(3,1fr)}.four{grid-template-columns:repeat(4,1fr)}.five{grid-template-columns:repeat(5,1fr)}.six{grid-template-columns:repeat(6,1fr)}label{display:block;font-weight:700;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid #cec8ba;border-radius:10px;padding:8px;margin-top:4px;background:rgba(255,255,255,.95)}textarea{resize:vertical}.actions,.toolbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:10px 0}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:var(--shadow)}.card b{display:block;font-size:21px;color:var(--pri);margin-top:2px}.tablewrap{overflow:auto;max-height:60vh;border:1px solid var(--line);border-radius:12px;background:#fff}table{width:100%;border-collapse:separate;border-spacing:0;min-width:820px}th,td{padding:7px 8px;border-bottom:1px solid #eee8dc;white-space:nowrap;text-align:right;vertical-align:middle}th{position:sticky;top:0;background:#3f644a;color:#fff;z-index:1}.num{direction:ltr;text-align:left}.summary{background:#f5f7ef;border:1px solid #d6decf;border-radius:12px;padding:10px;font-weight:800;color:var(--pri);margin:8px 0}.mini{font-size:11px}.badge{display:inline-block;border-radius:999px;padding:3px 8px;background:#edf3eb;color:var(--pri);font-weight:800}.warn{background:#fff7df;color:#865c00}.bad{background:#fff0ed;color:var(--red)}.ok{background:#e9f4ec;color:#20703b}.icon{position:relative;width:34px;height:31px;display:inline-grid;place-items:center;border-radius:9px;padding:0;margin:0 2px}.icon:hover:after{content:attr(data-tip);position:absolute;bottom:105%;right:50%;transform:translateX(50%);background:#22392a;color:#fff;font-size:11px;padding:4px 7px;border-radius:6px;white-space:nowrap;z-index:4}.tree ul{list-style:none;margin:5px 0;padding-right:16px}.tree li{background:rgba(255,255,255,.78);border-right:3px solid #cbd8c6;border-radius:9px;padding:6px;margin:4px 0}.tree .leaf{border-right-color:var(--gold)}.code{font-family:Consolas,monospace;direction:ltr;background:#edf3eb;border-radius:6px;padding:1px 5px;color:var(--pri)}.split-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.qrbox{display:flex;gap:10px;align-items:center;background:#faf8f1;border:1px solid #e2dacb;border-radius:12px;padding:10px}.qrbox img{width:92px;height:92px;border:1px solid #d9d1c3;background:#fff}.qrpayload{direction:ltr;word-break:break-all;font-family:Consolas,monospace;font-size:10px}.soft-section{background:rgba(246,246,238,.7);border:1px solid #e0d8ca;border-radius:12px;padding:10px;margin:8px 0}.toast{position:fixed;right:16px;bottom:16px;background:#263f2f;color:white;padding:11px 14px;border-radius:12px;opacity:0;transform:translateY(10px);transition:.2s;z-index:20}.toast.show{opacity:1;transform:none}@media(max-width:1100px){.app{grid-template-columns:1fr;grid-template-areas:'top' 'main'}.menu{display:block}.nav{position:fixed;right:0;top:53px;width:min(310px,90vw);height:calc(100vh - 53px);z-index:10;transform:translateX(105%);transition:.2s}.nav.open{transform:none}.two,.three,.four,.five,.six{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){body{font-size:12px}main{padding:8px}.panel,.hero{padding:10px;border-radius:12px}.top small{display:none}.cards{grid-template-columns:1fr}th,td{padding:6px}table{font-size:12px}.actions button,.toolbar button{flex:1}.cover-card{padding:22px 14px}}
-
-/* v9 RAFED-like redesign */
-:root{--navy:#213b63;--navy2:#2d4d7b;--navy3:#506a95;--paper:#f4f6fa;--panel:#ffffff;--line2:#d9e1ee;--text2:#31435c;--soft2:#eef2f8}
-body{background:linear-gradient(180deg,#eef2f7 0%,#f7f9fc 100%);color:var(--text2);font-family:"Tahoma",Arial,sans-serif;font-size:12px}
-body:before{opacity:.06;filter:grayscale(.3)}
-body:after{background:rgba(245,247,251,.84)}
-.top{background:linear-gradient(90deg,#1d3558,#314e7d);padding:8px 14px;min-height:58px}
-.top .brandline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.top .org-wrap{display:flex;flex-direction:column;gap:2px}
-.top h2{font-size:15px;font-weight:700}
-.top small{font-size:11px;opacity:.88}
-.top-right{display:flex;align-items:center;gap:10px;min-width:0}
-.top-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px 10px;color:#fff;font-weight:700}
-.searchbox{min-width:220px;max-width:360px;flex:1}.searchbox input{margin:0;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);color:#fff;padding:8px 12px;border-radius:999px}.searchbox input::placeholder{color:#d8e2f2}
-.nav{background:linear-gradient(180deg,#243f68,#2a4b7c);padding:10px 10px 16px;top:58px;height:calc(100vh - 58px);width:240px}
-.nav button{background:rgba(255,255,255,.06);color:#eef3fb;border:1px solid transparent;padding:7px 10px;border-radius:10px;font-size:12px}
-.nav button.active,.nav button:hover{background:#4f6790;border-color:rgba(255,255,255,.14)}
-.nav .nav-title{color:#dbe7fb;font-size:11px;font-weight:800;padding:8px 8px 4px;opacity:.88}
-.app{grid-template-columns:240px 1fr}
-main{max-width:none;margin:0;padding:12px 286px 12px 14px}
-.page{animation:fadeIn .18s ease}.panel,.hero,.card{border:1px solid var(--line2);box-shadow:0 6px 18px rgba(26,45,77,.08)}
-.panel,.card{background:rgba(255,255,255,.96)}
-.hero{background:linear-gradient(135deg,#273f69,#38547e);color:#fff;border-color:#2d4c78}.hero h1,.hero h2,.hero .mut{color:#fff}.hero .mut{opacity:.86}
-h2,h3{color:#253f67}
-.tablewrap{border:1px solid var(--line2)}
-th{background:#4d688f}
-input,select,textarea{border:1px solid #ccd6e4;background:#fff;border-radius:9px;padding:7px}
-.secondary{background:#edf2fa;color:#27436d;border-color:#cfd8e6}.primary{background:#35527f}.danger{background:#fff1f1;color:#a64141;border-color:#efcaca}.excel{background:#edf7ef;border-color:#cae3d1}.pdf{background:#fff2ef;border-color:#e8cbc4}
-.cards{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.card{padding:10px 12px;border-radius:12px;min-height:76px}.card span{display:block;color:#6c7a92;font-weight:700}.card b{font-size:22px;color:#243f68}
-.kpi-card{display:flex;gap:12px;align-items:center}.kpi-icon{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;color:#fff;font-size:22px;font-weight:900}.kpi-1{background:#f0a202}.kpi-2{background:#10b981}.kpi-3{background:#3b82f6}.kpi-4{background:#344767}.kpi-5{background:#ef4444}.kpi-6{background:#a21caf}
-.home-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-bottom:12px}.welcome-banner{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(135deg,#203a63,#304d79);color:#fff;border-radius:14px;padding:18px;min-height:134px;overflow:hidden;position:relative}.welcome-banner:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.12),transparent 32%),radial-gradient(circle at 80% 10%,rgba(255,255,255,.09),transparent 24%)}.welcome-banner .logo-mark{font-size:54px;font-weight:900;letter-spacing:2px;opacity:.92}.welcome-banner h2{margin:0;color:#fff;font-size:28px}.welcome-banner p{margin:4px 0 0;opacity:.84}
-.time-panel{display:grid;place-items:center;text-align:center;gap:8px;background:#fff;border-radius:14px;padding:18px}.time-panel .clock{font-size:42px;font-weight:900;color:#2b4267}.time-panel .date{font-size:18px;font-weight:800;color:#4e6180}.strip{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line2);border-radius:12px;padding:10px 14px;margin-bottom:12px;overflow:auto;white-space:nowrap}.strip b{color:#243f68}.section-accordion details{background:#fff;border:1px solid var(--line2);border-radius:12px;margin-bottom:10px;box-shadow:0 6px 18px rgba(26,45,77,.06)}.section-accordion summary{list-style:none;cursor:pointer;padding:14px 16px;font-size:20px;font-weight:800;color:#233e68;display:flex;align-items:center;justify-content:space-between}.section-accordion summary::-webkit-details-marker{display:none}.section-accordion .acc-body{padding:0 16px 16px;color:#62738d}.shortcut-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.shortcut{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--soft2);color:#254167;font-weight:800}.shortcut:hover{background:#e6edf7}
-.report-pane{position:fixed;left:12px;top:70px;bottom:12px;width:258px;overflow:auto;background:rgba(255,255,255,.98);border:1px solid var(--line2);border-radius:14px;box-shadow:0 8px 26px rgba(28,45,75,.12);padding:0;z-index:4}.report-pane .pane-head{background:#4f6790;color:#fff;padding:12px 14px;font-weight:900;border-radius:14px 14px 0 0;position:sticky;top:0;z-index:2}.report-pane .pane-group{padding:10px}.report-pane .pane-sub{font-size:11px;font-weight:900;color:#5b6d88;padding:6px 2px}.report-pane button{width:100%;text-align:right;background:transparent;color:#405778;border-radius:10px;border:1px solid transparent;padding:9px 10px}.report-pane button:hover{background:#f1f5fb;border-color:#d9e3f1}
-.meta-box{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#f7f9fd;border:1px solid var(--line2);border-radius:12px}.hintbox{background:#f5f8fd;border:1px dashed #cad4e3;border-radius:12px;padding:12px;color:#5b6d88}
-.placeholder-list{margin:0;padding-right:18px}.placeholder-list li{margin:5px 0}
-@keyframes fadeIn{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media(max-width:1380px){.report-pane{display:none}main{padding-left:14px}.home-layout{grid-template-columns:1fr}}
-@media(max-width:1100px){.app{grid-template-columns:1fr}.nav{width:min(320px,90vw)}main{padding:10px}.searchbox{display:none}.home-layout{grid-template-columns:1fr}.shortcut-grid{grid-template-columns:1fr}.section-accordion summary{font-size:18px}}
-
-/* v13.0.2 login/home refinement: left icons + forgot password */
-.login-cover{min-height:100vh;display:grid;place-items:center;padding:28px;background:linear-gradient(135deg,rgba(31,58,99,.65),rgba(49,83,61,.38));}
-.login-shell{width:min(1080px,96vw);display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch;direction:ltr}
-.login-brand-side,.login-card{direction:rtl}
-.login-brand-side{position:relative;overflow:hidden;border-radius:24px;padding:34px;background:linear-gradient(135deg,#203a63,#304d79);color:#fff;box-shadow:0 18px 42px rgba(20,35,60,.22);min-height:420px;display:flex;flex-direction:column;justify-content:center}
-.login-brand-side:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 90% 10%,rgba(255,255,255,.10),transparent 22%);pointer-events:none}.login-brand-badge{width:78px;height:78px;border-radius:20px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);display:grid;place-items:center;font-size:30px;font-weight:900;letter-spacing:2px;margin-bottom:18px}.login-brand-side h1{font-size:34px;line-height:1.28;margin:0 0 12px;color:#fff}.login-brand-side p{font-size:16px;line-height:1.9;margin:0;color:#dfeaff;max-width:560px}.login-features{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}.login-features span{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 12px;font-weight:800;color:#fff}
-.login-card{background:rgba(255,255,255,.96)!important;border:1px solid rgba(255,255,255,.85)!important;border-radius:24px!important;box-shadow:0 18px 42px rgba(20,35,60,.16)!important;padding:30px!important}.login-card h2{font-size:28px;margin:8px 0 6px;color:#223f68}.login-card .mut{font-size:14px;line-height:1.8}.login-form-box{display:grid;gap:12px;margin-top:16px}.login-form-box label{font-weight:900;color:#263f62}.login-form-box input{height:48px;border:1px solid #ccd6e4;border-radius:13px;padding:11px 13px;background:#fff;font-size:15px}.login-form-box input:focus{outline:0;border-color:#4776b3;box-shadow:0 0 0 4px rgba(71,118,179,.13)}.login-enter-btn{height:50px;border-radius:14px;font-size:17px;background:linear-gradient(135deg,#2b5b9e,#365c8c)!important;box-shadow:0 12px 24px rgba(43,91,158,.24)}.forgot-link{background:transparent!important;border:0!important;color:#2d5b9b!important;text-decoration:underline;font-weight:900;padding:6px!important}.forgot-link:hover{color:#1d4277!important}.login-hint-box{margin-top:14px;background:#f3f7fc;border:1px solid #dce7f4;border-radius:13px;padding:11px;text-align:center;color:#52657e;font-size:13px}.cover-card .kicker{display:inline-block;background:#eef5ff;color:#2b4f7f;border:1px solid #d6e5f8;border-radius:999px;padding:6px 12px;font-weight:900}
-.premium-welcome{background:linear-gradient(135deg,#203a63,#304d79)!important;box-shadow:0 12px 28px rgba(32,58,99,.18)}.welcome-text{position:relative;z-index:1}.welcome-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.welcome-actions button{border-radius:12px;padding:9px 13px}.welcome-actions .secondary{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);color:#fff}.quick-panel{background:rgba(255,255,255,.93)}
-.left-icon-shortcuts .shortcut{direction:rtl;display:flex;align-items:center;justify-content:space-between;text-align:right;min-height:48px}.shortcut-icon{order:2;margin-right:auto;margin-left:0;font-size:20px;background:#eef4ff;border:1px solid #dbe7f8;border-radius:10px;min-width:36px;height:34px;display:grid;place-items:center}.shortcut span:first-child{order:1}.nav button{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px}.nav-label{order:1}.nav-ico{order:2;margin-right:auto;background:rgba(255,255,255,.10);border-radius:8px;min-width:28px;height:26px;display:grid;place-items:center}.nav button:not(.active) .nav-ico{background:#eef4ff}.report-pane button{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px}.report-pane .r-label{order:1}.report-pane .r-ico{order:2;margin-right:auto;background:#eef4ff;border-radius:8px;min-width:28px;height:26px;display:grid;place-items:center}
-.home-page .cards{margin:12px 0}.home-page .card{background:#fff;box-shadow:0 8px 18px rgba(26,45,77,.07)}
-@media(max-width:900px){.login-shell{grid-template-columns:1fr}.login-brand-side{min-height:auto;padding:24px}.login-brand-side h1{font-size:27px}.login-card{padding:22px!important}.home-layout{grid-template-columns:1fr}.shortcut-grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>مؤسسة عائش حميد القريقري للدواجن - النظام المحاسبي</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">⚖️</div>
+        <div>
+          <h1>مؤسسة عائش حميد القريقري للدواجن</h1>
+          <p>النظام المحاسبي والتحليلي</p>
+        </div>
+      </div>
+      <nav>
+        <button class="nav active" data-page="dashboard">الرئيسية</button>
+        <button class="nav" data-page="accounts">الدليل المحاسبي</button>
+        <button class="nav" data-page="tree">شجرة الحسابات</button>
+        <button class="nav" data-page="entries">القيود اليومية</button>
+        <button class="nav" data-page="ledger">كشف الحساب</button>
+        <button class="nav" data-page="trial">ميزان المراجعة</button>
+        <button class="nav" data-page="invoices">الفواتير</button>
+        <button class="nav" data-page="reports">التقارير</button>
+      </nav>
+      <div class="side-note">
+        <strong>نسخة رفع Vercel</strong>
+        <span>تعمل بدون قاعدة بيانات وتحفظ البيانات داخل المتصفح.</span>
+      </div>
+    </aside>
 
-<section class="cover login-cover" id="cover">
-<div class="login-shell">
-<div class="login-brand-side">
-<div class="login-brand-badge">KA</div>
-<h1>King of Accounting and Analysis System</h1>
-<p>نظام محاسبي سحابي لإدارة الحسابات، الفواتير، القيود، التقارير، والصلاحيات بواجهة سهلة ومنظمة.</p>
-<div class="login-features">
-<span>📘 دليل الحسابات</span>
-<span>🧾 الفواتير</span>
-<span>📊 التقارير</span>
-</div>
-</div>
-<div class="cover-card login-card">
-<div class="kicker">Cloud Accounting Platform</div>
-<h2>تسجيل الدخول</h2>
-<p class="mut">أدخل بيانات المستخدم ثم اضغط <b>حياك الله</b> للدخول إلى النظام.</p>
-<div class="login-form-box">
-<label>اسم المستخدم
-          <input autocomplete="username" id="loginUser" placeholder="admin" value="admin"/>
-</label>
-<label>رمز الدخول
-          <input autocomplete="current-password" id="loginPass" placeholder="1234" type="password" value="1234"/>
-</label>
-<button class="primary login-enter-btn" onclick="enterApp()" type="button">حياك الله</button>
-<button class="forgot-link" onclick="forgotPassword()" type="button">استعادة كلمة السر</button>
-</div>
-<div class="login-hint-box">المستخدم الافتراضي: <b>admin</b> | الرمز: <b>1234</b></div>
-</div>
-</div>
-</section>
+    <main>
+      <header class="topbar">
+        <div>
+          <h2 id="pageTitle">الرئيسية</h2>
+          <p>إدارة القيود، الحسابات، الفواتير، الميزان وكشوف الحسابات.</p>
+        </div>
+        <div class="actions">
+          <button id="exportData" class="secondary">تصدير نسخة JSON</button>
+          <button id="printPage">طباعة / PDF</button>
+        </div>
+      </header>
 
-<div class="app hidden" id="app">
-<header class="top"><button class="menu" onclick="nav.classList.toggle('open')">☰</button><div class="top-right">
-<div class="top-pill">أنس عايش حميد القريقري</div>
-<div class="searchbox"><input placeholder="بحث سريع في الصفحات والتقارير..."/></div>
-<button class="secondary" onclick="backup()">نسخة احتياطية</button>
-</div><div class="brandline">
-<div class="org-wrap">
-<small>نظام محاسبي إلكتروني</small>
-<h2>مؤسسة عائش حميد القريقري للدواجن</h2>
-</div>
-</div></header>
-<nav class="nav" id="nav"><div class="nav-title">الأساسيات</div><button class="active" data-page="home">الرئيسية</button><button data-page="settings">بيانات المنشأة</button><button data-page="accounts">دليل الحسابات</button><button data-page="tree">شجرة الحسابات</button><button data-page="parties">العملاء والموردون</button><div class="nav-title">الفواتير والمبيعات</div><button data-page="saleInv">فواتير المبيعات</button><button data-page="purchaseInv">فواتير المشتريات</button><button data-page="notes">إشعارات دائنة/مدينة</button><button data-page="invoiceReg">سجل الفواتير</button><div class="nav-title">القيود والتقارير</div><button data-page="entry">شاشة القيد</button><button data-page="journal">سجل القيود</button><button data-page="daybook">دفتر اليومية</button><button data-page="ledger">دفتر الأستاذ</button><button data-page="statements">كشوف الحسابات</button><button data-page="vouchers">سندات قبض/صرف</button><div class="nav-title">العمليات المساندة</div><button data-page="payroll">مسيرات الرواتب</button><button data-page="trial">ميزان المراجعة</button><div class="nav-title">التقارير والإعدادات</div><button data-page="financials">القوائم المالية</button><button data-page="taxReports">تقارير الضريبة والزكاة</button><button data-page="data">النسخ والاستيراد</button></nav><aside class="report-pane" id="reportsPane">
-<div class="pane-head">التقارير المحاسبية</div>
-<div class="pane-group">
-<div class="pane-sub">التقارير الأساسية</div>
-<button onclick="show('accounts')">📘 تقرير الدليل المحاسبي</button>
-<button onclick="show('statements')">🧾 تقرير كشف حساب</button>
-<button onclick="show('daybook')">📒 دفتر اليومية</button>
-<button onclick="show('ledger')">📚 الأستاذ العام</button>
-<button onclick="showPlaceholder('الأستاذ العام الشهري','يعرض الأستاذ العام على مستوى شهري. تم إضافة الواجهة ويمكن تطوير التجميع الشهري لاحقًا بدون كسر البيانات.', ['تصفية حسب الشهر','تجميع مدين/دائن شهري','تصدير Excel وPDF'])">📅 الأستاذ العام الشهري</button>
-<button onclick="show('trial')">⚖️ ميزان المراجعة</button>
-<button onclick="show('journal')">📝 تقرير قيد يومية</button>
-<button onclick="show('daybook')">🗂️ الدفاتر المحاسبية</button>
-</div>
-<div class="pane-group">
-<div class="pane-sub">مراكز التكلفة والتقارير الذكية</div>
-<button onclick="showPlaceholder('تقرير كشف مركز تكلفة','تم إضافة واجهة هذا التقرير حتى يكون النظام متكاملًا أكثر.', ['اختيار مركز تكلفة','عرض الحركة','تصدير Excel وPDF'])">💠 تقرير كشف مركز تكلفة</button>
-<button onclick="showPlaceholder('الأستاذ العام لمراكز التكلفة','يعرض حركات الحسابات حسب مراكز التكلفة.', ['تجميع حسب المركز','حركة مدين ودائن','تصدير'])">📙 الأستاذ العام لمراكز التكلفة</button>
-<button onclick="showPlaceholder('ميزان مراجعة مراكز التكلفة','ميزان مراجعة مبني على مراكز التكلفة.', ['فترة من/إلى','تصفية بالمركز','إجماليات'])">📊 ميزان مراجعة مراكز التكلفة</button>
-<button onclick="show('financials')">🤖 إنشاء تقرير مالي ذكي</button>
-<button onclick="showPlaceholder('معاينة تقرير مالي ذكي','واجهة معاينة للتقرير المالي الذكي مع ملخصات ورسومات مستقبلًا.', ['معاينة قبل الطباعة','ملخصات ذكية','تصدير'])">👁️ معاينة تقرير مالي ذكي</button>
-<button onclick="showPlaceholder('معاينة نموذج قائمة ديناميكية','واجهة مضافة كنموذج تطويري للقوائم الديناميكية.', ['ربط بالحسابات','تجميع ديناميكي','تصدير'])">📑 معاينة نموذج قائمة ديناميكية</button>
-<button onclick="showPlaceholder('إحصائيات الإيرادات','ملخص بصري ونِسَب إيرادات قابلة للتطوير لاحقًا.', ['إيرادات شهرية','أعلى عملاء','تصدير'])">📈 إحصائيات الإيرادات</button>
-<button onclick="showPlaceholder('إحصائيات المصروفات','ملخص للمصروفات حسب الفترات والتصنيفات.', ['مصروفات شهرية','أعلى بنود','تصدير'])">📉 إحصائيات المصروفات</button>
-<button onclick="showPlaceholder('إحصائيات نمو الإيرادات','تتبّع نمو الإيرادات مقارنة بفترات سابقة.', ['مقارنة فترات','نسب نمو','تصدير'])">📈 إحصائيات نمو الإيرادات</button>
-<button onclick="showPlaceholder('إحصائيات تغير المصروفات','عرض التغيرات في المصروفات مع المقارنة الزمنية.', ['مقارنة شهرية','نسب تغير','تصدير'])">📉 إحصائيات تغير المصروفات</button>
-</div>
-<div class="pane-group">
-<div class="pane-sub">إدارة الشؤون المالية</div>
-<button onclick="show('settings')">⚙️ إعدادات النظام المحاسبي</button>
-<button onclick="showPlaceholder('إدارة حسابات البنوك','تمت إضافة الواجهة كتجهيز متكامل لإدارة حسابات البنوك.', ['إضافة حساب بنكي','ربط بالحسابات','طباعة كشف مختصر'])">🏦 إدارة حسابات البنوك</button>
-<button onclick="show('accounts')">🧩 إدارة الدليل المحاسبي</button>
-<button onclick="showPlaceholder('عمليات الدليل المحاسبي','صفحة عمليات مساندة للدليل المحاسبي.', ['استيراد','تصدير','تنشيط/تعطيل جماعي'])">🗃️ عمليات الدليل المحاسبي</button>
-<button onclick="showPlaceholder('إدارة مراكز التكلفة','إضافة الواجهة الخاصة بمراكز التكلفة ضمن هيكل النظام.', ['إضافة مركز','ربط بالقيود','تقارير'])">💲 إدارة مراكز التكلفة</button>
-<button onclick="showPlaceholder('عمليات مراكز التكلفة','صفحة عمليات مراكز التكلفة.', ['استيراد','تصدير','حذف بسلة مهملات'])">💹 عمليات مراكز التكلفة</button>
-<button onclick="show('entry')">➕ إضافة قيد يومية</button>
-<button onclick="show('journal')">📋 إدارة قيود اليومية</button>
-<button onclick="showPlaceholder('إعادة ترقيم القيود','واجهة لإعادة ترقيم القيود بشكل آمن ومنظم.', ['معاينة قبل التنفيذ','إعادة ترقيم متسلسل','حفظ نسخة احتياطية'])">🔢 إعادة ترقيم القيود</button>
-<button onclick="showPlaceholder('إقفال السنة المالية','صفحة مضافة لتجهيز الإقفال السنوي.', ['مراجعة الأرصدة','تصفير مؤقت','قيد إقفال'])">🔒 إقفال السنة المالية</button>
-<button onclick="showPlaceholder('فتح سنة مالية جديدة','صفحة مضافة لفتح سنة مالية جديدة مع أرصدة افتتاحية.', ['نسخ الأرصدة','سنة جديدة','قيود افتتاحية'])">🆕 فتح سنة مالية جديدة</button>
-</div>
-</aside>
-<main>
+      <section id="dashboard" class="page active">
+        <div class="cards">
+          <div class="card"><span>إجمالي الحسابات</span><strong id="statAccounts">0</strong></div>
+          <div class="card"><span>عدد القيود</span><strong id="statEntries">0</strong></div>
+          <div class="card"><span>إجمالي المدين</span><strong id="statDebit">0.00</strong></div>
+          <div class="card"><span>إجمالي الدائن</span><strong id="statCredit">0.00</strong></div>
+        </div>
+        <div class="panel">
+          <h3>ملاحظات التشغيل</h3>
+          <p>هذه نسخة موقع قابلة للرفع مباشرة. يمكنك إضافة الحسابات حتى 6 مستويات، تسجيل القيود، البحث، طباعة التقارير PDF من المتصفح، وتصدير البيانات.</p>
+        </div>
+      </section>
 
-<section class="page active home-page" id="home">
-<div class="home-layout">
-<div class="welcome-banner premium-welcome">
-<div class="welcome-text">
-<h2>مرحبًا بك في نظام المحاسبة والتحليل</h2>
-<p>كل العمليات المحاسبية مترابطة: الدليل، الشجرة، العملاء، الموردون، الفواتير، القيود، والتقارير.</p>
-<div class="welcome-actions">
-<button class="primary" onclick="show('entry')">إضافة قيد</button>
-<button class="secondary" onclick="show('saleInv')">فاتورة مبيعات</button>
-<button class="secondary" onclick="show('purchaseInv')">فاتورة مشتريات</button>
-</div>
-</div>
-<div class="logo-mark">KA</div>
-</div>
-<div class="time-panel">
-<div class="clock" id="homeClock">--:--</div>
-<div class="date" id="homeDate">--</div>
-<div class="mut mini">لوحة تشغيل سريعة</div>
-</div>
-</div>
-<div class="cards" id="cards"></div>
-<div class="panel quick-panel">
-<div class="split-head">
-<h2>اختصارات سريعة</h2>
-<span class="badge">الأيقونات على اليسار</span>
-</div>
-<div class="shortcut-grid left-icon-shortcuts">
-<button class="shortcut" onclick="show('accounts')"><span>دليل الحسابات</span><span class="shortcut-icon">📘</span></button>
-<button class="shortcut" onclick="show('tree')"><span>شجرة الحسابات</span><span class="shortcut-icon">🌳</span></button>
-<button class="shortcut" onclick="show('parties')"><span>العملاء والموردون</span><span class="shortcut-icon">👥</span></button>
-<button class="shortcut" onclick="show('saleInv')"><span>فاتورة مبيعات</span><span class="shortcut-icon">🧾</span></button>
-<button class="shortcut" onclick="show('purchaseInv')"><span>فاتورة مشتريات</span><span class="shortcut-icon">🛒</span></button>
-<button class="shortcut" onclick="show('statements')"><span>كشف حساب</span><span class="shortcut-icon">📄</span></button>
-<button class="shortcut" onclick="show('journal')"><span>إدارة القيود</span><span class="shortcut-icon">📝</span></button>
-<button class="shortcut" onclick="show('trial')"><span>ميزان المراجعة</span><span class="shortcut-icon">⚖️</span></button>
-<button class="shortcut" onclick="show('taxReports')"><span>تقارير الضريبة</span><span class="shortcut-icon">📊</span></button>
-</div>
-</div>
-</section>
+      <section id="accounts" class="page">
+        <div class="grid two">
+          <form id="accountForm" class="panel">
+            <h3>إضافة / تعديل حساب</h3>
+            <input type="hidden" id="accountEditId">
+            <label>رقم الحساب<input id="accountNo" required placeholder="مثال: 111001"></label>
+            <label>اسم الحساب<input id="accountName" required placeholder="الصندوق"></label>
+            <label>نوع الحساب
+              <select id="accountType">
+                <option>أصول</option><option>خصوم</option><option>حقوق ملكية</option><option>إيرادات</option><option>مصروفات</option>
+              </select>
+            </label>
+            <label>المستوى
+              <select id="accountLevel">
+                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option>
+              </select>
+            </label>
+            <label>الحساب الأب<input id="parentNo" placeholder="اختياري"></label>
+            <button type="submit">حفظ الحساب</button>
+          </form>
+          <div class="panel">
+            <h3>بحث في الدليل</h3>
+            <input id="accountSearch" placeholder="ابحث برقم الحساب أو الاسم">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>رقم الحساب</th><th>الاسم</th><th>النوع</th><th>المستوى</th><th>إجراء</th></tr></thead>
+                <tbody id="accountsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<section class="page" id="settings"><div class="panel"><h2>بيانات المنشأة / البائع</h2><div class="grid four"><label>اسم البائع<input id="setSellerName"/></label><label>الرقم الضريبي للبائع<input id="setSellerVat" placeholder="15 رقم"/></label><label>السجل التجاري<input id="setSellerCR"/></label><label>الحساب البنكي<input id="setBankName" placeholder="اسم البنك أو الحساب"/></label></div><label>عنوان البائع<input id="setSellerAddress"/></label><div class="actions"><button class="primary" onclick="saveSettings()">حفظ بيانات المنشأة</button></div></div></section>
-<section class="page" id="accounts"><div class="grid two"><form class="panel" id="accForm"><h2>إضافة / تعديل حساب</h2><label>رقم الحساب<input id="accCode" placeholder="1-01-01-001-001-001" required=""/></label><label>اسم الحساب<input id="accName" required=""/></label><div class="grid two"><label>النوع<select id="accType"><option>أصل</option><option>التزام</option><option>حقوق ملكية</option><option>إيراد</option><option>مصروف</option></select></label><label>الطبيعة<select id="accNat"><option>مدين</option><option>دائن</option></select></label></div><div class="grid two"><label>قابل للترحيل<select id="accPost"><option value="true">نعم</option><option value="false">لا</option></select></label><label>نشط<select id="accAct"><option value="true">نعم</option><option value="false">لا</option></select></label></div><label>ملاحظات<textarea id="accNotes" rows="2"></textarea></label><div class="actions"><button class="primary">حفظ</button><button class="secondary" onclick="newAccount()" type="button">جديد</button><button class="danger" onclick="resetAccounts()" type="button">استعادة الدليل</button></div></form><div class="panel"><div class="split-head"><h2>دليل الحسابات</h2><button class="excel" onclick="exportExcel('دليل الحسابات',accountsExport())">Excel</button></div><input id="accSearch" placeholder="بحث بالرقم أو الاسم أو النوع"/><div class="tablewrap"><table id="accTable"></table></div></div></div></section>
-<section class="page" id="tree"><div class="panel"><h2>شجرة الحسابات</h2><p class="mut">استخدم 📝 للتعديل أو + لإضافة حساب فرعي. تظهر كلمة تعديل عند الإشارة إلى رمز الورقة والقلم.</p><div class="tree" id="treeBox"></div></div></section>
-<section class="page" id="parties"><div class="grid two"><form class="panel" id="partyForm"><h2>سجل العملاء والموردين</h2><input id="partyId" type="hidden"/><div class="grid two"><label>النوع<select id="partyType"><option value="customer">عميل</option><option value="supplier">مورد</option></select></label><label>الاسم<input id="partyName" required=""/></label></div><div class="grid two"><label>الرقم الضريبي<input id="partyVat"/></label><label>السجل التجاري<input id="partyCR"/></label></div><div class="grid two"><label>الجوال<input id="partyPhone"/></label><label>البريد الإلكتروني<input id="partyEmail"/></label></div><label>العنوان<input id="partyAddress"/></label><div class="actions"><button class="primary">حفظ</button><button class="secondary" onclick="newParty()" type="button">جديد</button></div></form><div class="panel"><div class="split-head"><h2>قائمة العملاء والموردين</h2><button class="excel" onclick="exportExcel('العملاء والموردون',partyExport())">Excel</button></div><div class="grid three"><label>بحث<input id="partySearch"/></label><label>النوع<select id="partyFilter"><option value="">الكل</option><option value="customer">العملاء</option><option value="supplier">الموردون</option></select></label><button class="pdf" onclick="exportPDF('العملاء والموردون',partyExport())">PDF</button></div><div class="tablewrap"><table id="partyTable"></table></div></div></div></section>
-<section class="page" id="saleInv"><div class="panel"><h2>فواتير المبيعات</h2><div id="saleFormBox"></div></div></section>
-<section class="page" id="purchaseInv"><div class="panel"><h2>فواتير المشتريات</h2><div id="purchaseFormBox"></div></div></section>
-<section class="page" id="notes"><div class="panel"><h2>إشعارات دائنة ومدينة</h2><p class="mut">صفحة مستقلة عن الفواتير، ويمكن ربط الإشعار بالمبيعات أو المشتريات.</p><div id="noteFormBox"></div></div></section>
-<section class="page" id="invoiceReg"><div class="panel"><div class="split-head"><h2>سجل الفواتير والإشعارات</h2><div class="toolbar"><button class="excel" onclick="exportExcel('سجل الفواتير',invoiceRegExport())">Excel</button><button class="pdf" onclick="exportPDF('سجل الفواتير',invoiceRegExport())">PDF</button></div></div><div class="grid six"><label>بحث عام<input id="regSearch" placeholder="رقم، عميل، مورد، ضريبي"/></label><label>اسم العميل/المورد<input id="regPartySearch"/></label><label>النوع<select id="regType"><option value="">الكل</option><option value="sale">مبيعات</option><option value="purchase">مشتريات</option></select></label><label>المستند<select id="regDoc"><option value="">الكل</option><option value="invoice">فاتورة</option><option value="credit">إشعار دائن</option><option value="debit">إشعار مدين</option></select></label><label>من<input id="regFrom" type="date"/></label><label>إلى<input id="regTo" type="date"/></label></div><div class="tablewrap"><table id="regTable"></table></div></div></section>
-<section class="page" id="entry"><div class="panel"><h2>شاشة القيد</h2><div class="actions"><button class="secondary" onclick="newEntry()">قيد جديد</button><button class="primary" onclick="saveEntry()">حفظ القيد</button><button class="danger icon" data-tip="سلة مهملات" onclick="trashEntry(entryId.value)">🗑️</button><button class="secondary" onclick="zeroEntry()">تصفير</button><button class="excel" onclick="exportCurrentEntryExcel()">Excel</button><button class="pdf" onclick="exportCurrentEntryPDF()">PDF</button></div><div class="grid four"><label>رقم القيد<input id="entryId"/></label><label>التاريخ<input id="entryDate" min="2025-01-01" type="date"/></label><label>اسم القيد<input id="entryTitle"/></label><label>الحالة<select id="entryStatus"><option>نشط</option><option>مسودة</option></select></label></div><label>البيان<textarea id="entryDesc" rows="2"></textarea></label><datalist id="accList"></datalist><div class="tablewrap"><table id="linesTable"></table></div><div class="actions"><button class="secondary" onclick="addLine()">إضافة سطر</button><div class="summary" id="bal"></div></div></div></section>
-<section class="page" id="journal"><div class="panel"><div class="split-head"><h2>سجل القيود</h2><div class="toolbar"><button class="excel" onclick="exportExcel('سجل القيود',journalExport())">Excel</button><button class="pdf" onclick="exportPDF('سجل القيود',journalExport())">PDF</button></div></div><div class="grid six"><label>رقم القيد<input id="jfId"/></label><label>اسم القيد<input id="jfTitle"/></label><label>البيان<input id="jfDesc"/></label><label>الحساب<input id="jfAcc" list="accList" placeholder="رقم أو اسم"/></label><label>من<input id="jfFrom" type="date"/></label><label>إلى<input id="jfTo" type="date"/></label></div><div class="tablewrap"><table id="journalTable"></table></div></div></section>
-<section class="page" id="daybook"><div class="panel"><div class="split-head"><h2>دفتر اليومية</h2><div class="toolbar"><button class="excel" onclick="exportExcel('دفتر اليومية',daybookExport())">Excel</button><button class="pdf" onclick="exportPDF('دفتر اليومية',daybookExport())">PDF</button></div></div><div class="tablewrap"><table id="daybookTable"></table></div></div></section>
-<section class="page" id="ledger"><div class="panel"><div class="split-head"><h2>دفتر الأستاذ</h2><div class="toolbar"><button class="excel" onclick="exportExcel('دفتر الأستاذ',ledgerExport())">Excel</button><button class="pdf" onclick="exportPDF('دفتر الأستاذ',ledgerExport())">PDF</button></div></div><div class="grid four"><label>بحث باسم أو رقم الحساب<input id="ledAccSearch" list="accList"/></label><label>من<input id="ledFrom" type="date"/></label><label>إلى<input id="ledTo" type="date"/></label><button class="secondary" onclick="renderLedger()">عرض</button></div><div class="summary" id="ledSum"></div><div class="tablewrap"><table id="ledgerTable"></table></div></div></section>
-<section class="page" id="statements"><div class="panel"><div class="split-head"><h2>كشوف الحسابات</h2><div class="toolbar"><button class="excel" onclick="exportExcel('كشف حساب',statementExport())">Excel</button><button class="pdf" onclick="exportPDF('كشف حساب',statementExport())">PDF</button></div></div><div class="grid four"><label>بحث باسم الحساب<input id="stAccSearch" list="accList"/></label><label>من<input id="stFrom" type="date"/></label><label>إلى<input id="stTo" type="date"/></label><button class="secondary" onclick="renderStatements()">عرض الكشف</button></div><div class="summary" id="stSum"></div><div class="tablewrap"><table id="stTable"></table></div></div></section>
-<section class="page" id="vouchers"><div class="grid two"><form class="panel" id="voucherForm"><h2>سند قبض / سند صرف</h2><input id="voucherId" type="hidden"/><div class="grid three"><label>النوع<select id="voucherType"><option value="receipt">سند قبض</option><option value="payment">سند صرف</option></select></label><label>التاريخ<input id="voucherDate" type="date"/></label><label>رقم السند<input id="voucherNo"/></label></div><div class="grid two"><label>الحساب المقابل<input id="voucherAccount" list="accList" placeholder="اسم أو رقم الحساب"/></label><label>الصندوق/البنك<select id="voucherCash"><option value="1-01-01-001-001-001">الصندوق</option><option value="1-01-01-002-001-001">البنك</option></select></label></div><div class="grid two"><label>المبلغ<input id="voucherAmount" step="0.01" type="number"/></label><label>البيان<input id="voucherDesc"/></label></div><div class="actions"><button class="primary">حفظ وتوليد القيد</button><button class="secondary" onclick="newVoucher()" type="button">جديد</button></div></form><div class="panel"><div class="split-head"><h2>سجل السندات</h2><div class="toolbar"><button class="excel" onclick="exportExcel('سجل السندات',voucherExport())">Excel</button><button class="pdf" onclick="exportPDF('سجل السندات',voucherExport())">PDF</button></div></div><div class="tablewrap"><table id="voucherTable"></table></div></div></div></section>
-<section class="page" id="payroll"><div class="grid two"><form class="panel" id="payrollForm"><h2>مسيرات الرواتب</h2><input id="payrollId" type="hidden"/><div class="grid three"><label>الشهر<input id="payMonth" type="month"/></label><label>اسم الموظف<input id="payEmployee"/></label><label>طريقة الدفع<select id="payMethod"><option value="1-01-01-002-001-001">بنك</option><option value="1-01-01-001-001-001">نقدي</option></select></label></div><div class="grid four"><label>الراتب الأساسي<input id="payBasic" step="0.01" type="number"/></label><label>بدلات<input id="payAllow" step="0.01" type="number"/></label><label>استقطاعات<input id="payDeduct" step="0.01" type="number"/></label><label>الصافي<input id="payNet" readonly=""/></label></div><div class="actions"><button class="primary">حفظ وتوليد القيد</button><button class="secondary" onclick="newPayroll()" type="button">جديد</button></div></form><div class="panel"><div class="split-head"><h2>سجل الرواتب</h2><div class="toolbar"><button class="excel" onclick="exportExcel('مسيرات الرواتب',payrollExport())">Excel</button><button class="pdf" onclick="exportPDF('مسيرات الرواتب',payrollExport())">PDF</button></div></div><div class="tablewrap"><table id="payrollTable"></table></div></div></div></section>
-<section class="page" id="trial"><div class="panel"><div class="split-head"><h2>ميزان المراجعة</h2><div class="toolbar"><button class="excel" onclick="exportExcel('ميزان المراجعة',trialExport())">Excel</button><button class="pdf" onclick="exportPDF('ميزان المراجعة',trialExport())">PDF</button></div></div><div class="grid three"><label>من<input id="trFrom" type="date" value="2025-01-01"/></label><label>إلى<input id="trTo" type="date"/></label><button class="secondary" onclick="renderTrial()">عرض</button></div><div class="summary" id="trSum"></div><div class="tablewrap"><table id="trTable"></table></div></div></section>
-<section class="page" id="financials"><div class="panel"><div class="split-head"><h2>إعداد القوائم المالية</h2><div class="toolbar"><button class="excel" onclick="exportExcel('القوائم المالية',financialExport())">Excel</button><button class="pdf" onclick="exportPDF('القوائم المالية',financialExport())">PDF</button></div></div><div id="finBox"></div></div></section>
-<section class="page" id="taxReports"><div class="panel"><div class="split-head"><h2>تقارير الضريبة والزكاة</h2><div class="toolbar"><button class="excel" onclick="exportExcel('تقارير الضريبة والزكاة',taxExport())">Excel</button><button class="pdf" onclick="exportPDF('تقارير الضريبة والزكاة',taxExport())">PDF</button></div></div><div class="grid four"><label>من<input id="taxFrom" type="date"/></label><label>إلى<input id="taxTo" type="date"/></label><label>تعديلات الوعاء الزكوي<input id="zakatAdj" step="0.01" type="number" value="0"/></label><button class="secondary" onclick="renderTaxReports()">احتساب</button></div><div id="taxBox"></div></div></section>
-<section class="page" id="modulePage"><div class="panel"><div class="split-head"><h2 id="moduleTitle">وحدة إضافية</h2><div class="toolbar"><button class="secondary" onclick="show('home')">عودة للرئيسية</button></div></div><p class="mut" id="moduleDesc">وصف الوحدة.</p><div class="hintbox"><b>محتويات هذه الوحدة</b><ul class="placeholder-list" id="moduleBullets"></ul></div></div></section><section class="page" id="data"><div class="grid two"><div class="panel"><h2>نسخ احتياطي</h2><button class="primary" onclick="backup()">تصدير JSON</button><button class="danger" onclick="clearOperationalData()">تصفير القيود والفواتير والسجلات التشغيلية</button></div><div class="panel"><h2>استيراد</h2><input accept="application/json" id="importFile" type="file"/><button class="danger" onclick="restore()">استيراد واستبدال</button></div></div></section>
-</main></div><div class="toast" id="toast"></div>
-<script>
-const ORG='مؤسسة عائش حميد القريقري للدواجن', KEY='poultry.accounting.app.v8.clean', START='2025-01-01';
-const AC={cash:'1-01-01-001-001-001',bank:'1-01-01-002-001-001',ar:'1-01-02-001-001-001',vatIn:'1-01-06-001-001-001',ap:'2-01-01-001-001-001',vatOut:'2-01-03-001-001-001',owner:'3-01-02-001-001-001',sales:'4-01-01-001-001-001',purch:'5-03-01-001-001-001',salary:'6-01-01-001-001-001'};
-const $=id=>document.getElementById(id), n=v=>Math.round((Number(v)||0)*100)/100, money=v=>n(v).toLocaleString('ar-SA',{minimumFractionDigits:2,maximumFractionDigits:2}), norm=v=>String(v??'').trim().toLowerCase(), day=()=>new Date().toISOString().slice(0,10), uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2);
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-let S=load(), lines=[], invItems=[], editDocState=null;
-function accountSort(a,b){return a.code.localeCompare(b.code,'en',{numeric:true})}
-function leaf(code,names,type,nature){return{code,names,type,nature}}
-function defaultAccounts(){let leaves=[leaf('1-01-01-001-001-001',['الأصول','الأصول المتداولة','النقدية والبنوك','الصندوق','صناديق التشغيل','الصندوق الرئيسي'],'أصل','مدين'),leaf('1-01-01-002-001-001',['الأصول','الأصول المتداولة','النقدية والبنوك','البنوك','الحسابات البنكية','الحساب البنكي'],'أصل','مدين'),leaf('1-01-02-001-001-001',['الأصول','الأصول المتداولة','الذمم المدينة','العملاء','عملاء النشاط','العملاء'],'أصل','مدين'),leaf('1-01-03-001-001-001',['الأصول','الأصول المتداولة','المخزون','الأعلاف','أعلاف','مخزون أعلاف'],'أصل','مدين'),leaf('1-01-03-002-001-001',['الأصول','الأصول المتداولة','المخزون','الصيصان','صيصان','مخزون صيصان'],'أصل','مدين'),leaf('1-01-03-003-001-001',['الأصول','الأصول المتداولة','المخزون','أدوية ولقاحات','أدوية','مخزون أدوية ولقاحات'],'أصل','مدين'),leaf('1-01-06-001-001-001',['الأصول','الأصول المتداولة','الضريبة','ضريبة القيمة المضافة','ضريبة مدخلات','ضريبة القيمة المضافة مدخلات'],'أصل','مدين'),leaf('1-02-01-001-001-001',['الأصول','الأصول غير المتداولة','ممتلكات ومعدات','عنابر ومزارع','عنابر','عنابر دجاج'],'أصل','مدين'),leaf('1-02-02-001-001-001',['الأصول','الأصول غير المتداولة','ممتلكات ومعدات','معدات','معدات تشغيل','معدات مزارع'],'أصل','مدين'),leaf('2-01-01-001-001-001',['الالتزامات','التزامات متداولة','الذمم الدائنة','الموردون','موردون عامون','الموردون'],'التزام','دائن'),leaf('2-01-02-001-001-001',['الالتزامات','التزامات متداولة','مصروفات مستحقة','رواتب مستحقة','رواتب','رواتب مستحقة الدفع'],'التزام','دائن'),leaf('2-01-03-001-001-001',['الالتزامات','التزامات متداولة','الضريبة','ضريبة القيمة المضافة','ضريبة مخرجات','ضريبة القيمة المضافة مخرجات'],'التزام','دائن'),leaf('3-01-01-001-001-001',['حقوق الملكية','رأس المال','رأس مال المالك','رأس مال','رأس مال مدفوع','رأس المال'],'حقوق ملكية','دائن'),leaf('3-01-02-001-001-001',['حقوق الملكية','جاري المالك','جاري المالك','عمليات المالك','حساب جاري','جاري المالك'],'حقوق ملكية','دائن'),leaf('4-01-01-001-001-001',['الإيرادات','إيرادات النشاط','مبيعات','مبيعات دواجن','مبيعات دجاج لاحم','مبيعات الدواجن'],'إيراد','دائن'),leaf('4-02-01-001-001-001',['الإيرادات','إيرادات أخرى','إيرادات فرعية','مخلفات وفرشة','مبيعات سماد','إيراد بيع سماد وفرشة'],'إيراد','دائن'),leaf('5-01-01-001-001-001',['تكلفة المبيعات','تكاليف مباشرة','الصيصان','صيصان عمر يوم','تكلفة صيصان','تكلفة صيصان مستهلكة'],'مصروف','مدين'),leaf('5-01-01-002-001-001',['تكلفة المبيعات','تكاليف مباشرة','الأعلاف','علف','تكلفة علف','تكلفة أعلاف مستهلكة'],'مصروف','مدين'),leaf('5-03-01-001-001-001',['تكلفة المبيعات','المشتريات','مشتريات نشاط','مشتريات عامة','مشتريات قابلة للتحميل','المشتريات العامة'],'مصروف','مدين'),leaf('6-01-01-001-001-001',['المصروفات التشغيلية','مصروفات إدارية','رواتب وأجور','رواتب','رواتب موظفين','مصروف الرواتب والأجور'],'مصروف','مدين'),leaf('6-03-01-001-001-001',['المصروفات التشغيلية','مصروفات تمويلية','رسوم بنكية','عمولات','رسوم تحويل','رسوم وعمولات بنكية'],'مصروف','مدين')];let m=new Map();for(let l of leaves){let p=l.code.split('-');for(let i=1;i<=p.length;i++){let c=p.slice(0,i).join('-');if(!m.has(c))m.set(c,{code:c,name:l.names[i-1]||l.names.at(-1),type:l.type,nature:l.nature,level:i,parent:i>1?p.slice(0,i-1).join('-'):'',posting:false,active:true,notes:''});}let a=m.get(l.code);a.name=l.names[5];a.posting=true;}return[...m.values()].sort(accountSort)}
-function blank(){return{settings:{sellerName:ORG,sellerVat:'',sellerCR:'',sellerAddress:'',bankName:''},accounts:defaultAccounts(),parties:[],entries:[],invoices:[],vouchers:[],payroll:[],seq:{entry:1,doc:1,party:1,voucher:1,payroll:1}}}
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||blank()}catch(e){return blank()}}
-function save(){localStorage.setItem(KEY,JSON.stringify(S))}function toast(t){toastEl=$('toast');toastEl.textContent=t;toastEl.classList.add('show');clearTimeout(window._t);window._t=setTimeout(()=>toastEl.classList.remove('show'),2300)}
-function enterApp(){cover.classList.add('hidden');app.classList.remove('hidden');renderAll()}document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.page));function show(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(p).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));nav.classList.remove('open');renderAll()}
-function acc(c){return S.accounts.find(a=>a.code===c)}function accName(c){return acc(c)?.name||''}function postable(){return S.accounts.filter(a=>a.active&&a.posting).sort(accountSort)}function resolveAccount(v){let q=norm(v);let a=S.accounts.find(x=>norm(x.code)===q)||S.accounts.find(x=>norm(`${x.code} - ${x.name}`)===q)||S.accounts.find(x=>norm(x.name)===q)||S.accounts.find(x=>norm(x.code+' '+x.name).includes(q));return a?.code||v}function dateIn(d,f,t){return(!f||d>=f)&&(!t||d<=t)}function activeEntries(){return S.entries.filter(e=>e.status==='نشط')}function allLines(){return activeEntries().flatMap(e=>(e.lines||[]).map(l=>({...l,entryId:e.id,date:e.date,title:e.title,desc:e.desc,source:e.source||''})))}function next(k){return S.seq[k]||1}function bump(k,id){S.seq[k]=Math.max(next(k),Number(id)+1)}
-function renderAll(){renderSettings();renderCards();renderAccList();renderAccounts();renderTree();renderParties();renderInvoiceForms();renderInvoiceReg();renderEntryLines();renderJournal();renderDaybook();renderLedger();renderStatements();renderVouchers();renderPayroll();renderTrial();renderFinancials();renderTaxReports()}
-function renderCards(){let sales=S.invoices.filter(i=>i.type==='sale'&&i.docClass==='invoice').length,pur=S.invoices.filter(i=>i.type==='purchase'&&i.docClass==='invoice').length;cards.innerHTML=[['الحسابات',S.accounts.length],['العملاء/الموردون',S.parties.length],['فواتير المبيعات',sales],['فواتير المشتريات',pur],['القيود النشطة',activeEntries().length],['السندات',S.vouchers.length],['الرواتب',S.payroll.length],['VAT مخرجات',money(vatTotals().out)],['VAT مدخلات',money(vatTotals().in)],['صافي VAT',money(vatTotals().net)]].map(x=>`<div class="card"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('')}
-function renderSettings(){setSellerName.value=S.settings.sellerName||ORG;setSellerVat.value=S.settings.sellerVat||'';setSellerCR.value=S.settings.sellerCR||'';setSellerAddress.value=S.settings.sellerAddress||'';setBankName.value=S.settings.bankName||''}function saveSettings(){S.settings={sellerName:setSellerName.value.trim()||ORG,sellerVat:setSellerVat.value.trim(),sellerCR:setSellerCR.value.trim(),sellerAddress:setSellerAddress.value.trim(),bankName:setBankName.value.trim()};save();toast('تم حفظ بيانات المنشأة')}
-accForm.onsubmit=e=>{e.preventDefault();let code=accCode.value.trim();let parts=code.split('-').filter(Boolean);if(!parts.length||parts.length>6)return toast('رقم الحساب من 1 إلى 6 مستويات');let parent=parts.length>1?parts.slice(0,-1).join('-'):'';if(parent&&!acc(parent))return toast('أضف الحساب الأب أولًا');let obj={code:parts.join('-'),name:accName.value.trim(),type:accType.value,nature:accNat.value,level:parts.length,parent,posting:accPost.value==='true',active:accAct.value==='true',notes:accNotes.value.trim()};if(!obj.name)return toast('اسم الحساب مطلوب');let i=S.accounts.findIndex(a=>a.code===obj.code);i>=0?S.accounts[i]=obj:S.accounts.push(obj);S.accounts.sort(accountSort);save();renderAll();toast('تم حفظ الحساب')};accSearch.oninput=renderAccounts;function newAccount(){accForm.reset();accPost.value='true';accAct.value='true'}function editAccount(c){let a=acc(c);if(!a)return;show('accounts');accCode.value=a.code;accName.value=a.name;accType.value=a.type;accNat.value=a.nature;accPost.value=String(a.posting);accAct.value=String(a.active);accNotes.value=a.notes||''}function addChild(c){let a=acc(c);if(!a)return;if(a.level>=6)return toast('لا يمكن إضافة مستوى بعد السادس');let kids=S.accounts.filter(x=>x.parent===c).map(x=>Number(x.code.split('-').at(-1))||0);let nextNo=String((Math.max(0,...kids)+1)).padStart(a.level>=3?3:2,'0');show('accounts');accCode.value=c+'-'+nextNo;accName.value='';accType.value=a.type;accNat.value=a.nature;accPost.value='true';accAct.value='true';accName.focus()}function trashAccount(c){if(S.accounts.some(a=>a.parent===c))return toast('لا يمكن نقل حساب له فروع إلى السلة');if(allLines().some(l=>l.accountCode===c))return toast('الحساب مستخدم في قيود');if(confirm('نقل الحساب إلى سلة المهملات؟')){S.accounts=S.accounts.filter(a=>a.code!==c);save();renderAll()}}function resetAccounts(){if(confirm('استعادة دليل الحسابات الافتراضي؟')){S.accounts=defaultAccounts();save();renderAll()}}
-function renderAccList(){accList.innerHTML=postable().map(a=>`<option value="${esc(a.code)} - ${esc(a.name)}"></option><option value="${esc(a.name)}"></option>`).join('')}function accountsExport(){return S.accounts.map(a=>({'رقم الحساب':a.code,'اسم الحساب':a.name,'المستوى':a.level,'الأب':a.parent,'النوع':a.type,'الطبيعة':a.nature,'ترحيل':a.posting?'نعم':'لا','نشط':a.active?'نعم':'لا'}))}function renderAccounts(){let q=norm(accSearch?.value);let rows=S.accounts.filter(a=>!q||norm(`${a.code} ${a.name} ${a.type}`).includes(q));accTable.innerHTML='<thead><tr><th>رقم الحساب</th><th>اسم الحساب</th><th>المستوى</th><th>النوع</th><th>الطبيعة</th><th>ترحيل</th><th>إجراءات</th></tr></thead><tbody>'+rows.map(a=>`<tr><td class="num">${a.code}</td><td>${esc(a.name)}</td><td>${a.level}</td><td>${a.type}</td><td>${a.nature}</td><td>${a.posting?'نعم':'لا'}</td><td><button class="secondary icon" data-tip="تعديل" onclick="editAccount('${a.code}')">📝</button><button class="secondary icon" data-tip="إضافة فرعي" onclick="addChild('${a.code}')">＋</button><button class="danger icon" data-tip="سلة مهملات" onclick="trashAccount('${a.code}')">🗑️</button></td></tr>`).join('')+'</tbody>'}
-function renderTree(){let ch={};S.accounts.forEach(a=>(ch[a.parent||'root']??=[]).push(a));let branch=p=>`<ul>${(ch[p]||[]).sort(accountSort).map(a=>`<li class="${a.posting?'leaf':''}"><span class="code">${a.code}</span> <b>${esc(a.name)}</b> <span class="badge">${a.type}</span> ${a.posting?'<span class="badge warn">ترحيل</span>':''} <button class="secondary icon" data-tip="تعديل" onclick="editAccount('${a.code}')">📝</button><button class="secondary icon" data-tip="إضافة فرعي" onclick="addChild('${a.code}')">＋</button>${branch(a.code)}</li>`).join('')}</ul>`;treeBox.innerHTML=branch('root')}
-partyForm.onsubmit=e=>{e.preventDefault();let id=partyId.value||uid();let p={id,type:partyType.value,name:partyName.value.trim(),vat:partyVat.value.trim(),cr:partyCR.value.trim(),phone:partyPhone.value.trim(),email:partyEmail.value.trim(),address:partyAddress.value.trim()};if(!p.name)return toast('اسم العميل/المورد مطلوب');let i=S.parties.findIndex(x=>x.id===id);i>=0?S.parties[i]=p:S.parties.push(p);save();newParty();renderAll();toast('تم حفظ السجل')};partySearch.oninput=renderParties;partyFilter.oninput=renderParties;function newParty(){partyForm.reset();partyId.value=''}function upsertParty(type,name,vat,address){if(!name)return;let p=S.parties.find(x=>x.type===type&&norm(x.name)===norm(name));if(p){p.vat=vat||p.vat;p.address=address||p.address}else S.parties.push({id:uid(),type,name,vat:vat||'',cr:'',phone:'',email:'',address:address||''})}function pickParty(name,type){let p=S.parties.find(x=>x.type===type&&norm(x.name)===norm(name));return p||{name,vat:'',address:''}}function editParty(id){let p=S.parties.find(x=>x.id===id);if(!p)return;show('parties');partyId.value=p.id;partyType.value=p.type;partyName.value=p.name;partyVat.value=p.vat;partyCR.value=p.cr;partyPhone.value=p.phone;partyEmail.value=p.email;partyAddress.value=p.address}function trashParty(id){if(confirm('نقل السجل إلى سلة المهملات؟')){S.parties=S.parties.filter(p=>p.id!==id);save();renderAll()}}function partyExport(){return S.parties.map(p=>({'النوع':p.type==='customer'?'عميل':'مورد','الاسم':p.name,'الرقم الضريبي':p.vat,'السجل التجاري':p.cr,'الجوال':p.phone,'البريد':p.email,'العنوان':p.address}))}function renderParties(){let q=norm(partySearch?.value),f=partyFilter?.value;let rows=S.parties.filter(p=>(!f||p.type===f)&&(!q||norm(`${p.name} ${p.vat} ${p.phone}`).includes(q)));partyTable.innerHTML='<thead><tr><th>النوع</th><th>الاسم</th><th>الرقم الضريبي</th><th>الجوال</th><th>البريد</th><th>العنوان</th><th>إجراءات</th></tr></thead><tbody>'+rows.map(p=>`<tr><td>${p.type==='customer'?'عميل':'مورد'}</td><td>${esc(p.name)}</td><td class="num">${esc(p.vat)}</td><td>${esc(p.phone)}</td><td>${esc(p.email)}</td><td>${esc(p.address)}</td><td><button class="secondary icon" data-tip="تعديل" onclick="editParty('${p.id}')">📝</button><button class="danger icon" data-tip="سلة مهملات" onclick="trashParty('${p.id}')">🗑️</button></td></tr>`).join('')+'</tbody>'}
-function docFormHTML(type,docClass='invoice'){let isSale=type==='sale',isNote=docClass!=='invoice';let list=S.parties.filter(p=>p.type===(isSale?'customer':'supplier')).map(p=>`<option value="${esc(p.name)}"></option>`).join('');let title=isNote?(docClass==='credit'?'إشعار دائن':'إشعار مدين'):(isSale?'فاتورة مبيعات':'فاتورة مشتريات');return `<form id="docForm" onsubmit="saveDoc(event,'${type}','${docClass}')"><input id="docId" type="hidden"><datalist id="partyList">${list}</datalist><div class="grid six"><label>نوع المستند<input value="${title}" readonly></label><label>رقم المستند<input id="docNo" required></label><label>التاريخ<input id="docDate" type="date" required></label><label>الوقت<input id="docTime" type="time"></label><label>حالة السداد<select id="docPay"><option>نقدي</option><option>آجل</option><option>الحساب البنكي</option><option>جاري المالك</option><option>تحويل بنكي</option><option>شبكة</option></select></label><label>المعاملة الضريبية<select id="docVatMode" onchange="renderDocItems()"><option value="mixed">مختلطة حسب البنود</option><option value="taxable">خاضعة بالكامل</option><option value="exempt">معفاة بالكامل</option></select></label></div><div class="soft-section"><h3>${isSale?'بيانات المشتري / العميل':'بيانات المورد / البائع'}</h3><div class="grid four"><label>الاسم<input id="docParty" list="partyList" oninput="fillParty('${isSale?'customer':'supplier'}')"></label><label>الرقم الضريبي<input id="docPartyVat"></label><label>السجل التجاري<input id="docPartyCR"></label><label>العنوان<input id="docPartyAddress"></label></div></div><div class="soft-section"><h3>${isSale?'بيانات البائع المحفوظة':'بيانات المشتري المحفوظة'}</h3><div class="grid four"><label>اسم المنشأة<input id="docSellerName" readonly></label><label>الرقم الضريبي<input id="docSellerVat" readonly></label><label>السجل التجاري<input id="docSellerCR" readonly></label><label>العنوان<input id="docSellerAddress" readonly></label></div></div><h3>بنود المستند</h3><div class="actions"><button type="button" class="secondary" onclick="addDocItem()">إضافة بند</button><button type="button" class="secondary" onclick="clearDocItems()">مسح البنود</button></div><div class="tablewrap"><table id="docItemsTable"></table></div><div id="docSummary" class="summary"></div><div id="docQR" class="qrbox"></div><label>ملاحظات<textarea id="docDesc" rows="2"></textarea></label><div class="actions"><button class="primary">حفظ وتوليد القيد</button><button type="button" class="secondary" onclick="newDoc('${type}','${docClass}')">جديد</button><button type="button" class="excel" onclick="exportDocFormExcel('${type}','${docClass}')">Excel</button><button type="button" class="pdf" onclick="exportDocFormPDF('${type}','${docClass}')">PDF</button></div></form>`}
-function renderInvoiceForms(){if(!saleFormBox.innerHTML)saleFormBox.innerHTML=docFormHTML('sale','invoice');if(!purchaseFormBox.innerHTML)purchaseFormBox.innerHTML=docFormHTML('purchase','invoice');if(!noteFormBox.innerHTML)noteFormBox.innerHTML=`<div class="grid two"><label>نوع الإشعار<select id="noteDocClass" onchange="noteFormBox.querySelector('#noteInner').innerHTML=docFormHTML(noteBaseType.value,this.value);newDoc(noteBaseType.value,this.value)"><option value="credit">إشعار دائن</option><option value="debit">إشعار مدين</option></select></label><label>مرتبط بـ<select id="noteBaseType" onchange="noteFormBox.querySelector('#noteInner').innerHTML=docFormHTML(this.value,noteDocClass.value);newDoc(this.value,noteDocClass.value)"><option value="sale">مبيعات</option><option value="purchase">مشتريات</option></select></label></div><div id="noteInner"></div>`;let ni=$('noteInner');if(ni&&!ni.innerHTML){ni.innerHTML=docFormHTML('sale','credit');newDoc('sale','credit')}initDocForms()}function initDocForms(){document.querySelectorAll('#docForm').forEach(f=>{let d=f.querySelector('#docDate'),t=f.querySelector('#docTime');if(d&&!d.value)d.value=day();if(t&&!t.value)t.value=new Date().toTimeString().slice(0,5);let sn=f.querySelector('#docSellerName'),sv=f.querySelector('#docSellerVat'),sc=f.querySelector('#docSellerCR'),sa=f.querySelector('#docSellerAddress');if(sn){sn.value=S.settings.sellerName||ORG;sv.value=S.settings.sellerVat||'';sc.value=S.settings.sellerCR||'';sa.value=S.settings.sellerAddress||''}if(!f.dataset.init){f.dataset.init=1;invItems=[{item:'دجاج لاحم',unit:'كجم',qty:1,price:0,discount:0,vatRate:15,vatTreatment:'taxable'}];renderDocItems()}})}function newDoc(type,docClass='invoice'){editDocState=null;let form=document.querySelector('.page.active #docForm');if(!form)return;form.reset();form.querySelector('#docNo').value=(docClass==='invoice'?(type==='sale'?'S-':'P-'):(docClass==='credit'?'CN-':'DN-'))+next('doc');form.querySelector('#docDate').value=day();form.querySelector('#docTime').value=new Date().toTimeString().slice(0,5);form.querySelector('#docVatMode').value='mixed';form.querySelector('#docSellerName').value=S.settings.sellerName||ORG;form.querySelector('#docSellerVat').value=S.settings.sellerVat||'';form.querySelector('#docSellerCR').value=S.settings.sellerCR||'';form.querySelector('#docSellerAddress').value=S.settings.sellerAddress||'';invItems=[{item:'',unit:'',qty:1,price:0,discount:0,vatRate:15,vatTreatment:'taxable'}];renderDocItems()}function fillParty(type){let f=document.querySelector('.page.active #docForm');if(!f)return;let p=pickParty(f.querySelector('#docParty').value,type);f.querySelector('#docPartyVat').value=p.vat||'';f.querySelector('#docPartyAddress').value=p.address||''}function currentDocForm(){return document.querySelector('.page.active #docForm')}function addDocItem(){invItems.push({item:'',unit:'',qty:1,price:0,discount:0,vatRate:15,vatTreatment:'taxable'});renderDocItems()}function clearDocItems(){invItems=[];addDocItem()}function updItem(i,k,v){if(!invItems[i])return;invItems[i][k]=['qty','price','discount','vatRate'].includes(k)?n(v):v;renderDocItems()}function docTotals(){let f=currentDocForm(),mode=f?.querySelector('#docVatMode')?.value||'mixed';let gross=0,disc=0,taxable=0,exempt=0,vat=0;for(let it of invItems){let amount=n(n(it.qty)*n(it.price)),d=n(it.discount),net=Math.max(0,n(amount-d));gross+=amount;disc+=d;let vt=mode==='taxable'?'taxable':mode==='exempt'?'exempt':(it.vatTreatment||'taxable');if(vt==='exempt'){exempt+=net}else{taxable+=net;vat+=n(net*n(it.vatRate||15)/100)}}return{gross:n(gross),discount:n(disc),taxable:n(taxable),exempt:n(exempt),vat:n(vat),taxableWithVat:n(taxable+vat),total:n(taxable+exempt+vat)}}function renderDocItems(){let f=currentDocForm();if(!f||!f.querySelector('#docItemsTable'))return;let mode=f.querySelector('#docVatMode').value;f.querySelector('#docItemsTable').innerHTML='<thead><tr><th>البند</th><th>الوحدة</th><th>الكمية</th><th>السعر</th><th>الخصم</th><th>الحالة</th><th>VAT%</th><th>الصافي</th><th></th></tr></thead><tbody>'+invItems.map((it,i)=>{let net=Math.max(0,n(n(it.qty)*n(it.price)-n(it.discount)));return`<tr><td><input value="${esc(it.item)}" onchange="updItem(${i},'item',this.value)"></td><td><input value="${esc(it.unit)}" onchange="updItem(${i},'unit',this.value)"></td><td><input class="num" type="number" step="0.01" value="${it.qty}" onchange="updItem(${i},'qty',this.value)"></td><td><input class="num" type="number" step="0.01" value="${it.price}" onchange="updItem(${i},'price',this.value)"></td><td><input class="num" type="number" step="0.01" value="${it.discount}" onchange="updItem(${i},'discount',this.value)"></td><td><select ${mode!=='mixed'?'disabled':''} onchange="updItem(${i},'vatTreatment',this.value)"><option value="taxable" ${it.vatTreatment!=='exempt'?'selected':''}>خاضع</option><option value="exempt" ${it.vatTreatment==='exempt'?'selected':''}>معفى</option></select></td><td><input class="num" type="number" step="0.01" value="${it.vatRate}" onchange="updItem(${i},'vatRate',this.value)"></td><td class="num">${money(net)}</td><td><button type="button" class="danger icon" data-tip="سلة مهملات" onclick="invItems.splice(${i},1);renderDocItems()">🗑️</button></td></tr>`}).join('')+'</tbody>';let t=docTotals();f.querySelector('#docSummary').innerHTML=`<div class="grid five"><div>الخاضع للضريبة<br><b>${money(t.taxable)}</b></div><div>المعفى<br><b>${money(t.exempt)}</b></div><div>مبلغ VAT<br><b>${money(t.vat)}</b></div><div>الخاضع شامل VAT<br><b>${money(t.taxableWithVat)}</b></div><div>الإجمالي النهائي<br><b>${money(t.total)}</b></div></div>`;let payload=currentQRPayload();f.querySelector('#docQR').innerHTML=`<img alt="QR" src="${qrUrl(payload,92)}"><div><b>QR TLV Base64</b><div class="qrpayload">${esc(payload)}</div><small class="mut">يعرض الحقول الأساسية: اسم البائع، الرقم الضريبي، الوقت، الإجمالي، وإجمالي الضريبة.</small></div>`}
-function normalizeVat(v){return String(v||'').replace(/\D/g,'')}function tlvBase64(tags){let bytes=[];for(let [tag,val] of tags){let enc=new TextEncoder().encode(String(val??''));bytes.push(tag,enc.length,...enc)}let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin)}function isoStamp(date,time){let d=date||day(),t=time||'00:00';return new Date(d+'T'+t+':00+03:00').toISOString()}function currentQRPayload(doc){let f=currentDocForm();let t=doc?doc.totals:docTotals();let seller=doc?doc.seller:{name:f?.querySelector('#docSellerName')?.value||S.settings.sellerName||ORG,vat:f?.querySelector('#docSellerVat')?.value||S.settings.sellerVat||''};let date=doc?doc.date:f?.querySelector('#docDate')?.value;let time=doc?doc.time:f?.querySelector('#docTime')?.value;return tlvBase64([[1,seller.name],[2,normalizeVat(seller.vat)],[3,isoStamp(date,time)],[4,t.total.toFixed(2)],[5,t.vat.toFixed(2)]])}function qrUrl(payload,size=140){return 'https://api.qrserver.com/v1/create-qr-code/?size='+size+'x'+size+'&data='+encodeURIComponent(payload)}
-function saveDoc(e,type,docClass){e.preventDefault();let f=e.target,t=docTotals();if(t.total<=0)return toast('إجمالي المستند يجب أن يكون أكبر من صفر');let id=f.querySelector('#docId').value||uid(),no=f.querySelector('#docNo').value.trim()||('DOC-'+next('doc'));let partyType=type==='sale'?'customer':'supplier';let party={name:f.querySelector('#docParty').value.trim(),vat:normalizeVat(f.querySelector('#docPartyVat').value),cr:f.querySelector('#docPartyCR').value.trim(),address:f.querySelector('#docPartyAddress').value.trim()};if(!party.name)return toast('اسم العميل/المورد مطلوب');let seller={name:S.settings.sellerName||ORG,vat:normalizeVat(S.settings.sellerVat),cr:S.settings.sellerCR||'',address:S.settings.sellerAddress||''};let doc={id,no,type,docClass,date:f.querySelector('#docDate').value||day(),time:f.querySelector('#docTime').value||'00:00',pay:f.querySelector('#docPay').value,vatMode:f.querySelector('#docVatMode').value,party, seller, items:invItems.map(x=>({...x,qty:n(x.qty),price:n(x.price),discount:n(x.discount),vatRate:n(x.vatRate)})),totals:t,desc:f.querySelector('#docDesc').value.trim(),qrPayload:'',entryId:null,updatedAt:new Date().toISOString()};doc.qrPayload=currentQRPayload(doc);let old=S.invoices.find(x=>x.id===id);doc.entryId=old?.entryId||next('entry');let idx=S.invoices.findIndex(x=>x.id===id);idx>=0?S.invoices[idx]=doc:S.invoices.push(doc);upsertParty(partyType,party.name,party.vat,party.address);let entry=entryFromDoc(doc);saveEntryObject(entry);bump('doc',Number(String(no).replace(/\D/g,''))||next('doc'));save();newDoc(type,docClass);renderAll();toast('تم حفظ المستند وتوليد القيد')}
-function payAccount(pay,type){if(pay==='نقدي')return AC.cash;if(pay==='الحساب البنكي'||pay==='تحويل بنكي'||pay==='شبكة')return AC.bank;if(pay==='جاري المالك')return AC.owner;return type==='sale'?AC.ar:AC.ap}function entryFromDoc(d){let debit=[],credit=[],t=d.totals,pa=payAccount(d.pay,d.type);let title=(d.docClass==='invoice'?'فاتورة':d.docClass==='credit'?'إشعار دائن':'إشعار مدين')+' '+(d.type==='sale'?'مبيعات':'مشتريات')+' '+d.no;let source='doc:'+d.id;let addD=(accountCode,amount,description)=>amount&&debit.push({accountCode,description,debit:n(amount),credit:0});let addC=(accountCode,amount,description)=>amount&&credit.push({accountCode,description,debit:0,credit:n(amount)});if(d.type==='sale'){if(d.docClass==='credit'){addD(AC.sales,t.taxable,'تخفيض مبيعات '+d.no);addD(AC.vatOut,t.vat,'تخفيض ضريبة مخرجات '+d.no);addC(pa,t.total,'إشعار دائن '+d.party.name)}else{addD(pa,t.total,title);addC(AC.sales,t.taxable,'مبيعات '+d.no);addC(AC.vatOut,t.vat,'ضريبة مخرجات '+d.no)}}else{if(d.docClass==='credit'){addD(pa,t.total,'إشعار دائن مشتريات '+d.party.name);addC(AC.purch,t.taxable,'تخفيض مشتريات '+d.no);addC(AC.vatIn,t.vat,'تخفيض ضريبة مدخلات '+d.no)}else{addD(AC.purch,t.taxable,title);addD(AC.vatIn,t.vat,'ضريبة مدخلات '+d.no);addC(pa,t.total,'مورد '+d.party.name)}}let lines=[...debit,...credit].filter(l=>n(l.debit)||n(l.credit));return{id:d.entryId,date:d.date,title,desc:d.desc||title,status:'نشط',source,lines}}
-function editDoc(id){let d=S.invoices.find(x=>x.id===id);if(!d)return;show(d.docClass==='invoice'?(d.type==='sale'?'saleInv':'purchaseInv'):'notes');setTimeout(()=>{if(d.docClass!=='invoice'){noteDocClass.value=d.docClass;noteBaseType.value=d.type;noteInner.innerHTML=docFormHTML(d.type,d.docClass)}let f=currentDocForm();editDocState=d;f.querySelector('#docId').value=d.id;f.querySelector('#docNo').value=d.no;f.querySelector('#docDate').value=d.date;f.querySelector('#docTime').value=d.time;f.querySelector('#docPay').value=d.pay;f.querySelector('#docVatMode').value=d.vatMode||'mixed';f.querySelector('#docParty').value=d.party.name;f.querySelector('#docPartyVat').value=d.party.vat;f.querySelector('#docPartyCR').value=d.party.cr||'';f.querySelector('#docPartyAddress').value=d.party.address;f.querySelector('#docDesc').value=d.desc||'';invItems=d.items.map(x=>({...x}));renderDocItems()},40)}function trashDoc(id){if(confirm('نقل المستند إلى سلة المهملات؟')){let d=S.invoices.find(x=>x.id===id);S.invoices=S.invoices.filter(x=>x.id!==id);let e=S.entries.find(x=>x.id===d?.entryId);if(e)e.status='محذوف';save();renderAll()}}function invoiceRegRows(){let q=norm(regSearch?.value),pq=norm(regPartySearch?.value),ty=regType?.value,dc=regDoc?.value,fr=regFrom?.value,to=regTo?.value;return S.invoices.filter(d=>(!q||norm(`${d.no} ${d.party?.name} ${d.party?.vat} ${d.desc}`).includes(q))&&(!pq||norm(d.party?.name).includes(pq))&&(!ty||d.type===ty)&&(!dc||d.docClass===dc)&&dateIn(d.date,fr,to)).sort((a,b)=>b.date.localeCompare(a.date)||b.no.localeCompare(a.no))}function docClassName(d){return d.docClass==='invoice'?'فاتورة':d.docClass==='credit'?'إشعار دائن':'إشعار مدين'}function invoiceRegExport(){return invoiceRegRows().map(d=>({'التاريخ':d.date,'الوقت':d.time,'رقم المستند':d.no,'النوع':d.type==='sale'?'مبيعات':'مشتريات','المستند':docClassName(d),'العميل/المورد':d.party.name,'الرقم الضريبي':d.party.vat,'حالة السداد':d.pay,'الخاضع للضريبة':d.totals.taxable,'المعفى':d.totals.exempt,'VAT':d.totals.vat,'الإجمالي':d.totals.total,'رقم القيد':d.entryId}))}function renderInvoiceReg(){if(!regTable)return;let rows=invoiceRegRows();regTable.innerHTML='<thead><tr><th>التاريخ</th><th>الرقم</th><th>النوع</th><th>المستند</th><th>العميل/المورد</th><th>VAT</th><th>الإجمالي</th><th>السداد</th><th>إجراءات</th></tr></thead><tbody>'+rows.map(d=>`<tr><td>${d.date}</td><td>${esc(d.no)}</td><td>${d.type==='sale'?'مبيعات':'مشتريات'}</td><td>${docClassName(d)}</td><td>${esc(d.party.name)}</td><td class="num">${money(d.totals.vat)}</td><td class="num">${money(d.totals.total)}</td><td>${d.pay}</td><td><button class="secondary icon" data-tip="تعديل" onclick="editDoc('${d.id}')">📝</button><button class="excel icon" data-tip="Excel" onclick="exportExcel('${d.no}',docExport('${d.id}'))">X</button><button class="pdf icon" data-tip="PDF" onclick="exportDocPDF('${d.id}')">PDF</button><button class="secondary icon" data-tip="إيميل" onclick="sendEmailDoc('${d.id}')">✉️</button><button class="danger icon" data-tip="سلة مهملات" onclick="trashDoc('${d.id}')">🗑️</button></td></tr>`).join('')+'</tbody>'}['regSearch','regPartySearch','regType','regDoc','regFrom','regTo'].forEach(id=>setTimeout(()=>$(id)&&( $(id).oninput=renderInvoiceReg ),0));
-function docExport(id){let d=S.invoices.find(x=>x.id===id);if(!d)return[];let rows=d.items.map((it,i)=>({'م':i+1,'البند':it.item,'الوحدة':it.unit,'الكمية':it.qty,'السعر':it.price,'الخصم':it.discount,'الحالة':it.vatTreatment==='exempt'?'معفى':'خاضع','VAT%':it.vatRate}));rows.push({'م':'','البند':'الخاضع للضريبة','الوحدة':d.totals.taxable},{'م':'','البند':'المعفى','الوحدة':d.totals.exempt},{'م':'','البند':'VAT','الوحدة':d.totals.vat},{'م':'','البند':'الإجمالي','الوحدة':d.totals.total});return rows}function sendEmailDoc(id){let d=S.invoices.find(x=>x.id===id);if(!d)return;let body=`${docClassName(d)} ${d.no}%0A${d.party.name}%0Aالإجمالي: ${money(d.totals.total)}%0AVAT: ${money(d.totals.vat)}`;location.href=`mailto:?subject=${encodeURIComponent(docClassName(d)+' '+d.no)}&body=${body}`}function sendWhatsDoc(id){toast('تم إلغاء واتساب حسب طلبك. استخدم PDF أو الإيميل.')}
-function newEntry(){entryId.value=next('entry');entryDate.value=day();entryTitle.value='';entryDesc.value='';entryStatus.value='نشط';lines=[{accountCode:'',description:'',debit:0,credit:0},{accountCode:'',description:'',debit:0,credit:0}];renderEntryLines()}function addLine(){lines.push({accountCode:'',description:'',debit:0,credit:0});renderEntryLines()}function updLine(i,k,v){if(!lines[i])return;lines[i][k]=['debit','credit'].includes(k)?n(v):(k==='accountCode'?resolveAccount(v):v);if(k==='debit'&&n(v)>0)lines[i].credit=0;if(k==='credit'&&n(v)>0)lines[i].debit=0;renderEntryLines()}function zeroEntry(){lines=lines.map(l=>({...l,debit:0,credit:0}));renderEntryLines()}function renderEntryLines(){if(!linesTable)return;linesTable.innerHTML='<thead><tr><th>م</th><th>الحساب</th><th>اسم الحساب</th><th>البيان</th><th>مدين</th><th>دائن</th><th></th></tr></thead><tbody>'+lines.map((l,i)=>`<tr><td>${i+1}</td><td><input list="accList" value="${esc(l.accountCode)}" onchange="updLine(${i},'accountCode',this.value)"></td><td>${esc(accName(l.accountCode))}</td><td><input value="${esc(l.description)}" onchange="updLine(${i},'description',this.value)"></td><td><input class="num" type="number" step="0.01" value="${l.debit}" onchange="updLine(${i},'debit',this.value)"></td><td><input class="num" type="number" step="0.01" value="${l.credit}" onchange="updLine(${i},'credit',this.value)"></td><td><button class="danger icon" data-tip="سلة مهملات" onclick="lines.splice(${i},1);renderEntryLines()">🗑️</button></td></tr>`).join('')+'</tbody>';let d=lines.reduce((s,l)=>s+n(l.debit),0),c=lines.reduce((s,l)=>s+n(l.credit),0);bal.textContent=`المدين: ${money(d)} | الدائن: ${money(c)} | الفرق: ${money(d-c)}`}function saveEntry(){let clean=lines.filter(l=>l.accountCode&&(n(l.debit)||n(l.credit))).map(l=>({...l,accountCode:resolveAccount(l.accountCode),debit:n(l.debit),credit:n(l.credit)}));if(!clean.length)return toast('لا توجد أسطر صالحة');for(let l of clean)if(!acc(l.accountCode)?.posting)return toast('الحساب غير قابل للترحيل: '+l.accountCode);let d=clean.reduce((s,l)=>s+l.debit,0),c=clean.reduce((s,l)=>s+l.credit,0);if(n(d-c)!==0)return toast('القيد غير متوازن');let id=Number(entryId.value||next('entry'));let old=S.entries.find(e=>e.id===id);let e={id,date:entryDate.value||day(),title:entryTitle.value||('قيد '+id),desc:entryDesc.value,status:entryStatus.value,source:old?.source||'manual',lines:clean};saveEntryObject(e);save();newEntry();renderAll();toast('تم حفظ القيد')}function saveEntryObject(e){let i=S.entries.findIndex(x=>x.id===e.id);i>=0?S.entries[i]=e:S.entries.push(e);bump('entry',e.id)}function loadEntry(id){let e=S.entries.find(x=>x.id==id);if(!e)return;show('entry');entryId.value=e.id;entryDate.value=e.date;entryTitle.value=e.title;entryDesc.value=e.desc;entryStatus.value=e.status;lines=e.lines.map(l=>({...l}));renderEntryLines()}function trashEntry(id){let e=S.entries.find(x=>x.id==id);if(e&&confirm('نقل القيد إلى سلة المهملات؟')){e.status='محذوف';save();renderAll()}}
-function journalRows(){let qid=jfId?.value,qt=norm(jfTitle?.value),qd=norm(jfDesc?.value),qa=norm(jfAcc?.value),fr=jfFrom?.value,to=jfTo?.value;return S.entries.filter(e=>(!qid||String(e.id).includes(qid))&&(!qt||norm(e.title).includes(qt))&&(!qd||norm(e.desc).includes(qd))&&dateIn(e.date,fr,to)&&(!qa||(e.lines||[]).some(l=>norm(l.accountCode+' '+accName(l.accountCode)).includes(qa)))).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id)}function journalExport(){return journalRows().flatMap(e=>e.lines.map((l,i)=>({'رقم القيد':e.id,'التاريخ':e.date,'اسم القيد':e.title,'البيان':e.desc,'السطر':i+1,'رقم الحساب':l.accountCode,'اسم الحساب':accName(l.accountCode),'بيان السطر':l.description,'مدين':l.debit,'دائن':l.credit,'الحالة':e.status,'المصدر':e.source}))) }function renderJournal(){if(!journalTable)return;journalTable.innerHTML='<thead><tr><th>رقم</th><th>التاريخ</th><th>اسم القيد</th><th>البيان</th><th>مدين</th><th>دائن</th><th>الحالة</th><th>تعديل القيد</th><th>سلة</th></tr></thead><tbody>'+journalRows().map(e=>{let d=e.lines.reduce((s,l)=>s+n(l.debit),0),c=e.lines.reduce((s,l)=>s+n(l.credit),0);return`<tr><td>${e.id}</td><td>${e.date}</td><td>${esc(e.title)}</td><td>${esc(e.desc)}</td><td class="num">${money(d)}</td><td class="num">${money(c)}</td><td>${e.status}</td><td><button class="secondary icon" data-tip="تعديل" onclick="loadEntry(${e.id})">📝</button></td><td><button class="danger icon" data-tip="سلة مهملات" onclick="trashEntry(${e.id})">🗑️</button></td></tr>`}).join('')+'</tbody>'}['jfId','jfTitle','jfDesc','jfAcc','jfFrom','jfTo'].forEach(id=>setTimeout(()=>$(id)&&($(id).oninput=renderJournal),0));
-function daybookExport(){return activeEntries().sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id).flatMap(e=>e.lines.map(l=>({'التاريخ':e.date,'رقم القيد':e.id,'الحساب':l.accountCode,'اسم الحساب':accName(l.accountCode),'البيان':l.description||e.desc,'مدين':l.debit,'دائن':l.credit}))) }function renderDaybook(){if(!daybookTable)return;let r=daybookExport();daybookTable.innerHTML=tableFromRows(r)}function selectedAccount(input){return resolveAccount(input||'')}function ledgerRows(inp,from,to){let code=selectedAccount(inp);let ls=allLines().filter(l=>l.accountCode===code).sort((a,b)=>a.date.localeCompare(b.date)||a.entryId-b.entryId);let open=ls.filter(l=>from&&l.date<from).reduce((s,l)=>s+n(l.debit)-n(l.credit),0),run=open;return{code,open,rows:ls.filter(l=>dateIn(l.date,from,to)).map(l=>{run=n(run+n(l.debit)-n(l.credit));return{'التاريخ':l.date,'رقم القيد':l.entryId,'اسم القيد':l.title,'البيان':l.description||l.desc,'مدين':l.debit,'دائن':l.credit,'الرصيد':run}})}}function ledgerExport(){return ledgerRows(ledAccSearch.value,ledFrom.value,ledTo.value).rows}function renderLedger(){if(!ledgerTable)return;let d=ledgerRows(ledAccSearch.value,ledFrom.value,ledTo.value);ledSum.textContent=`الحساب: ${d.code} - ${accName(d.code)} | الرصيد الافتتاحي: ${money(d.open)}`;ledgerTable.innerHTML=tableFromRows(d.rows)}function statementExport(){return ledgerRows(stAccSearch.value,stFrom.value,stTo.value).rows}function renderStatements(){if(!stTable)return;let d=ledgerRows(stAccSearch.value,stFrom.value,stTo.value);stSum.textContent=`الحساب: ${d.code} - ${accName(d.code)} | الرصيد الافتتاحي: ${money(d.open)}`;stTable.innerHTML=tableFromRows(d.rows)}
-voucherForm.onsubmit=e=>{e.preventDefault();let id=voucherId.value||uid(),type=voucherType.value,amount=n(voucherAmount.value);if(amount<=0)return toast('المبلغ مطلوب');let other=resolveAccount(voucherAccount.value),cash=voucherCash.value;if(!acc(other))return toast('اختر الحساب المقابل');let no=voucherNo.value||((type==='receipt'?'RV-':'PV-')+next('voucher'));let v={id,type,no,date:voucherDate.value||day(),account:other,cashAccount:cash,amount,desc:voucherDesc.value};let entry={id:next('entry'),date:v.date,title:no+' '+(type==='receipt'?'سند قبض':'سند صرف'),desc:v.desc,status:'نشط',source:'voucher:'+id,lines:type==='receipt'?[{accountCode:cash,description:v.desc,debit:amount,credit:0},{accountCode:other,description:v.desc,debit:0,credit:amount}]:[{accountCode:other,description:v.desc,debit:amount,credit:0},{accountCode:cash,description:v.desc,debit:0,credit:amount}]};let i=S.vouchers.findIndex(x=>x.id===id);i>=0?S.vouchers[i]=v:S.vouchers.push(v);saveEntryObject(entry);bump('voucher',Number(String(no).replace(/\D/g,''))||next('voucher'));save();newVoucher();renderAll();toast('تم حفظ السند')};function newVoucher(){voucherForm.reset();voucherDate.value=day();voucherNo.value='RV-'+next('voucher')}function voucherExport(){return S.vouchers.map(v=>({'التاريخ':v.date,'رقم السند':v.no,'النوع':v.type==='receipt'?'قبض':'صرف','الحساب':accName(v.account),'الصندوق/البنك':accName(v.cashAccount),'المبلغ':v.amount,'البيان':v.desc}))}function renderVouchers(){if(!voucherTable)return;voucherTable.innerHTML=tableFromRows(voucherExport())}
-[payBasic,payAllow,payDeduct].forEach(x=>x.oninput=()=>payNet.value=money(n(payBasic.value)+n(payAllow.value)-n(payDeduct.value)));payrollForm.onsubmit=e=>{e.preventDefault();let id=payrollId.value||uid(),gross=n(payBasic.value)+n(payAllow.value),ded=n(payDeduct.value),net=n(gross-ded);if(net<=0)return toast('صافي الراتب مطلوب');let p={id,month:payMonth.value,employee:payEmployee.value,basic:n(payBasic.value),allow:n(payAllow.value),deduct:ded,net,method:payMethod.value};let entry={id:next('entry'),date:(p.month?p.month+'-28':day()),title:'مسير راتب '+p.employee,desc:p.month,status:'نشط',source:'payroll:'+id,lines:[{accountCode:AC.salary,description:'رواتب وأجور',debit:gross,credit:0},{accountCode:p.method,description:'صرف راتب '+p.employee,debit:0,credit:net},...(ded?[{accountCode:AC.ap,description:'استقطاعات رواتب',debit:0,credit:ded}]:[])]};let i=S.payroll.findIndex(x=>x.id===id);i>=0?S.payroll[i]=p:S.payroll.push(p);saveEntryObject(entry);save();newPayroll();renderAll();toast('تم حفظ مسير الراتب')};function newPayroll(){payrollForm.reset();payMonth.value=new Date().toISOString().slice(0,7);payNet.value='0.00'}function payrollExport(){return S.payroll.map(p=>({'الشهر':p.month,'الموظف':p.employee,'الأساسي':p.basic,'البدلات':p.allow,'الاستقطاعات':p.deduct,'الصافي':p.net,'طريقة الدفع':accName(p.method)}))}function renderPayroll(){if(!payrollTable)return;payrollTable.innerHTML=tableFromRows(payrollExport())}
-function trialData(){let from=trFrom?.value||START,to=trTo?.value||day();return postable().map(a=>{let ls=allLines().filter(l=>l.accountCode===a.code),op=ls.filter(l=>l.date<from).reduce((s,l)=>s+n(l.debit)-n(l.credit),0),md=ls.filter(l=>dateIn(l.date,from,to)).reduce((s,l)=>s+n(l.debit),0),mc=ls.filter(l=>dateIn(l.date,from,to)).reduce((s,l)=>s+n(l.credit),0),cl=n(op+md-mc);return{'رقم الحساب':a.code,'اسم الحساب':a.name,'النوع':a.type,'افتتاحي مدين':Math.max(op,0),'افتتاحي دائن':Math.max(-op,0),'حركة مدين':md,'حركة دائن':mc,'ختامي مدين':Math.max(cl,0),'ختامي دائن':Math.max(-cl,0)}}).filter(r=>Object.values(r).some(v=>typeof v==='number'&&v))}function trialExport(){return trialData()}function renderTrial(){if(!trTable)return;let r=trialData(),d=r.reduce((s,x)=>s+x['ختامي مدين'],0),c=r.reduce((s,x)=>s+x['ختامي دائن'],0);trSum.textContent=`إجمالي مدين: ${money(d)} | إجمالي دائن: ${money(c)} | الفرق: ${money(d-c)}`;trTable.innerHTML=tableFromRows(r)}function balancesByType(){let out={};for(let a of postable()){let bal=allLines().filter(l=>l.accountCode===a.code).reduce((s,l)=>s+n(l.debit)-n(l.credit),0);out[a.type]=(out[a.type]||0)+bal}return out}function financialExport(){let b=balancesByType();let revenue=-(b['إيراد']||0),expense=(b['مصروف']||0),profit=n(revenue-expense);return[{'القائمة':'قائمة الدخل','البند':'الإيرادات','المبلغ':revenue},{'القائمة':'قائمة الدخل','البند':'المصروفات والتكاليف','المبلغ':expense},{'القائمة':'قائمة الدخل','البند':'صافي الربح/الخسارة','المبلغ':profit},{'القائمة':'المركز المالي','البند':'الأصول','المبلغ':b['أصل']||0},{'القائمة':'المركز المالي','البند':'الالتزامات','المبلغ':-(b['التزام']||0)},{'القائمة':'المركز المالي','البند':'حقوق الملكية','المبلغ':-(b['حقوق ملكية']||0)}]}function renderFinancials(){if(!finBox)return;finBox.innerHTML='<div class="tablewrap"><table>'+tableFromRows(financialExport()).replace(/^<table>|<\/table>$/g,'')+'</table></div>'}
-function vatTotals(){let out=0,inn=0;for(let d of S.invoices){let sign=d.docClass==='credit'?-1:1;if(d.type==='sale')out+=sign*n(d.totals.vat);else inn+=sign*n(d.totals.vat)}return{out:n(out),in:n(inn),net:n(out-inn)}}function taxExport(){let v=vatTotals(),b=balancesByType(),profit=financialExport().find(x=>x['البند']==='صافي الربح/الخسارة')?.['المبلغ']||0;let base=n((-(b['حقوق ملكية']||0))+Math.max(profit,0)+n(zakatAdj?.value)-((b['أصل']||0)*0.35));let zakat=Math.max(0,n(base*.025));return[{'التقرير':'ضريبة القيمة المضافة','البند':'ضريبة المخرجات','المبلغ':v.out},{'التقرير':'ضريبة القيمة المضافة','البند':'ضريبة المدخلات','المبلغ':v.in},{'التقرير':'ضريبة القيمة المضافة','البند':'صافي الضريبة المستحقة','المبلغ':v.net},{'التقرير':'الزكاة التقديرية','البند':'الوعاء الزكوي التقريبي','المبلغ':base},{'التقرير':'الزكاة التقديرية','البند':'الزكاة 2.5%','المبلغ':zakat}]}function renderTaxReports(){if(!taxBox)return;taxBox.innerHTML='<div class="summary">احتساب الزكاة هنا تقديري ومحاسبي داخلي، وليس إقرارًا رسميًا.</div><div class="tablewrap"><table>'+tableFromRows(taxExport()).replace(/^<table>|<\/table>$/g,'')+'</table></div>'}
-function tableFromRows(rows){if(!rows||!rows.length)return'<table><tbody><tr><td class="mut">لا توجد بيانات</td></tr></tbody></table>';let h=Object.keys(rows[0]);return'<table><thead><tr>'+h.map(x=>`<th>${esc(x)}</th>`).join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+h.map(k=>`<td class="${typeof r[k]==='number'?'num':''}">${typeof r[k]==='number'?money(r[k]):esc(r[k])}</td>`).join('')+'</tr>').join('')+'</tbody></table>'}
-function reportHTML(title,rows){let logo='مؤسسة عائش حميد القريقري للدواجن';return`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><style>body{font-family:Tahoma,Arial;color:#24342b;margin:24px;background:#fbfaf5}h1{color:#31533d;margin:0}.head{display:flex;justify-content:space-between;border-bottom:3px solid #31533d;padding-bottom:12px;margin-bottom:16px}.box{border:1px solid #d8d0c1;border-radius:12px;padding:12px;background:white}table{width:100%;border-collapse:collapse;background:#fff}th{background:#31533d;color:white}th,td{border:1px solid #ddd;padding:7px;text-align:right}.num{text-align:left;direction:ltr}.foot{margin-top:18px;color:#6f776f;font-size:12px}@media print{button{display:none}}</style></head><body><div class="head"><div><h1>${esc(title)}</h1><div>${esc(logo)}</div></div><div>${new Date().toLocaleString('ar-SA')}</div></div><div class="box">${tableFromRows(rows)}</div><div class="foot">تم التصدير من النظام المحاسبي المحلي.</div><button onclick="print()">طباعة / حفظ PDF</button></body></html>`}function exportPDF(title,rows){let w=open('','_blank');w.document.write(reportHTML(title,rows));w.document.close();setTimeout(()=>w.print(),400)}function exportExcel(title,rows){if(!rows.length)return toast('لا توجد بيانات');let html=reportHTML(title,rows).replace('<button onclick="print()">طباعة / حفظ PDF</button>','');let blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=title.replace(/\s+/g,'_')+'.xls';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}function exportDocPDF(id){let d=S.invoices.find(x=>x.id===id);let rows=docExport(id);let w=open('','_blank');let html=reportHTML(docClassName(d)+' '+d.no,rows).replace('</div><div class="foot">',`</div><div style="display:flex;gap:14px;align-items:center;margin:14px 0"><img src="${qrUrl(d.qrPayload,150)}"><div style="direction:ltr;word-break:break-all">${esc(d.qrPayload)}</div></div><div class="foot">`);w.document.write(html);w.document.close();setTimeout(()=>w.print(),400)}function exportDocFormExcel(type,docClass){let rows=docExportFromForm(type,docClass);exportExcel('مستند',rows)}function exportDocFormPDF(type,docClass){let rows=docExportFromForm(type,docClass);exportPDF('مستند',rows)}function docExportFromForm(type,docClass){return invItems.map((it,i)=>({'م':i+1,'البند':it.item,'الوحدة':it.unit,'الكمية':it.qty,'السعر':it.price,'الخصم':it.discount,'الحالة':it.vatTreatment==='exempt'?'معفى':'خاضع','VAT%':it.vatRate}))}function exportCurrentEntryExcel(){exportExcel('قيد رقم '+entryId.value,lines.map((l,i)=>({'م':i+1,'الحساب':l.accountCode,'اسم الحساب':accName(l.accountCode),'البيان':l.description,'مدين':l.debit,'دائن':l.credit})))}function exportCurrentEntryPDF(){exportPDF('قيد رقم '+entryId.value,lines.map((l,i)=>({'م':i+1,'الحساب':l.accountCode,'اسم الحساب':accName(l.accountCode),'البيان':l.description,'مدين':l.debit,'دائن':l.credit})))}function backup(){let blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_accounting_v8_'+day()+'.json';a.click()}async function restore(){let f=importFile.files[0];if(!f)return toast('اختر ملف');if(!confirm('سيتم استبدال البيانات الحالية'))return;S=JSON.parse(await f.text());save();renderAll();toast('تم الاستيراد')}function clearOperationalData(){if(confirm('سيتم حذف القيود والفواتير والسندات والرواتب فقط، مع بقاء الدليل والعملاء والموردين.')){S.entries=[];S.invoices=[];S.vouchers=[];S.payroll=[];S.seq.entry=1;S.seq.doc=1;save();renderAll();toast('تم تصفير البيانات التشغيلية')}}
-setTimeout(()=>{newEntry();newVoucher();newPayroll();trTo.value=day();taxTo.value=day();taxFrom.value=START;renderAll()},50);
+      <section id="tree" class="page">
+        <div class="panel">
+          <h3>شجرة الحسابات</h3>
+          <div id="accountTree" class="tree"></div>
+        </div>
+      </section>
 
-function showPlaceholder(title,desc,items){moduleTitle.textContent=title;moduleDesc.textContent=desc||'';moduleBullets.innerHTML=(items||[]).map(x=>`<li>${esc(x)}</li>`).join('');show('modulePage')}
-function refreshClock(){let d=new Date();let wd=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let mo=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];if(homeDate)homeDate.textContent=`${wd[d.getDay()]}، ${d.getDate()} ${mo[d.getMonth()]} ${d.getFullYear()}`;if(homeClock)homeClock.textContent=d.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
-setInterval(refreshClock,1000);
-setTimeout(refreshClock,100);
-</script>
-<script id="entry-button-fix-only-v13">
-(function(){
-  function safeToast(msg){
-    var t=document.getElementById('toast');
-    if(t){ t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show')},2800); }
-  }
-  window.enterApp=function(){
-    var coverEl=document.getElementById('cover');
-    var appEl=document.getElementById('app');
-    if(coverEl){ coverEl.classList.add('hidden'); coverEl.style.display='none'; }
-    if(appEl){ appEl.classList.remove('hidden'); appEl.style.display='grid'; }
-    try{ if(typeof renderAll==='function') renderAll(); }
-    catch(err){ console.error(err); safeToast('تم فتح التطبيق، لكن يوجد تنبيه في تحديث بعض البيانات.'); }
-  };
-  document.addEventListener('DOMContentLoaded',function(){
-    var btn=document.querySelector('#cover button.primary, #cover button');
-    if(btn){ btn.removeAttribute('onclick'); btn.addEventListener('click',function(e){ e.preventDefault(); window.enterApp(); }); }
-  });
-})();
+      <section id="entries" class="page">
+        <div class="panel">
+          <h3>شاشة القيود التفاعلية</h3>
+          <form id="entryForm">
+            <input type="hidden" id="entryEditId">
+            <div class="grid four">
+              <label>رقم القيد<input id="entryNo" required></label>
+              <label>التاريخ<input id="entryDate" type="date" required></label>
+              <label>البيان<input id="entryDesc" required placeholder="بيان القيد"></label>
+              <label>مرفق<input id="entryAttachment" type="file"></label>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>بحث الحساب</th><th>رقم الحساب</th><th>اسم الحساب</th><th>مدين</th><th>دائن</th><th></th></tr></thead>
+                <tbody id="entryLines"></tbody>
+              </table>
+            </div>
+            <div class="entry-actions">
+              <button type="button" id="addLine" class="secondary">إضافة سطر</button>
+              <button type="submit">حفظ القيد</button>
+              <button type="button" id="clearEntry" class="danger">تصفير الشاشة</button>
+            </div>
+            <div class="totals">
+              <span>إجمالي المدين: <b id="entryDebitTotal">0.00</b></span>
+              <span>إجمالي الدائن: <b id="entryCreditTotal">0.00</b></span>
+              <span id="balanceStatus">غير متوازن</span>
+            </div>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>سجل القيود</h3>
+          <div class="grid four">
+            <input id="entrySearch" placeholder="بحث برقم القيد أو البيان">
+            <input id="entryAccountSearch" placeholder="بحث برقم/اسم الحساب">
+            <input id="dateFrom" type="date">
+            <input id="dateTo" type="date">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>رقم</th><th>التاريخ</th><th>البيان</th><th>مدين</th><th>دائن</th><th>مرفق</th><th>إجراء</th></tr></thead>
+              <tbody id="entriesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
+      <section id="ledger" class="page">
+        <div class="panel">
+          <h3>كشف الحساب</h3>
+          <div class="grid four">
+            <input id="ledgerSearch" placeholder="رقم أو اسم الحساب">
+            <input id="ledgerFrom" type="date">
+            <input id="ledgerTo" type="date">
+            <button id="runLedger">عرض الكشف</button>
+          </div>
+          <div id="ledgerResult" class="table-wrap"></div>
+        </div>
+      </section>
 
-/* v13.0.2 login/home behavior */
-function forgotPassword(){
-  const user = (document.getElementById('loginUser')?.value || '').trim() || 'المستخدم';
-  alert('استعادة كلمة السر\n\nلأمان البيانات، يتم استعادة كلمة السر من مدير النظام.\nاسم المستخدم: '+user+'\n\nفي النسخة السحابية الكاملة يمكن ربطها بالإيميل لاحقًا لإرسال رابط استعادة تلقائي.');
-}
-(function(){
-  const navIcons={home:'🏠',settings:'⚙️',accounts:'📘',tree:'🌳',parties:'👥',saleInv:'🧾',purchaseInv:'🛒',notes:'↩️',invoiceReg:'📑',entry:'➕',journal:'📝',daybook:'📒',ledger:'📚',statements:'📄',vouchers:'💵',payroll:'👷',trial:'⚖️',financials:'📈',taxReports:'📊',data:'💾'};
-  function decorateNav(){
-    document.querySelectorAll('#nav button[data-page]').forEach(btn=>{
-      if(btn.dataset.decorated) return;
-      const txt=btn.textContent.trim(); const ico=navIcons[btn.dataset.page]||'•';
-      btn.innerHTML='<span class="nav-label">'+txt+'</span><span class="nav-ico">'+ico+'</span>';
-      btn.dataset.decorated='1';
-    });
-    document.querySelectorAll('#reportsPane button').forEach(btn=>{
-      if(btn.dataset.decorated) return;
-      const txt=btn.textContent.trim();
-      const m=txt.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|[\uD83C-\uDBFF][\uDC00-\uDFFF])\s*(.*)$/);
-      const ico=m?m[1]:'📌'; const label=m?(m[2]||txt):txt;
-      btn.innerHTML='<span class="r-label">'+label+'</span><span class="r-ico">'+ico+'</span>';
-      btn.dataset.decorated='1';
-    });
-  }
-  function updateClock(){
-    const c=document.getElementById('homeClock'), d=document.getElementById('homeDate');
-    if(!c&&!d) return;
-    const now=new Date();
-    if(c) c.textContent=now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
-    if(d) d.textContent=now.toLocaleDateString('ar-SA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  }
-  const oldEnter=window.enterApp;
-  window.enterApp=function(){
-    if(typeof oldEnter==='function') oldEnter(); else {document.getElementById('cover')?.classList.add('hidden');document.getElementById('app')?.classList.remove('hidden');if(typeof renderAll==='function')renderAll();}
-    decorateNav(); updateClock(); setInterval(updateClock,30000);
-  };
-  document.addEventListener('DOMContentLoaded',()=>{decorateNav();updateClock();});
-  setTimeout(()=>{decorateNav();updateClock();},100);
-})();
-</script></body>
+      <section id="trial" class="page">
+        <div class="panel">
+          <h3>ميزان المراجعة</h3>
+          <button id="refreshTrial">تحديث الميزان</button>
+          <div id="trialResult" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="invoices" class="page">
+        <div class="panel">
+          <h3>سجل الفواتير</h3>
+          <form id="invoiceForm" class="grid four">
+            <label>نوع الفاتورة<select id="invoiceType"><option>مبيعات</option><option>مشتريات</option></select></label>
+            <label>رقم الفاتورة<input id="invoiceNo" required></label>
+            <label>التاريخ<input id="invoiceDate" type="date" required></label>
+            <label>اسم العميل / المورد<input id="invoiceParty" required></label>
+            <label>الرقم الضريبي<input id="invoiceVatNo" placeholder="اختياري"></label>
+            <label>المبلغ قبل الضريبة<input id="invoiceAmount" type="number" step="0.01" required></label>
+            <label>ضريبة VAT 15%<input id="invoiceVat" type="number" step="0.01" readonly></label>
+            <label>الإجمالي<input id="invoiceTotal" type="number" step="0.01" readonly></label>
+            <button type="submit">حفظ الفاتورة</button>
+          </form>
+          <p class="hint">تم تصميم السجل ليتضمن الحقول الأساسية المطلوبة للفواتير الضريبية، ويمكن تطويره لاحقًا لربط API أو QR.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>النوع</th><th>الرقم</th><th>التاريخ</th><th>الطرف</th><th>قبل الضريبة</th><th>VAT</th><th>الإجمالي</th></tr></thead>
+              <tbody id="invoicesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports" class="page">
+        <div class="panel">
+          <h3>التقارير والتصدير</h3>
+          <div class="report-actions">
+            <button id="exportEntriesCsv">تصدير القيود Excel CSV</button>
+            <button id="exportAccountsCsv">تصدير الدليل Excel CSV</button>
+            <button id="resetAll" class="danger">حذف جميع البيانات</button>
+          </div>
+          <p>للتصدير PDF استخدم زر الطباعة ثم اختر Save as PDF.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="lineTemplate">
+    <tr>
+      <td><input class="lineSearch" placeholder="ابحث ثم اختر"></td>
+      <td><input class="lineNo" readonly></td>
+      <td><input class="lineName" readonly></td>
+      <td><input class="lineDebit" type="number" step="0.01" value="0"></td>
+      <td><input class="lineCredit" type="number" step="0.01" value="0"></td>
+      <td><button type="button" class="removeLine danger">حذف</button></td>
+    </tr>
+  </template>
+  <script src="script.js"></script>
+</body>
 </html>

@@ -46,10 +46,53 @@ input,select,textarea{border:1px solid #ccd6e4;background:#fff;border-radius:9px
 @keyframes fadeIn{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
 @media(max-width:1380px){.report-pane{display:none}main{padding-left:14px}.home-layout{grid-template-columns:1fr}}
 @media(max-width:1100px){.app{grid-template-columns:1fr}.nav{width:min(320px,90vw)}main{padding:10px}.searchbox{display:none}.home-layout{grid-template-columns:1fr}.shortcut-grid{grid-template-columns:1fr}.section-accordion summary{font-size:18px}}
+
+/* v13.0.2 login/home refinement: left icons + forgot password */
+.login-cover{min-height:100vh;display:grid;place-items:center;padding:28px;background:linear-gradient(135deg,rgba(31,58,99,.65),rgba(49,83,61,.38));}
+.login-shell{width:min(1080px,96vw);display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch;direction:ltr}
+.login-brand-side,.login-card{direction:rtl}
+.login-brand-side{position:relative;overflow:hidden;border-radius:24px;padding:34px;background:linear-gradient(135deg,#203a63,#304d79);color:#fff;box-shadow:0 18px 42px rgba(20,35,60,.22);min-height:420px;display:flex;flex-direction:column;justify-content:center}
+.login-brand-side:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 90% 10%,rgba(255,255,255,.10),transparent 22%);pointer-events:none}.login-brand-badge{width:78px;height:78px;border-radius:20px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);display:grid;place-items:center;font-size:30px;font-weight:900;letter-spacing:2px;margin-bottom:18px}.login-brand-side h1{font-size:34px;line-height:1.28;margin:0 0 12px;color:#fff}.login-brand-side p{font-size:16px;line-height:1.9;margin:0;color:#dfeaff;max-width:560px}.login-features{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}.login-features span{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 12px;font-weight:800;color:#fff}
+.login-card{background:rgba(255,255,255,.96)!important;border:1px solid rgba(255,255,255,.85)!important;border-radius:24px!important;box-shadow:0 18px 42px rgba(20,35,60,.16)!important;padding:30px!important}.login-card h2{font-size:28px;margin:8px 0 6px;color:#223f68}.login-card .mut{font-size:14px;line-height:1.8}.login-form-box{display:grid;gap:12px;margin-top:16px}.login-form-box label{font-weight:900;color:#263f62}.login-form-box input{height:48px;border:1px solid #ccd6e4;border-radius:13px;padding:11px 13px;background:#fff;font-size:15px}.login-form-box input:focus{outline:0;border-color:#4776b3;box-shadow:0 0 0 4px rgba(71,118,179,.13)}.login-enter-btn{height:50px;border-radius:14px;font-size:17px;background:linear-gradient(135deg,#2b5b9e,#365c8c)!important;box-shadow:0 12px 24px rgba(43,91,158,.24)}.forgot-link{background:transparent!important;border:0!important;color:#2d5b9b!important;text-decoration:underline;font-weight:900;padding:6px!important}.forgot-link:hover{color:#1d4277!important}.login-hint-box{margin-top:14px;background:#f3f7fc;border:1px solid #dce7f4;border-radius:13px;padding:11px;text-align:center;color:#52657e;font-size:13px}.cover-card .kicker{display:inline-block;background:#eef5ff;color:#2b4f7f;border:1px solid #d6e5f8;border-radius:999px;padding:6px 12px;font-weight:900}
+.premium-welcome{background:linear-gradient(135deg,#203a63,#304d79)!important;box-shadow:0 12px 28px rgba(32,58,99,.18)}.welcome-text{position:relative;z-index:1}.welcome-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.welcome-actions button{border-radius:12px;padding:9px 13px}.welcome-actions .secondary{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);color:#fff}.quick-panel{background:rgba(255,255,255,.93)}
+.left-icon-shortcuts .shortcut{direction:rtl;display:flex;align-items:center;justify-content:space-between;text-align:right;min-height:48px}.shortcut-icon{order:2;margin-right:auto;margin-left:0;font-size:20px;background:#eef4ff;border:1px solid #dbe7f8;border-radius:10px;min-width:36px;height:34px;display:grid;place-items:center}.shortcut span:first-child{order:1}.nav button{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px}.nav-label{order:1}.nav-ico{order:2;margin-right:auto;background:rgba(255,255,255,.10);border-radius:8px;min-width:28px;height:26px;display:grid;place-items:center}.nav button:not(.active) .nav-ico{background:#eef4ff}.report-pane button{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px}.report-pane .r-label{order:1}.report-pane .r-ico{order:2;margin-right:auto;background:#eef4ff;border-radius:8px;min-width:28px;height:26px;display:grid;place-items:center}
+.home-page .cards{margin:12px 0}.home-page .card{background:#fff;box-shadow:0 8px 18px rgba(26,45,77,.07)}
+@media(max-width:900px){.login-shell{grid-template-columns:1fr}.login-brand-side{min-height:auto;padding:24px}.login-brand-side h1{font-size:27px}.login-card{padding:22px!important}.home-layout{grid-template-columns:1fr}.shortcut-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<section class="cover" id="cover"><div class="cover-card"><div class="kicker">نظام محاسبي مبسط ومتكامل</div><h1>مؤسسة عائش حميد القريقري للدواجن</h1><p class="mut">نسخة v9 بواجهة أقرب لأسلوب رافد: شريط علوي واضح، قائمة جانبية مرتبة، ولوحة تقارير منفصلة مع نفس الترابط المحاسبي.</p><button class="primary" onclick="enterApp()">دخول التطبيق</button></div></section>
+
+<section class="cover login-cover" id="cover">
+<div class="login-shell">
+<div class="login-brand-side">
+<div class="login-brand-badge">KA</div>
+<h1>King of Accounting and Analysis System</h1>
+<p>نظام محاسبي سحابي لإدارة الحسابات، الفواتير، القيود، التقارير، والصلاحيات بواجهة سهلة ومنظمة.</p>
+<div class="login-features">
+<span>📘 دليل الحسابات</span>
+<span>🧾 الفواتير</span>
+<span>📊 التقارير</span>
+</div>
+</div>
+<div class="cover-card login-card">
+<div class="kicker">Cloud Accounting Platform</div>
+<h2>تسجيل الدخول</h2>
+<p class="mut">أدخل بيانات المستخدم ثم اضغط <b>حياك الله</b> للدخول إلى النظام.</p>
+<div class="login-form-box">
+<label>اسم المستخدم
+          <input autocomplete="username" id="loginUser" placeholder="admin" value="admin"/>
+</label>
+<label>رمز الدخول
+          <input autocomplete="current-password" id="loginPass" placeholder="1234" type="password" value="1234"/>
+</label>
+<button class="primary login-enter-btn" onclick="enterApp()" type="button">حياك الله</button>
+<button class="forgot-link" onclick="forgotPassword()" type="button">استعادة كلمة السر</button>
+</div>
+<div class="login-hint-box">المستخدم الافتراضي: <b>admin</b> | الرمز: <b>1234</b></div>
+</div>
+</div>
+</section>
+
 <div class="app hidden" id="app">
 <header class="top"><button class="menu" onclick="nav.classList.toggle('open')">☰</button><div class="top-right">
 <div class="top-pill">أنس عايش حميد القريقري</div>
@@ -103,8 +146,47 @@ input,select,textarea{border:1px solid #ccd6e4;background:#fff;border-radius:9px
 </div>
 </aside>
 <main>
-<section class="page active" id="home">
+
+<section class="page active home-page" id="home">
+<div class="home-layout">
+<div class="welcome-banner premium-welcome">
+<div class="welcome-text">
+<h2>مرحبًا بك في نظام المحاسبة والتحليل</h2>
+<p>كل العمليات المحاسبية مترابطة: الدليل، الشجرة، العملاء، الموردون، الفواتير، القيود، والتقارير.</p>
+<div class="welcome-actions">
+<button class="primary" onclick="show('entry')">إضافة قيد</button>
+<button class="secondary" onclick="show('saleInv')">فاتورة مبيعات</button>
+<button class="secondary" onclick="show('purchaseInv')">فاتورة مشتريات</button>
+</div>
+</div>
+<div class="logo-mark">KA</div>
+</div>
+<div class="time-panel">
+<div class="clock" id="homeClock">--:--</div>
+<div class="date" id="homeDate">--</div>
+<div class="mut mini">لوحة تشغيل سريعة</div>
+</div>
+</div>
+<div class="cards" id="cards"></div>
+<div class="panel quick-panel">
+<div class="split-head">
+<h2>اختصارات سريعة</h2>
+<span class="badge">الأيقونات على اليسار</span>
+</div>
+<div class="shortcut-grid left-icon-shortcuts">
+<button class="shortcut" onclick="show('accounts')"><span>دليل الحسابات</span><span class="shortcut-icon">📘</span></button>
+<button class="shortcut" onclick="show('tree')"><span>شجرة الحسابات</span><span class="shortcut-icon">🌳</span></button>
+<button class="shortcut" onclick="show('parties')"><span>العملاء والموردون</span><span class="shortcut-icon">👥</span></button>
+<button class="shortcut" onclick="show('saleInv')"><span>فاتورة مبيعات</span><span class="shortcut-icon">🧾</span></button>
+<button class="shortcut" onclick="show('purchaseInv')"><span>فاتورة مشتريات</span><span class="shortcut-icon">🛒</span></button>
+<button class="shortcut" onclick="show('statements')"><span>كشف حساب</span><span class="shortcut-icon">📄</span></button>
+<button class="shortcut" onclick="show('journal')"><span>إدارة القيود</span><span class="shortcut-icon">📝</span></button>
+<button class="shortcut" onclick="show('trial')"><span>ميزان المراجعة</span><span class="shortcut-icon">⚖️</span></button>
+<button class="shortcut" onclick="show('taxReports')"><span>تقارير الضريبة</span><span class="shortcut-icon">📊</span></button>
+</div>
+</div>
 </section>
+
 <section class="page" id="settings"><div class="panel"><h2>بيانات المنشأة / البائع</h2><div class="grid four"><label>اسم البائع<input id="setSellerName"/></label><label>الرقم الضريبي للبائع<input id="setSellerVat" placeholder="15 رقم"/></label><label>السجل التجاري<input id="setSellerCR"/></label><label>الحساب البنكي<input id="setBankName" placeholder="اسم البنك أو الحساب"/></label></div><label>عنوان البائع<input id="setSellerAddress"/></label><div class="actions"><button class="primary" onclick="saveSettings()">حفظ بيانات المنشأة</button></div></div></section>
 <section class="page" id="accounts"><div class="grid two"><form class="panel" id="accForm"><h2>إضافة / تعديل حساب</h2><label>رقم الحساب<input id="accCode" placeholder="1-01-01-001-001-001" required=""/></label><label>اسم الحساب<input id="accName" required=""/></label><div class="grid two"><label>النوع<select id="accType"><option>أصل</option><option>التزام</option><option>حقوق ملكية</option><option>إيراد</option><option>مصروف</option></select></label><label>الطبيعة<select id="accNat"><option>مدين</option><option>دائن</option></select></label></div><div class="grid two"><label>قابل للترحيل<select id="accPost"><option value="true">نعم</option><option value="false">لا</option></select></label><label>نشط<select id="accAct"><option value="true">نعم</option><option value="false">لا</option></select></label></div><label>ملاحظات<textarea id="accNotes" rows="2"></textarea></label><div class="actions"><button class="primary">حفظ</button><button class="secondary" onclick="newAccount()" type="button">جديد</button><button class="danger" onclick="resetAccounts()" type="button">استعادة الدليل</button></div></form><div class="panel"><div class="split-head"><h2>دليل الحسابات</h2><button class="excel" onclick="exportExcel('دليل الحسابات',accountsExport())">Excel</button></div><input id="accSearch" placeholder="بحث بالرقم أو الاسم أو النوع"/><div class="tablewrap"><table id="accTable"></table></div></div></div></section>
 <section class="page" id="tree"><div class="panel"><h2>شجرة الحسابات</h2><p class="mut">استخدم 📝 للتعديل أو + لإضافة حساب فرعي. تظهر كلمة تعديل عند الإشارة إلى رمز الورقة والقلم.</p><div class="tree" id="treeBox"></div></div></section>
@@ -187,6 +269,46 @@ setTimeout(refreshClock,100);
     var btn=document.querySelector('#cover button.primary, #cover button');
     if(btn){ btn.removeAttribute('onclick'); btn.addEventListener('click',function(e){ e.preventDefault(); window.enterApp(); }); }
   });
+})();
+
+
+/* v13.0.2 login/home behavior */
+function forgotPassword(){
+  const user = (document.getElementById('loginUser')?.value || '').trim() || 'المستخدم';
+  alert('استعادة كلمة السر\n\nلأمان البيانات، يتم استعادة كلمة السر من مدير النظام.\nاسم المستخدم: '+user+'\n\nفي النسخة السحابية الكاملة يمكن ربطها بالإيميل لاحقًا لإرسال رابط استعادة تلقائي.');
+}
+(function(){
+  const navIcons={home:'🏠',settings:'⚙️',accounts:'📘',tree:'🌳',parties:'👥',saleInv:'🧾',purchaseInv:'🛒',notes:'↩️',invoiceReg:'📑',entry:'➕',journal:'📝',daybook:'📒',ledger:'📚',statements:'📄',vouchers:'💵',payroll:'👷',trial:'⚖️',financials:'📈',taxReports:'📊',data:'💾'};
+  function decorateNav(){
+    document.querySelectorAll('#nav button[data-page]').forEach(btn=>{
+      if(btn.dataset.decorated) return;
+      const txt=btn.textContent.trim(); const ico=navIcons[btn.dataset.page]||'•';
+      btn.innerHTML='<span class="nav-label">'+txt+'</span><span class="nav-ico">'+ico+'</span>';
+      btn.dataset.decorated='1';
+    });
+    document.querySelectorAll('#reportsPane button').forEach(btn=>{
+      if(btn.dataset.decorated) return;
+      const txt=btn.textContent.trim();
+      const m=txt.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|[\uD83C-\uDBFF][\uDC00-\uDFFF])\s*(.*)$/);
+      const ico=m?m[1]:'📌'; const label=m?(m[2]||txt):txt;
+      btn.innerHTML='<span class="r-label">'+label+'</span><span class="r-ico">'+ico+'</span>';
+      btn.dataset.decorated='1';
+    });
+  }
+  function updateClock(){
+    const c=document.getElementById('homeClock'), d=document.getElementById('homeDate');
+    if(!c&&!d) return;
+    const now=new Date();
+    if(c) c.textContent=now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    if(d) d.textContent=now.toLocaleDateString('ar-SA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  }
+  const oldEnter=window.enterApp;
+  window.enterApp=function(){
+    if(typeof oldEnter==='function') oldEnter(); else {document.getElementById('cover')?.classList.add('hidden');document.getElementById('app')?.classList.remove('hidden');if(typeof renderAll==='function')renderAll();}
+    decorateNav(); updateClock(); setInterval(updateClock,30000);
+  };
+  document.addEventListener('DOMContentLoaded',()=>{decorateNav();updateClock();});
+  setTimeout(()=>{decorateNav();updateClock();},100);
 })();
 </script></body>
 </html>

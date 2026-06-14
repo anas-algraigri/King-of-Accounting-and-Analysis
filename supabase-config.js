@@ -1,11 +1,11 @@
 // إعدادات Supabase للنظام المحاسبي السحابي
-// 1) أنشئ مشروعًا في Supabase
-// 2) شغل ملف supabase_cloud_schema.sql داخل SQL Editor
-// 3) ضع رابط المشروع ومفتاح anon public هنا ثم ارفع الملف إلى GitHub/Vercel
-// ملاحظة: لا تضع service_role key هنا أبدًا.
+// مفتاح publishable/anon فقط، لا تستخدم service_role أو secret key هنا.
 window.KING_SUPABASE_CONFIG = {
-  url: "",
-  anonKey: "",
+  url: "https://eqqepbamaxqpsvbsihpb.supabase.co",
+  anonKey: "sb_publishable_2JSulQ-u683PDSWA8SiV0A_qw_nMgMh",
   companyId: "main",
   table: "king_accounting_state"
 };
+// توافق مع النسخ السابقة التي تقرأ المتغيرات مباشرة
+window.KING_SUPABASE_URL = window.KING_SUPABASE_CONFIG.url;
+window.KING_SUPABASE_ANON_KEY = window.KING_SUPABASE_CONFIG.anonKey;

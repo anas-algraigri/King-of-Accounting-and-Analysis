@@ -1,15 +1,1 @@
-{
-  "name": "alqraigri-poultry-accounting-cloud-ready",
-  "version": "13.0.0",
-  "private": true,
-  "scripts": {
-    "start": "npx serve app -l 3000",
-    "deploy": "vercel --prod"
-  },
-  "dependencies": {
-    "serve": "latest"
-  },
-  "devDependencies": {
-    "vercel": "latest"
-  }
-}
+{"name":"king-accounting-analysis-cloud-supabase","version":"14.6.0","private":true,"scripts":{"start":"npx serve app -l 3000"},"dependencies":{"serve":"latest"}}

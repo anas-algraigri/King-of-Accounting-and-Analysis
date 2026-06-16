@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v15.8 مرجعية - ترابط الحسابات الشامل</title>
+<title>مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v15.14 - تسريع وربط حسابات الفواتير</title>
 <style>
 :root{--navW:280px;--bg:#f5f7fb;--card:#ffffff;--ink:#1f2a44;--mut:#6b7280;--line:#dbe3ef;--pri:#233f6e;--pri2:#315b9b;--ok:#15803d;--red:#b91c1c;--gold:#bd7c18;--shadow:0 12px 28px rgba(20,40,80,.10);--r:16px}
 *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#f6f8fb,#eef3f8);color:var(--ink);font-size:14px;overflow-x:hidden}button,input,select,textarea{font:inherit}button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff}.secondary{background:#eef4ff;color:#244674;border:1px solid #d7e3f5}.danger{background:#fff1f0;color:#b91c1c;border:1px solid #ffd3cf}.excel{background:#edf9f0;color:#166534;border:1px solid #cdebd3}.pdf{background:#fff5eb;color:#9a4b00;border:1px solid #f1d3ad}.hidden{display:none!important}.num{text-align:left;direction:ltr}.mut{color:var(--mut)}.badge{display:inline-block;border-radius:999px;padding:3px 9px;background:#eef4ff;color:#244674;font-size:12px}.badge.ok{background:#e9f9ef;color:#166534}.badge.bad{background:#fff1f0;color:#b91c1c}.toast{position:fixed;bottom:20px;left:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:14px;z-index:9999;opacity:0;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
@@ -27,6 +27,8 @@
 .perf-loading{position:fixed;left:16px;bottom:16px;background:#263a5d;color:#fff;border-radius:14px;padding:10px 14px;box-shadow:var(--shadow);z-index:3000;font-weight:900}
 
 .perf-busy{position:fixed;inset:0;background:rgba(15,23,42,.25);z-index:5000;display:grid;place-items:center}.perf-busy-box{background:#fff;border:1px solid #dbe7f7;border-radius:18px;box-shadow:var(--shadow);padding:18px 24px;font-weight:900;color:#263a5d}.perf-page-controls{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px;background:#f8fbff;border-top:1px solid #e5edf7}.perf-page-controls button{padding:6px 10px}.perf-page-controls .active{background:#244674;color:#fff}.perf-muted{color:#64748b;font-size:13px;line-height:1.8}.perf-panel .badge{font-size:13px}
+
+.invoice-account-cell{min-width:260px}.invoice-account-cell .account-name-input{margin-bottom:6px}.invoice-account-code{font-size:12px;background:#eef4ff;border:1px solid #d7e5ff;border-radius:10px;padding:7px;color:#263a5d;font-weight:900;direction:ltr;text-align:center}.perf-lite-note{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;border-radius:12px;padding:8px 10px;margin-top:8px;font-weight:900}.account-suggest-item small{direction:rtl;text-align:right}.search-soft-input{border-color:#9bb9e6!important;box-shadow:0 0 0 3px rgba(49,91,155,.08)}
 </style>
 <!-- v15.8 reference safe linkage audit update -->
 </head>
@@ -100,7 +102,7 @@
 <section class="page" id="financials"><div class="panel"><h2>القوائم المالية</h2><div class="account-link-note">تُبنى القوائم المالية مباشرة من القيود النشطة والفواتير والسندات والرواتب، مع استبعاد القيود الافتتاحية من حركة الفترة وإدراجها ضمن أرصدة أول المدة.</div><div class="grid two"><label>من تاريخ<input id="finFrom" type="date" min="2025-01-01"></label><label>إلى تاريخ<input id="finTo" type="date" min="2025-01-01"></label></div><div class="actions"><button onclick="setFin('income')">قائمة الدخل</button><button onclick="setFin('position')">المركز المالي</button><button onclick="setFin('cashflow')">التدفقات النقدية</button><button onclick="setFin('equity')">التغيرات في حقوق الملكية</button><button onclick="setFin('comprehensive')">الدخل الشامل</button><button class="excel" onclick="exportExcel(finTitle(),financialRows())">Excel</button><button class="pdf" onclick="exportPDF(finTitle(),financialRows())">PDF</button></div><div id="finDesc" class="summary"></div><div class="tablewrap"><table id="financialTable"></table></div></div></section>
 <section class="page" id="taxReports"><div class="panel"><div class="split-head"><h2>تقارير الضريبة والزكاة</h2><div class="actions"><button class="secondary" onclick="rebuildDocumentEntries()">تحديث ربط الفواتير بالقيود</button><button class="excel" onclick="exportExcel('تقرير ضريبة القيمة المضافة',vatReportRows())">VAT Excel</button><button class="pdf" onclick="exportPDF('تقرير ضريبة القيمة المضافة',vatReportRows())">VAT PDF</button></div></div><div class="grid three"><label>من تاريخ<input id="taxFrom" type="date" min="2025-01-01"></label><label>إلى تاريخ<input id="taxTo" type="date" min="2025-01-01"></label><label>نسبة الزكاة %<input id="zakatRate" type="number" step="0.01" value="2.5"></label></div><div class="account-link-note">يتم احتساب ضريبة القيمة المضافة من الفواتير والقيود مع مقارنة مباشرة، ويتم احتساب الوعاء الزكوي أوليًا من أرصدة جميع حسابات المستوى السادس في الدليل والقيود والفواتير والسندات.</div><div class="summary" id="taxSummary"></div><div class="summary" id="vatCompare"></div><div class="tablewrap"><table id="taxTable"></table></div></div><div class="panel"><div class="split-head"><h2>حاسبة الوعاء الزكوي والزكاة</h2><div class="actions"><button class="excel" onclick="exportExcel('حاسبة الوعاء الزكوي',zakatReportRows())">Zakat Excel</button><button class="pdf" onclick="exportPDF('حاسبة الوعاء الزكوي',zakatReportRows())">Zakat PDF</button></div></div><div class="summary" id="zakatSummary"></div><div class="tablewrap"><table id="zakatTable"></table></div></div></section>
 <section class="page" id="data"><div class="panel"><div class="split-head"><h2>ربط قاعدة البيانات السحابية Supabase</h2><span class="badge" id="cloudModeBadge">محلي</span></div><div class="cloud-help">بعد إنشاء مشروع Supabase وتشغيل ملف <b>supabase_cloud_schema.sql</b>، ضع رابط المشروع ومفتاح anon هنا أو داخل ملف <b>app/supabase-config.js</b>. عند الاتصال، تحفظ الحسابات والقيود والفواتير والمستخدمون في قاعدة مشتركة وتظهر على الأجهزة الأخرى.</div><div class="cloud-status" id="cloudStatus">غير متصل</div><div class="cloud-grid"><label>Supabase URL<input id="cloudUrl" placeholder="https://xxxx.supabase.co" dir="ltr"></label><label>Supabase anon public key<input id="cloudAnonKey" placeholder="eyJ..." dir="ltr"></label><label>Company ID<input id="cloudCompanyId" value="main" dir="ltr"></label></div><div class="cloud-actions"><button class="primary" onclick="saveCloudSettings()">حفظ الاتصال والتحميل من السحابة</button><button class="secondary" onclick="pullCloudNow()">تحديث من السحابة</button><button class="excel" onclick="pushCloudNow()">رفع بيانات هذا الجهاز للسحابة</button><button class="danger" onclick="clearCloudSettings()">إلغاء الربط من هذا المتصفح</button></div></div><div class="panel"><div class="split-head"><h2>مؤشر الترابط بين الأقسام</h2><div class="actions"><button class="secondary" onclick="relinkAllSections()">تحديث وربط شامل مالي وغير مالي</button><button class="excel" onclick="exportExcel('مؤشر الترابط بين الأقسام',linkageRows())">Excel</button><button class="pdf" onclick="exportPDF('مؤشر الترابط بين الأقسام',linkageRows())">PDF</button></div></div><div class="cloud-help">هذه اللوحة تفحص ترابط العمليات المالية وغير المالية: دليل الحسابات، الشجرة، العملاء والموردين، القيود، الفواتير، السندات، الرواتب، المرفقات، المستخدمين، الضريبة، التقارير، والمزامنة السحابية. زر التحديث الشامل لا يغير آلية القيد؛ بل يعيد ربط المراجع الناقصة ويحدث القيود المرتبطة والتقارير بأمان.</div><div id="linkSummary" class="summary"></div><div class="tablewrap"><table id="linkTable"></table></div></div>
-<div class="panel perf-panel"><div class="split-head"><div><h2>تجربة تسريع النظام</h2><p class="mut">وضع الأداء لا يغير القيود أو الفواتير أو الحسابات؛ يغير طريقة العرض والحساب فقط لتقليل التقطيع.</p></div><span class="badge" id="perfModeBadge">وضع سريع</span></div><div class="cloud-help"><b>المرفقات محفوظة ولا يتم حذفها.</b> تم تعديل التسريع ليعتمد على تحديث الصفحة المفتوحة فقط، وحساب التقارير عند الطلب، وتقليل تجميد التصدير، مع إبقاء المرفقات محفوظة ضمن النسخة السحابية والاحتياطية.</div><div class="actions"><button class="primary" onclick="perfEnableFast(true)">تفعيل الوضع السريع</button><button class="secondary" onclick="perfEnableFast(false)">إيقاف الوضع السريع مؤقتًا</button><button class="secondary" onclick="perfRenderCurrentPage()">تحديث الصفحة الحالية</button><button class="excel" onclick="perfRenderAllReportsNow()">تحديث كل الصفحات الآن</button><button class="secondary" onclick="perfAttachmentInfo()">حالة المرفقات</button></div><div id="perfSummary" class="summary">جاري قراءة حالة الأداء...</div><div class="perf-muted">لا يوجد أي زر لحذف أو تقليل المرفقات. إذا كان حجم المرفقات كبيرًا فسيتم الحفاظ عليها، لكن يُفضّل عدم فتح التقارير الثقيلة إلا عند الحاجة.</div></div>
+<div class="panel perf-panel"><div class="split-head"><div><h2>تجربة تسريع النظام</h2><p class="mut">وضع الأداء لا يغير القيود أو الفواتير أو الحسابات؛ يغير طريقة العرض والحساب فقط لتقليل التقطيع.</p></div><span class="badge" id="perfModeBadge">وضع سريع</span></div><div class="cloud-help"><b>المرفقات محفوظة ولا يتم حذفها.</b> تم تعديل التسريع ليعتمد على تحديث الصفحة المفتوحة فقط، وحساب التقارير عند الطلب، وفهرسة الحسابات والحركات، وتقليل تجميد التصدير، مع إبقاء المرفقات محفوظة ضمن النسخة السحابية والاحتياطية.</div><div class="actions"><button class="primary" onclick="perfEnableFast(true)">تفعيل الوضع السريع</button><button class="secondary" onclick="perfEnableFast(false)">إيقاف الوضع السريع مؤقتًا</button><button class="secondary" onclick="perfRenderCurrentPage()">تحديث الصفحة الحالية</button><button class="excel" onclick="perfRenderAllReportsNow()">تحديث كل الصفحات الآن</button><button class="secondary" onclick="perfAttachmentInfo()">حالة المرفقات</button></div><div id="perfSummary" class="summary">جاري قراءة حالة الأداء...</div><div class="perf-muted">لا يوجد أي زر لحذف أو تقليل المرفقات. إذا كان حجم المرفقات كبيرًا فسيتم الحفاظ عليها، لكن يُفضّل عدم فتح التقارير الثقيلة إلا عند الحاجة.</div></div>
 <div class="panel"><div class="split-head"><h2>إقفال السنة المالية وتصفير أرصدة الحركة</h2><span class="badge">ترحيل افتتاحي صحيح</span></div><div class="year-close-box"><h3>فكرة الإقفال</h3><div class="cloud-help">يتم إقفال الإيرادات والمصروفات في حساب الأرباح المبقاة/الخسائر المتراكمة، ثم إنشاء قيد افتتاحي للسنة الجديدة بأرصدة الأصول والالتزامات وحقوق الملكية فقط. عند تفعيل خيار إقفال قيود السنة السابقة سيتم حفظها بحالة "مقفل" حتى لا تتكرر الأرصدة مع القيد الافتتاحي الجديد.</div></div><div class="grid four"><label>بداية السنة<input id="yearCloseFrom" type="date" min="2025-01-01"></label><label>نهاية السنة<input id="yearCloseTo" type="date" min="2025-01-01"></label><label>تاريخ قيد الافتتاح الجديد<input id="yearOpenDate" type="date" min="2025-01-01"></label><label>حساب الأرباح المبقاة/الخسائر<select id="yearCloseEquity"></select></label></div><label class="checkline"><input id="yearCloseArchive" type="checkbox" checked> إقفال قيود السنة السابقة بعد إنشاء قيد الافتتاح حتى لا تتكرر الأرصدة في السنة الجديدة</label><div class="actions"><button class="secondary" onclick="renderYearClosePanel()">معاينة الإقفال</button><button class="primary" onclick="createYearEndClosing()">إقفال السنة وإنشاء قيد افتتاحي</button><button class="excel" onclick="exportExcel('معاينة إقفال السنة المالية',yearClosePreviewRows())">Excel</button><button class="pdf" onclick="exportPDF('معاينة إقفال السنة المالية',yearClosePreviewRows())">PDF</button></div><div id="yearCloseSummary" class="summary"></div><div class="tablewrap"><table id="yearClosePreviewTable"></table></div></div><div class="panel"><h2>النسخ والاستيراد</h2><div class="actions"><button class="primary" onclick="backup()">تصدير نسخة احتياطية</button><input id="importFile" type="file" accept="application/json"><button class="secondary" onclick="restore()">استيراد</button><button class="danger" onclick="clearOperationalData()">تصفير كامل بدون ترحيل</button></div><div class="account-link-note">لإقفال سنة مالية بطريقة صحيحة لا تستخدم التصفير الكامل؛ استخدم لوحة "إقفال السنة المالية" أعلاه حتى يتم توليد قيد إقفال وقيد افتتاحي مترابط.</div></div></section>
 </main>
 <div class="nav-resizer" id="navResizer"></div>
@@ -303,7 +305,7 @@ function docPrefix(type,docClass){if(docClass==='invoice')return type==='sale'?'
 function defaultDocItem(type){return{item:'',unit:'',qty:1,price:0,discount:0,vatRate:15,vatTreatment:'taxable',accountCode:core(type==='sale'?AC.sales:AC.purch)}}
 function partyOptions(type){return S.parties.filter(p=>p.type===type).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'ar')).map(p=>`<option value="${esc(p.name)}" label="${esc([p.vat,p.cr,p.phone].filter(Boolean).join(' | '))}"></option>`).join('')}
 function partySelectOptions(type){return '<option value="">اختر عميل/مورد موجود من قبل</option>'+S.parties.filter(p=>p.type===type).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'ar')).map(p=>`<option value="${esc(p.id)}">${esc(p.name)}${p.vat?' - ضريبي: '+esc(p.vat):''}${p.cr?' - س.ت '+esc(p.cr):''}${p.accountCode?' - حساب: '+esc(p.accountCode):''}</option>`).join('')}
-function docFormHTML(type,docClass='invoice',doc=null){let isSale=type==='sale', partyType=isSale?'customer':'supplier', partyLabel=isSale?'العميل':'المورد', parties=partyOptions(partyType), partySelect=partySelectOptions(partyType), title=docTitleBy(type,docClass), isNote=docClass!=='invoice';return `<form id="docForm" class="doc-form" onsubmit="saveDoc(event,'${type}','${docClass}')"><input type="hidden" id="docId"><input type="hidden" id="docPartyId"><datalist id="partyList">${parties}</datalist><div class="split-head"><h3>${title}</h3><div class="actions"><button type="button" class="secondary" onclick="newDocForm('${type}','${docClass}')">مستند جديد</button><button type="button" class="excel" onclick="exportDocCurrent('excel')">Excel</button><button type="button" class="pdf" onclick="exportDocCurrent('pdf')">PDF/طباعة</button></div></div><div class="grid four"><label>رقم المستند<input id="docNo" placeholder="تلقائي عند الحفظ"></label><label>تاريخ الإصدار<input id="docDate" type="date" min="2025-01-01"></label><label>وقت الإصدار<input id="docTime" type="time"></label><label>تاريخ التوريد<input id="docSupplyDate" type="date" min="2025-01-01"></label></div><div class="grid four"><label>طريقة السداد<select id="docPay"><option>آجل</option><option>نقدي</option><option>الحساب البنكي</option><option>جاري المالك</option></select></label><label>تاريخ الاستحقاق<input id="docDueDate" type="date" min="2025-01-01"></label><label>مرجع فاتورة أصلية<input id="docRefNo" placeholder="مطلوب للإشعارات"></label><label>سبب الإشعار/الملاحظة<input id="docReason" placeholder="مرتجع، خصم، فرق سعر..."></label></div><div class="account-link-note"><b>ربط ${partyLabel}:</b> اكتب اسم ${partyLabel} مباشرة إذا كان جديدًا، أو اختر ${partyLabel} موجودًا من الخانة الثانية ليتم جلب بياناته وحسابه تلقائيًا. يمكنك اختيار سجل موجود أو تفعيل إدخال جديد مستقل؛ لن يتم إجبارك على اسم مشابه، ويمنع التكرار عند التطابق التام أو الرقم الضريبي/السجل التجاري.</div><div class="grid six"><label>اسم ${partyLabel} في الفاتورة<input id="docParty" list="partyList" oninput="fillParty('${partyType}')" placeholder="اكتب اسم ${partyLabel} الجديد أو ابحث بالاسم"></label><label>اختيار ${partyLabel} موجود من قبل<select id="docPartySelect" onchange="selectPartyFromInvoice('${partyType}')">${partySelect}</select></label><label>رقم/حساب مرتبط<input id="docPartyCode" readonly class="account-code-fixed"></label><label>الرقم الضريبي<input id="docPartyVat" oninput="fillParty('${partyType}')"></label><label>السجل التجاري<input id="docPartyCR" oninput="fillParty('${partyType}')"></label><label>العنوان<input id="docPartyAddress"></label></div><div class="actions"><button type="button" class="secondary" onclick="selectPartyFromInvoice('${partyType}')">جلب بيانات الموجود</button><button type="button" class="secondary" onclick="openPartyFromDoc('${partyType}')">إضافة/تعديل في سجل العملاء والموردين</button><button type="button" class="secondary" onclick="clearDocPartySelection()">إدخال جديد</button></div><div class="account-link-note" id="docPartyHint">اكتب اسم ${partyLabel} أو اختره من السجل السابق. عند الضغط على إدخال جديد سيتم إنشاء سجل مستقل ولن يتم اختيار اسم مشابه تلقائيًا.</div><div class="grid three"><label>المعاملة الضريبية<select id="docVatMode" onchange="renderDocItems()"><option value="mixed">مختلطة حسب البنود</option><option value="taxable">خاضعة بالكامل</option><option value="exempt">معفاة بالكامل</option></select></label><label>حالة المستند<select id="docStatus"><option>نشط</option><option>مسودة</option></select></label><label>معرّف داخلي UUID<input id="docUuid" readonly></label></div>${type==='sale'&&docClass==='invoice'?`<div class="account-link-note"><b>رقم دورة المبيعات:</b> اختر رقم الدورة من 1 إلى 15 للتصنيف والمتابعة فقط. هذا الاختيار لا يغيّر القيد المحاسبي ولا يرحّل إلى مصروفات دورة مثل فواتير المشتريات.</div><div class="grid four"><label>رقم الدورة<select id="docSaleCycleNo" onchange="renderDocItems()"><option value="">بدون دورة</option>${Array.from({length:15},(_,i)=>`<option value="${i+1}">دورة ${i+1}</option>`).join('')}</select></label><label>تأثير محاسبي<input value="تصنيف فقط - لا يؤثر على القيد" readonly class="account-code-fixed"></label></div>`:''}${type==='purchase'?`<datalist id="expenseAccList">${expenseAccountOptions()}</datalist><div class="account-link-note"><b>ربط التشغيلة/الدورة:</b> إذا كانت فاتورة المشتريات تخص دورة تشغيل، فعّل الخيار واختر رقم الدورة ونوع المصروف. عند الحفظ يتم إنشاء/تحديث قيد مركب مترابط: مصروف تشغيلة الدورة + ضريبة المدخلات مقابل المورد/طريقة السداد، وتظهر الأثر في ميزان المراجعة، كشف الحساب، دفتر الأستاذ، القوائم، الضريبة والتقارير.</div><div class="grid four"><label class="checkline"><input id="docCycleEnabled" type="checkbox" onchange="toggleCycleFields();renderDocItems()"> هذه فاتورة تشغيلة/دورة</label><label>رقم الدورة<select id="docCycleNo" onchange="setCycleDefaultExpense();renderDocItems()">${Array.from({length:15},(_,i)=>`<option value="${i+1}">دورة ${i+1}</option>`).join('')}</select></label><label>نوع المصروف من الدليل والشجرة<input id="docCycleExpense" list="expenseAccList" onchange="updateCycleExpenseName()" placeholder="مثال: مصروفات تشغيلة دورة 1 أو تكلفة أعلاف"></label><label>الحساب المختار<input id="docCycleExpenseCode" readonly class="account-code-fixed"></label></div><div class="account-link-note" id="docCycleHint">عند تفعيل التشغيلة سيتم تحميل صافي بنود الفاتورة على نوع المصروف المختار بدل حسابات البنود، مع بقاء كل التفاصيل محفوظة في الفاتورة.</div>`:''}<div class="account-link-note">كل بند يمكن ربطه بحساب إيراد/مصروف من دليل الحسابات، وعند الحفظ يتم تحديث القيد المرتبط وميزان المراجعة ودفتر الأستاذ وكشف الحساب وتقارير الضريبة تلقائيًا.</div><div class="actions"><button type="button" class="secondary" onclick="addDocItem()">إضافة بند</button></div><div class="tablewrap"><table id="docItemsTable"></table></div><div class="summary" id="docSummary"></div><div class="attachment-zone"><label>مرفقات المستند<input id="docAttachmentInput" type="file" multiple onchange="addDocAttachments(this)"></label><div id="docAttachmentList" class="attachment-list"></div><div class="account-link-note">أرفق صورة الفاتورة، أمر الشراء، سند التسليم، PDF أو Excel. تحفظ المرفقات مع الفاتورة/الإشعار وتظهر في السجل والتصدير.</div></div><label>البيان<textarea id="docDesc"></textarea></label><button class="primary">حفظ ${title} وتوليد/تحديث القيد</button></form>`}
+function docFormHTML(type,docClass='invoice',doc=null){let isSale=type==='sale', partyType=isSale?'customer':'supplier', partyLabel=isSale?'العميل':'المورد', parties=partyOptions(partyType), partySelect=partySelectOptions(partyType), title=docTitleBy(type,docClass), isNote=docClass!=='invoice';return `<form id="docForm" class="doc-form" onsubmit="saveDoc(event,'${type}','${docClass}')"><input type="hidden" id="docId"><input type="hidden" id="docPartyId"><datalist id="partyList">${parties}</datalist><div class="split-head"><h3>${title}</h3><div class="actions"><button type="button" class="secondary" onclick="newDocForm('${type}','${docClass}')">مستند جديد</button><button type="button" class="excel" onclick="exportDocCurrent('excel')">Excel</button><button type="button" class="pdf" onclick="exportDocCurrent('pdf')">PDF/طباعة</button></div></div><div class="grid four"><label>رقم المستند<input id="docNo" placeholder="تلقائي عند الحفظ"></label><label>تاريخ الإصدار<input id="docDate" type="date" min="2025-01-01"></label><label>وقت الإصدار<input id="docTime" type="time"></label><label>تاريخ التوريد<input id="docSupplyDate" type="date" min="2025-01-01"></label></div><div class="grid four"><label>طريقة السداد<select id="docPay"><option>آجل</option><option>نقدي</option><option>الحساب البنكي</option><option>جاري المالك</option></select></label><label>تاريخ الاستحقاق<input id="docDueDate" type="date" min="2025-01-01"></label><label>مرجع فاتورة أصلية<input id="docRefNo" placeholder="مطلوب للإشعارات"></label><label>سبب الإشعار/الملاحظة<input id="docReason" placeholder="مرتجع، خصم، فرق سعر..."></label></div><div class="account-link-note"><b>ربط ${partyLabel}:</b> اكتب اسم ${partyLabel} مباشرة إذا كان جديدًا، أو اختر ${partyLabel} موجودًا من الخانة الثانية ليتم جلب بياناته وحسابه تلقائيًا. يمكنك اختيار سجل موجود أو تفعيل إدخال جديد مستقل؛ لن يتم إجبارك على اسم مشابه، ويمنع التكرار عند التطابق التام أو الرقم الضريبي/السجل التجاري.</div><div class="grid six"><label>اسم ${partyLabel} في الفاتورة<input id="docParty" list="partyList" oninput="fillParty('${partyType}')" placeholder="اكتب اسم ${partyLabel} الجديد أو ابحث بالاسم"></label><label>اختيار ${partyLabel} موجود من قبل<select id="docPartySelect" onchange="selectPartyFromInvoice('${partyType}')">${partySelect}</select></label><label>رقم/حساب مرتبط<input id="docPartyCode" readonly class="account-code-fixed"></label><label>الرقم الضريبي<input id="docPartyVat" oninput="fillParty('${partyType}')"></label><label>السجل التجاري<input id="docPartyCR" oninput="fillParty('${partyType}')"></label><label>العنوان<input id="docPartyAddress"></label></div><div class="actions"><button type="button" class="secondary" onclick="selectPartyFromInvoice('${partyType}')">جلب بيانات الموجود</button><button type="button" class="secondary" onclick="openPartyFromDoc('${partyType}')">إضافة/تعديل في سجل العملاء والموردين</button><button type="button" class="secondary" onclick="clearDocPartySelection()">إدخال جديد</button></div><div class="account-link-note" id="docPartyHint">اكتب اسم ${partyLabel} أو اختره من السجل السابق. عند الضغط على إدخال جديد سيتم إنشاء سجل مستقل ولن يتم اختيار اسم مشابه تلقائيًا.</div><div class="grid three"><label>المعاملة الضريبية<select id="docVatMode" onchange="renderDocItems()"><option value="mixed">مختلطة حسب البنود</option><option value="taxable">خاضعة بالكامل</option><option value="exempt">معفاة بالكامل</option></select></label><label>حالة المستند<select id="docStatus"><option>نشط</option><option>مسودة</option></select></label><label>معرّف داخلي UUID<input id="docUuid" readonly></label></div>${type==='sale'&&docClass==='invoice'?`<div class="account-link-note"><b>رقم دورة المبيعات:</b> اختر رقم الدورة من 1 إلى 15 للتصنيف والمتابعة فقط. هذا الاختيار لا يغيّر القيد المحاسبي ولا يرحّل إلى مصروفات دورة مثل فواتير المشتريات.</div><div class="grid four"><label>رقم الدورة<select id="docSaleCycleNo" onchange="renderDocItems()"><option value="">بدون دورة</option>${Array.from({length:15},(_,i)=>`<option value="${i+1}">دورة ${i+1}</option>`).join('')}</select></label><label>تأثير محاسبي<input value="تصنيف فقط - لا يؤثر على القيد" readonly class="account-code-fixed"></label></div>`:''}${type==='purchase'?`<datalist id="expenseAccList">${expenseAccountOptions()}</datalist><div class="account-link-note"><b>ربط التشغيلة/الدورة:</b> إذا كانت فاتورة المشتريات تخص دورة تشغيل، فعّل الخيار واختر رقم الدورة ونوع المصروف. عند الحفظ يتم إنشاء/تحديث قيد مركب مترابط: مصروف تشغيلة الدورة + ضريبة المدخلات مقابل المورد/طريقة السداد، وتظهر الأثر في ميزان المراجعة، كشف الحساب، دفتر الأستاذ، القوائم، الضريبة والتقارير.</div><div class="grid four"><label class="checkline"><input id="docCycleEnabled" type="checkbox" onchange="toggleCycleFields();renderDocItems()"> هذه فاتورة تشغيلة/دورة</label><label>رقم الدورة<select id="docCycleNo" onchange="setCycleDefaultExpense();renderDocItems()">${Array.from({length:15},(_,i)=>`<option value="${i+1}">دورة ${i+1}</option>`).join('')}</select></label><label>نوع المصروف من الدليل والشجرة<input id="docCycleExpense" list="expenseAccList" onchange="updateCycleExpenseName()" placeholder="مثال: مصروفات تشغيلة دورة 1 أو تكلفة أعلاف"></label><label>الحساب المختار<input id="docCycleExpenseCode" readonly class="account-code-fixed"></label></div><div class="account-link-note" id="docCycleHint">عند تفعيل التشغيلة سيتم تحميل صافي بنود الفاتورة على نوع المصروف المختار بدل حسابات البنود، مع بقاء كل التفاصيل محفوظة في الفاتورة.</div>`:''}<datalist id="invoiceAccountNameList">${accountNameSelectorOptions(postable())}</datalist><div class="account-link-note">كل بند يمكن ربطه بحساب إيراد/مصروف من دليل الحسابات وشجرة الحسابات. اكتب اسم الحساب فقط وسيظهر رقمه في خانة ثابتة لضمان تطابق الاسم والرقم مع القيود والتقارير.</div><div class="actions"><button type="button" class="secondary" onclick="addDocItem()">إضافة بند</button></div><div class="tablewrap"><table id="docItemsTable"></table></div><div class="summary" id="docSummary"></div><div class="attachment-zone"><label>مرفقات المستند<input id="docAttachmentInput" type="file" multiple onchange="addDocAttachments(this)"></label><div id="docAttachmentList" class="attachment-list"></div><div class="account-link-note">أرفق صورة الفاتورة، أمر الشراء، سند التسليم، PDF أو Excel. تحفظ المرفقات مع الفاتورة/الإشعار وتظهر في السجل والتصدير.</div></div><label>البيان<textarea id="docDesc"></textarea></label><button class="primary">حفظ ${title} وتوليد/تحديث القيد</button></form>`}
 
 function toggleCycleFields(){let f=currentDocForm();if(!f)return;let enabled=!!f.querySelector('#docCycleEnabled')?.checked;['#docCycleNo','#docCycleExpense'].forEach(sel=>{let el=f.querySelector(sel);if(el)el.disabled=!enabled});let code=f.querySelector('#docCycleExpenseCode');if(code)code.disabled=!enabled;if(enabled&&!f.querySelector('#docCycleExpense')?.value)setCycleDefaultExpense()}function setCycleDefaultExpense(){let f=currentDocForm();if(!f||!f.querySelector('#docCycleNo'))return;let code=cycleExpenseDefault(f.querySelector('#docCycleNo').value),a=acc(code),inp=f.querySelector('#docCycleExpense');if(inp&&!inp.value)inp.value=a?.name||code;updateCycleExpenseName()}function updateCycleExpenseName(){let f=currentDocForm();if(!f)return;let inp=f.querySelector('#docCycleExpense'),out=f.querySelector('#docCycleExpenseCode');if(!inp||!out)return;let a=findAccountByQuery(inp.value)||acc(cycleExpenseDefault(f.querySelector('#docCycleNo')?.value));let code=level6AccountCode(a?.code||cycleExpenseDefault(f.querySelector('#docCycleNo')?.value));out.value=code+(accName(code)?' - '+accName(code):'');let hint=f.querySelector('#docCycleHint');if(hint)hint.textContent='سيتم توجيه صافي المشتريات إلى: '+out.value+' / رقم الدورة: '+(f.querySelector('#docCycleNo')?.value||'')}
 function renderInvoiceForms(){if(!saleFormBox.innerHTML)saleFormBox.innerHTML=docFormHTML('sale','invoice');if(!purchaseFormBox.innerHTML)purchaseFormBox.innerHTML=docFormHTML('purchase','invoice');if(!noteFormBox.innerHTML){noteFormBox.innerHTML='<div class="grid two"><label>نوع الإشعار<select id="noteDocClass" onchange="renderNoteDocForm()"><option value="credit">إشعار دائن</option><option value="debit">إشعار مدين</option></select></label><label>مرتبط بـ<select id="noteBaseType" onchange="renderNoteDocForm()"><option value="sale">مبيعات</option><option value="purchase">مشتريات</option></select></label></div><div id="noteInner"></div>';renderNoteDocForm()}initDocForms()}
@@ -552,6 +554,196 @@ const __kingExportPDF = exportPDF;
 exportPDF = function(title,rows){perfBusy('جاري تجهيز PDF...');setTimeout(()=>{try{__kingExportPDF(title,rows)}finally{setTimeout(perfUnbusy,250)}},80)};
 // إلغاء أي وظيفة قديمة كانت تقلل أو تحذف المرفقات
 function perfReduceHeavyAttachments(){perfAttachmentInfo()}
+
+
+
+// ===== v15.14: تسريع إضافي آمن + ربط حسابات الفواتير + بحث كشف الحساب المحسن =====
+(function(){
+  const PERF_PAGE_SIZE_KEY='king.perf.pageSize';
+  if(!localStorage.getItem(PERF_PAGE_SIZE_KEY)) localStorage.setItem(PERF_PAGE_SIZE_KEY,'55');
+  let __cacheVer=0, __allLinesCache=null, __accountIndexCache=null;
+  function invalidateFastCaches(){__cacheVer++;__allLinesCache=null;__accountIndexCache=null;}
+  window.invalidateFastCaches = invalidateFastCaches;
+
+  const __oldLocalSave = localSave;
+  localSave = function(){ invalidateFastCaches(); return __oldLocalSave.apply(this,arguments); };
+
+  const __oldAllLines = allLines;
+  allLines = function(){
+    if(__allLinesCache) return __allLinesCache;
+    __allLinesCache = __oldAllLines();
+    return __allLinesCache;
+  };
+
+  function accountIndex(){
+    if(__accountIndexCache) return __accountIndexCache;
+    const byName=new Map(), bySix=new Map(), byInternal=new Map();
+    (S.accounts||[]).forEach(a=>{
+      byName.set(flexText(a.name),a);
+      bySix.set(flexText(accountCodeForDisplay(a.code)),a);
+      byInternal.set(flexText(a.code),a);
+      byInternal.set(flexText(String(a.code||'').replace(/-/g,'')),a);
+    });
+    __accountIndexCache={byName,bySix,byInternal};
+    return __accountIndexCache;
+  }
+
+  function strictAccountMatchCode(q){
+    const s=String(q||'').trim();
+    if(!s) return '';
+    const x=flexText(s), idx=accountIndex();
+    return (idx.byName.get(x)||idx.bySix.get(x)||idx.byInternal.get(x))?.code || '';
+  }
+  window.strictAccountMatchCode = strictAccountMatchCode;
+
+  // لا نثبت رقم الحساب في كشف الحساب/الأستاذ/الميزان إلا عند تطابق واضح أو اختيار من القائمة
+  pickerAccountCode = function(inputId){
+    const el=$(inputId); if(!el) return '';
+    const ds=el.dataset.accountCode||'';
+    if(ds && acc(ds) && flexText(el.value)===flexText(accName(ds))) return ds;
+    return strictAccountMatchCode(el.value||'');
+  };
+  pickerAccountQuery = function(inputId){
+    const el=$(inputId); if(!el) return '';
+    const code=pickerAccountCode(inputId);
+    return code || String(el.value||'').trim();
+  };
+  refreshFixedAccountCodes = function(){
+    if(window.statementAccountCode) statementAccountCode.value=accountCodeForDisplay(pickerAccountCode('statementAccount'));
+    if(window.ledgerAccountCode) ledgerAccountCode.value=accountCodeForDisplay(pickerAccountCode('ledgerAccount'));
+    if(window.trAccountCode) trAccountCode.value=(window.trMode&&trMode.value==='all')?'':accountCodeForDisplay(pickerAccountCode('trAccountQuery'));
+  };
+
+  accountPickerMatches = function(q){
+    const query=String(q||'').trim(), fx=flexText(query);
+    const list=[...(S.accounts||[])].sort(accountSort);
+    if(!fx) return [];
+    const parts=fx.split(/[,؛\s]+/).filter(Boolean);
+    return list.filter(a=>{
+      const text=flexText([a.name,accountPathText(a),a.type,mainAccountName(a.code)].join(' '));
+      return parts.every(p=>text.includes(p));
+    }).slice(0,18);
+  };
+
+  showAccountSuggest = function(inputId,codeId,onSelect){
+    const inp=$(inputId); if(!inp) return;
+    let box=$(inputId+'Suggest');
+    if(!box){
+      box=document.createElement('div');box.id=inputId+'Suggest';box.className='account-suggest hidden';
+      inp.parentElement.style.position='relative';inp.parentElement.appendChild(box);
+    }
+    const q=String(inp.value||'').trim();
+    if(!q){
+      inp.dataset.accountCode='';
+      if(codeId&&$(codeId)) $(codeId).value='';
+      box.classList.add('hidden');
+      if(typeof onSelect==='function') onSelect();
+      return;
+    }
+    const matches=accountPickerMatches(q);
+    if(!matches.length){
+      box.innerHTML='<div class="account-suggest-item"><b>لا توجد نتيجة</b><small>اكتب اسم الحساب كما هو في الدليل أو جزءًا أوضح من الاسم</small></div>';
+      box.classList.remove('hidden');
+      if(codeId&&$(codeId)) $(codeId).value='';
+      return;
+    }
+    box.innerHTML=matches.map(a=>`<div class="account-suggest-item" data-code="${esc(a.code)}"><b>${esc(a.name)}</b><small>${esc(accountCodeForDisplay(a.code))} | ${esc(accountPathText(a))} | المستوى ${accLevel(a)}</small></div>`).join('');
+    box.classList.remove('hidden');
+    [...box.querySelectorAll('.account-suggest-item[data-code]')].forEach(el=>el.onmousedown=e=>{
+      e.preventDefault();
+      const code=el.dataset.code,a=acc(code);
+      inp.value=a.name; inp.dataset.accountCode=code;
+      if(codeId&&$(codeId)) $(codeId).value=accountCodeForDisplay(code);
+      box.classList.add('hidden');
+      if(typeof onSelect==='function') onSelect();
+    });
+  };
+
+  setupAccountNamePicker = function(inputId,codeId,onSelect){
+    const inp=$(inputId); if(!inp||inp.dataset.pickerReadyV1514) return;
+    inp.dataset.pickerReadyV1514='1'; inp.setAttribute('autocomplete','off'); inp.classList.add('search-soft-input');
+    let timer=null;
+    const run=()=>{ if(typeof onSelect==='function') onSelect(); };
+    inp.addEventListener('input',()=>{
+      inp.dataset.accountCode='';
+      const exact=strictAccountMatchCode(inp.value||'');
+      if(codeId&&$(codeId)) $(codeId).value=exact?accountCodeForDisplay(exact):'';
+      showAccountSuggest(inputId,codeId);
+      clearTimeout(timer); timer=setTimeout(run,260);
+    });
+    inp.addEventListener('focus',()=>showAccountSuggest(inputId,codeId));
+    inp.addEventListener('keydown',e=>{ if(e.key==='Escape'){inp.value='';inp.dataset.accountCode='';if(codeId&&$(codeId))$(codeId).value='';showAccountSuggest(inputId,codeId);run();} });
+    inp.addEventListener('blur',()=>setTimeout(()=>{let box=$(inputId+'Suggest');if(box)box.classList.add('hidden');},180));
+  };
+  setupReportAccountPickers = function(){
+    setupAccountNamePicker('statementAccount','statementAccountCode',renderStatements);
+    setupAccountNamePicker('ledgerAccount','ledgerAccountCode',renderLedger);
+    setupAccountNamePicker('trAccountQuery','trAccountCode',renderTrial);
+  };
+
+  // ربط حسابات الفواتير: اسم الحساب في خانة ورقمه في خانة ثابتة، من نفس الدليل والشجرة
+  function invoiceAccountDisplay(code){
+    const c=level6AccountCode(resolveAccount(code||''));
+    return {code:c, name:accName(c)||''};
+  }
+  const __oldUpdItem = updItem;
+  updItem = function(i,k,v){
+    if(k==='accountName') return __oldUpdItem(i,'accountCode',v);
+    return __oldUpdItem(i,k,v);
+  };
+
+  renderDocItems = function(){
+    const f=currentDocForm(); if(!f||!f.querySelector('#docItemsTable')) return;
+    const mode=f.querySelector('#docVatMode')?.value||'mixed', items=getFormItems(f);
+    const accountOptions = accountNameSelectorOptions(postable());
+    const table=f.querySelector('#docItemsTable');
+    table.innerHTML='<thead><tr><th>البند</th><th>الوحدة</th><th>الكمية</th><th>السعر</th><th>الخصم</th><th>الحالة</th><th>VAT%</th><th>اسم الحساب</th><th>رقم الحساب</th><th>الصافي</th><th>الضريبة</th><th>الإجمالي</th><th></th></tr></thead><tbody>'+items.map((it,i)=>{
+      const lc=docLineCalc(it,mode), ad=invoiceAccountDisplay(it.accountCode);
+      return `<tr><td><input value="${esc(it.item||'')}" onchange="updItem(${i},'item',this.value)" placeholder="اسم الصنف/الخدمة"></td><td><input value="${esc(it.unit||'')}" onchange="updItem(${i},'unit',this.value)" placeholder="كرتون/رأس/خدمة"></td><td><input type="number" step="0.01" value="${n(it.qty)}" onchange="updItem(${i},'qty',this.value)"></td><td><input type="number" step="0.01" value="${n(it.price)}" onchange="updItem(${i},'price',this.value)"></td><td><input type="number" step="0.01" value="${n(it.discount)}" onchange="updItem(${i},'discount',this.value)"></td><td><select ${mode!=='mixed'?'disabled':''} onchange="updItem(${i},'vatTreatment',this.value)"><option value="taxable" ${it.vatTreatment!=='exempt'?'selected':''}>خاضع</option><option value="exempt" ${it.vatTreatment==='exempt'?'selected':''}>معفى</option></select></td><td><input type="number" step="0.01" value="${n(it.vatRate||15)}" onchange="updItem(${i},'vatRate',this.value)"></td><td class="invoice-account-cell"><input class="account-name-input" list="invoiceAccountNameList" value="${esc(ad.name)}" placeholder="اكتب اسم الحساب من الدليل" onchange="updItem(${i},'accountName',this.value)"><datalist id="invoiceAccountNameList">${accountOptions}</datalist></td><td><input class="account-code-fixed" value="${esc(accountCodeForDisplay(ad.code))}" readonly tabindex="-1"></td><td>${money(lc.net)}</td><td>${money(lc.vat)}</td><td>${money(lc.total)}</td><td><button type="button" class="danger" onclick="let a=getFormItems();a.splice(${i},1);setFormItems(a)">🗑️</button></td></tr>`;
+    }).join('')+'</tbody>';
+    const t=docTotals(f);
+    const cyc=f.querySelector('#docCycleEnabled')?.checked?(' | التشغيلة: دورة '+(f.querySelector('#docCycleNo')?.value||'')+' → '+(f.querySelector('#docCycleExpenseCode')?.value||'')):'';
+    const saleC=f.querySelector('#docSaleCycleNo')?.value?(' | دورة المبيعات: '+f.querySelector('#docSaleCycleNo').value+' (تصنيف فقط)'):'';
+    f.querySelector('#docSummary').innerHTML=`الإجمالي قبل الخصم: ${money(t.subtotal)} | الخصم: ${money(t.discount)} | الخاضع: ${money(t.taxable)} | المعفى: ${money(t.exempt)} | VAT: ${money(t.vat)} | الإجمالي: ${money(t.total)}${cyc}${saleC}`;
+  };
+
+  const __oldApplyPartyToDocForm=applyPartyToDocForm;
+  applyPartyToDocForm=function(p){
+    __oldApplyPartyToDocForm(p);
+    const f=currentDocForm(); if(!f||!p) return;
+    const code=level6AccountCode(p.accountCode||partyRoot(p.type));
+    const codeInput=f.querySelector('#docPartyCode');
+    if(codeInput) codeInput.value=accountCodeForDisplay(code)+(accName(code)?' - '+accName(code):'');
+  };
+
+  const __oldUpdateCycleExpenseName=updateCycleExpenseName;
+  updateCycleExpenseName=function(){
+    __oldUpdateCycleExpenseName();
+    const f=currentDocForm(); if(!f) return;
+    const out=f.querySelector('#docCycleExpenseCode');
+    if(out&&out.value){
+      const a=findAccountByQuery(out.value)||findAccountByQuery(f.querySelector('#docCycleExpense')?.value||'');
+      if(a){const c=level6AccountCode(a.code); out.value=accountCodeForDisplay(c)+(accName(c)?' - '+accName(c):'');}
+    }
+  };
+
+  // تشغيل الربط الخفيف عند فتح نماذج الفواتير فقط، بدل إعادة بناء كل التقارير
+  const __oldRenderInvoiceForms = renderInvoiceForms;
+  renderInvoiceForms = function(){ __oldRenderInvoiceForms(); refreshInvoiceAccountLists(); };
+  function refreshInvoiceAccountLists(){
+    document.querySelectorAll('#invoiceAccountNameList').forEach(dl=>{ dl.innerHTML=accountNameSelectorOptions(postable()); });
+  }
+
+  // ملخص أداء أوضح
+  const __oldPerfUpdateSummary=perfUpdateSummary;
+  perfUpdateSummary=function(){
+    __oldPerfUpdateSummary();
+    const box=document.getElementById('perfSummary');
+    if(box && !box.querySelector('.perf-lite-note')){
+      box.insertAdjacentHTML('beforeend','<div class="perf-lite-note">تم تفعيل فهارس داخلية للحسابات والحركات، وتحديث الصفحة المفتوحة فقط، وربط حسابات الفواتير بالاسم والرقم من الدليل والشجرة.</div>');
+    }
+  };
+})();
 
 document.addEventListener('DOMContentLoaded',async()=>{ensure();renderPermList();applyRolePreset();newEntry();bindEntryDirty();newVoucher();newPayroll();renderAll();setupReportAccountPickers();initResize();await initializeCloud()});
 </script>

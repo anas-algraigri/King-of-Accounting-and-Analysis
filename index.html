@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v15.17 - ربط حسابات العملاء والموردين</title>
+<title>مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v15.18 - إصلاح التعليق وتسريع العرض</title>
 <style>
 :root{--navW:280px;--bg:#f5f7fb;--card:#ffffff;--ink:#1f2a44;--mut:#6b7280;--line:#dbe3ef;--pri:#233f6e;--pri2:#315b9b;--ok:#15803d;--red:#b91c1c;--gold:#bd7c18;--shadow:0 12px 28px rgba(20,40,80,.10);--r:16px}
 *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#f6f8fb,#eef3f8);color:var(--ink);font-size:14px;overflow-x:hidden}button,input,select,textarea{font:inherit}button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff}.secondary{background:#eef4ff;color:#244674;border:1px solid #d7e3f5}.danger{background:#fff1f0;color:#b91c1c;border:1px solid #ffd3cf}.excel{background:#edf9f0;color:#166534;border:1px solid #cdebd3}.pdf{background:#fff5eb;color:#9a4b00;border:1px solid #f1d3ad}.hidden{display:none!important}.num{text-align:left;direction:ltr}.mut{color:var(--mut)}.badge{display:inline-block;border-radius:999px;padding:3px 9px;background:#eef4ff;color:#244674;font-size:12px}.badge.ok{background:#e9f9ef;color:#166534}.badge.bad{background:#fff1f0;color:#b91c1c}.toast{position:fixed;bottom:20px;left:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:14px;z-index:9999;opacity:0;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
@@ -856,6 +856,91 @@ function perfReduceHeavyAttachments(){perfAttachmentInfo()}
       box.insertAdjacentHTML('beforeend','<div class="perf-lite-note">تم تفعيل فهارس داخلية للحسابات والحركات، وتحديث الصفحة المفتوحة فقط، وربط حسابات الفواتير بالاسم والرقم من الدليل والشجرة.</div>');
     }
   };
+})();
+
+
+
+/* ===== v15.18 Emergency Freeze Hotfix - تسريع العرض بدون حذف المرفقات ===== */
+(function(){
+  try{
+    localStorage.setItem('king.perf.fast.v1513','1');
+    localStorage.setItem('king.perf.pageSize','35');
+  }catch(e){}
+  if(typeof perfIsFast==='function'){
+    perfIsFast=function(){return true};
+  }
+  if(typeof ensure==='function'){
+    const __v1518OriginalEnsure=ensure;
+    let __v1518Ensured=false;
+    ensure=function(force=false){
+      if(!__v1518Ensured || force===true){
+        __v1518Ensured=true;
+        return __v1518OriginalEnsure();
+      }
+      S.accounts ||= [];
+      if(!S.accounts.length) S.accounts = defaultAccounts();
+      S.parties ||= [];
+      S.entries ||= [];
+      S.invoices ||= [];
+      S.vouchers ||= [];
+      S.payroll ||= [];
+      S.users ||= blank().users;
+      S.seq ||= {entry:1,doc:1,party:1,voucher:1,payroll:1};
+      S.accountAliases ||= {};
+      S.accountSixMap ||= {};
+      try{ resetEntrySeq(); }catch(e){}
+      return false;
+    };
+  }
+  if(typeof localSave==='function'){
+    save=function(){
+      try{ if(window.invalidateFastCaches) invalidateFastCaches(); }catch(e){}
+      localSave();
+      try{ cloudSaveDebounced(); }catch(e){}
+    };
+  }
+  if(typeof renderAll==='function' && typeof perfRenderByPage==='function'){
+    const __v1518FullRenderAll = window.__kingFullRenderAll || renderAll;
+    window.__v1518FullRenderAll = __v1518FullRenderAll;
+    renderAll=function(forceFull=false){
+      if(forceFull===true){
+        return __v1518FullRenderAll();
+      }
+      try{
+        ensure();
+        perfRenderByPage((typeof perfActivePage==='function'?perfActivePage():'home'));
+        if(typeof perfCommon==='function') perfCommon();
+      }catch(err){
+        console.error('v15.18 fast render failed',err);
+        return __v1518FullRenderAll();
+      }
+    };
+  }
+  if(typeof show==='function'){
+    show=function(p){
+      if(!hasPerm(p)){
+        toast('ليست لديك صلاحية فتح: '+permissionLabel(p));
+        p=firstAllowedPage();
+      }
+      document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+      const pageEl=$(p);
+      if(pageEl) pageEl.classList.add('active');
+      document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
+      $('nav')?.classList.remove('open');
+      try{ applyPermissions(); }catch(e){}
+      renderAll(false);
+    };
+  }
+  if(typeof perfUpdateSummary==='function'){
+    const __v1518PerfUpdateSummary=perfUpdateSummary;
+    perfUpdateSummary=function(){
+      __v1518PerfUpdateSummary();
+      const box=document.getElementById('perfSummary');
+      if(box && !box.querySelector('.v1518-note')){
+        box.insertAdjacentHTML('beforeend','<div class="perf-lite-note v1518-note">إصلاح v15.18 مفعل: لا يتم فحص كل الروابط عند كل حفظ، ولا يتم تحديث كل الصفحات عند التنقل. استخدم زر تحديث وربط شامل فقط عند الحاجة.</div>');
+      }
+    };
+  }
 })();
 
 document.addEventListener('DOMContentLoaded',async()=>{ensure();renderPermList();applyRolePreset();newEntry();bindEntryDirty();newVoucher();newPayroll();renderAll();setupReportAccountPickers();initResize();await initializeCloud()});

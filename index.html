@@ -1433,6 +1433,208 @@ function perfReduceHeavyAttachments(){perfAttachmentInfo()}
   setTimeout(()=>{setupZakatComplianceUI();['taxFrom','taxTo','zakatRate'].forEach(id=>{let e=zEl(id);if(e)e.addEventListener('input',()=>{let d=zEl('zakatFiscalDays');if(d&&!String(d.value||'').trim())d.placeholder='تلقائي: '+zDateDays(zRaw('taxFrom'),zRaw('taxTo'))+' يوم';});});},0);
 })();
 
+
+/* v15.20: قوائم مالية أدق مع إجماليات وفروق تحقق */
+(function(){
+  const FIN_KEYS=['القائمة','القسم','البند','رقم الحساب','الحساب الرئيسي','مدين','دائن','المبلغ','ملاحظات'];
+  function finRow(list, data){
+    const r={}; FIN_KEYS.forEach(k=>r[k]=data[k]!==undefined?data[k]:''); list.push(r); return r;
+  }
+  function finStyle(){
+    if(document.getElementById('financialProfessionalStyle'))return;
+    const st=document.createElement('style'); st.id='financialProfessionalStyle';
+    st.textContent=`#financials .summary.fin-professional-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;background:#f7fbff;border:1px solid #d8e6f7;border-radius:14px;padding:10px;margin:10px 0;font-weight:900;color:#263a5d}
+      #financials .summary.fin-professional-summary .mini-card{background:#fff;border:1px solid #e1e8f0;border-radius:12px;padding:9px 10px;box-shadow:0 4px 14px rgba(20,45,80,.06);line-height:1.65}
+      #financials .summary.fin-professional-summary .mini-card b{display:block;color:#263a5d;margin-bottom:4px}
+      #financials .summary.fin-professional-summary .warn{color:#b45309}
+      #financials .summary.fin-professional-summary .ok{color:#166534}`;
+    document.head.appendChild(st);
+  }
+  function finDateRange(){return{fr:(window.finFrom&&finFrom.value)||'',to:(window.finTo&&finTo.value)||''}}
+  function finPeriodLabel(fr,to){return (fr||'بداية النظام')+' إلى '+(to||'نهاية الحركات')}
+  function finIsOpeningLine(l){return String(l.entryType||'').trim()==='قيد افتتاحي'}
+  function finPeriodLines(fr='',to='',includeOpening=false){return allLines().filter(l=>(includeOpening||!finIsOpeningLine(l))&&dateIn(l.date,fr,to))}
+  function finUptoLines(to=''){return allLines().filter(l=>!to||String(l.date||'')<=to)}
+  function finOpeningAndBefore(fr=''){return allLines().filter(l=>finIsOpeningLine(l)||(fr&&String(l.date||'')<fr))}
+  function finMap(lines){
+    const map=new Map();
+    (lines||[]).forEach(l=>{
+      const code=level6AccountCode(l.accountCode); if(!code)return;
+      const cur=map.get(code)||{debit:0,credit:0,count:0};
+      cur.debit=n(cur.debit+n(l.debit)); cur.credit=n(cur.credit+n(l.credit)); cur.count++;
+      map.set(code,cur);
+    });
+    return map;
+  }
+  function finCodes(map){
+    const set=new Set(reportAccountCandidates());
+    map&&map.forEach((v,k)=>set.add(k));
+    return [...set].sort((a,b)=>accountSort(acc(a)||{code:a},acc(b)||{code:b}));
+  }
+  function finTypeAmount(a,t){
+    if(!a)return n(n(t.debit)-n(t.credit));
+    return ['أصل','مصروف'].includes(a.type)?n(n(t.debit)-n(t.credit)):n(n(t.credit)-n(t.debit));
+  }
+  function finBalance(code,map){
+    const a=accountRowInfo(code),t=map.get(code)||{debit:0,credit:0,count:0};
+    return {...t,amount:finTypeAmount(a,t),account:a};
+  }
+  function finPath(a){return mainAccountName(a.code)||levelAccountName(a.code,3)||a.name||''}
+  function finCostSection(a){
+    const txt=flexText([a.code,a.name,accountPathText(a)].join(' '));
+    if(String(a.code||'').startsWith('5-')||txt.includes(flexText('تكلفة'))||txt.includes(flexText('مشتريات')))return 'تكلفة المبيعات';
+    if(String(a.code||'').startsWith('6-03')||txt.includes(flexText('تمويل')))return 'مصروفات تمويلية';
+    return 'مصروفات تشغيلية وإدارية';
+  }
+  function finBalanceGroup(a){
+    if(a.type==='أصل')return String(a.code||'').startsWith('1-02')?'أصول غير متداولة':'أصول متداولة';
+    if(a.type==='التزام')return String(a.code||'').startsWith('2-02')?'التزامات غير متداولة':'التزامات متداولة';
+    if(a.type==='حقوق ملكية')return 'حقوق الملكية';
+    return a.type||'غير مصنف';
+  }
+  function finIncomeData(fr='',to=''){
+    const map=finMap(finPeriodLines(fr,to,false));
+    const rows=[]; let rev=0,cost=0,opex=0,finance=0;
+    const detail=[];
+    finCodes(map).forEach(code=>{
+      const b=finBalance(code,map),a=b.account; if(!b.count||!['إيراد','مصروف'].includes(a.type)||!n(b.amount))return;
+      if(a.type==='إيراد'){
+        rev=n(rev+b.amount);
+        detail.push({order:10,row:{'القائمة':'قائمة الدخل','القسم':'إيرادات','البند':a.name,'رقم الحساب':accountCodeForDisplay(a.code),'الحساب الرئيسي':finPath(a),'مدين':b.debit,'دائن':b.credit,'المبلغ':b.amount,'ملاحظات':b.amount<0?'مردودات/خصم أو إيراد عكسي':''}});
+      }else{
+        const sec=finCostSection(a); if(sec==='تكلفة المبيعات')cost=n(cost+b.amount); else if(sec==='مصروفات تمويلية')finance=n(finance+b.amount); else opex=n(opex+b.amount);
+        detail.push({order:sec==='تكلفة المبيعات'?30:sec==='مصروفات تمويلية'?55:50,row:{'القائمة':'قائمة الدخل','القسم':sec,'البند':a.name,'رقم الحساب':accountCodeForDisplay(a.code),'الحساب الرئيسي':finPath(a),'مدين':b.debit,'دائن':b.credit,'المبلغ':b.amount,'ملاحظات':b.amount<0?'مصروف عكسي/تسوية دائنة':''}});
+      }
+    });
+    const gross=n(rev-cost),operating=n(gross-opex),net=n(operating-finance);
+    finRow(rows,{'القائمة':'قائمة الدخل','القسم':'إجماليات','البند':'إجمالي الإيرادات','المبلغ':rev,'ملاحظات':'إجمالي حسابات الإيرادات غير الافتتاحية خلال الفترة'});
+    detail.filter(x=>x.order===10).forEach(x=>finRow(rows,x.row));
+    finRow(rows,{'القائمة':'قائمة الدخل','القسم':'إجماليات','البند':'إجمالي تكلفة المبيعات','المبلغ':cost});
+    detail.filter(x=>x.order===30).forEach(x=>finRow(rows,x.row));
+    finRow(rows,{'القائمة':'قائمة الدخل','القسم':'نتائج','البند':'مجمل الربح / الخسارة','المبلغ':gross});
+    finRow(rows,{'القائمة':'قائمة الدخل','القسم':'إجماليات','البند':'إجمالي المصروفات التشغيلية والإدارية','المبلغ':opex});
+    detail.filter(x=>x.order===50).forEach(x=>finRow(rows,x.row));
+    finRow(rows,{'القائمة':'قائمة الدخل','القسم':'نتائج','البند':'ربح / خسارة النشاط قبل التمويل','المبلغ':operating});
+    if(finance||detail.some(x=>x.order===55)){
+      finRow(rows,{'القائمة':'قائمة الدخل','القسم':'إجماليات','البند':'إجمالي المصروفات التمويلية','المبلغ':finance});
+      detail.filter(x=>x.order===55).forEach(x=>finRow(rows,x.row));
+    }
+    finRow(rows,{'القائمة':'قائمة الدخل','القسم':'صافي النتيجة','البند':'صافي الربح / الخسارة','المبلغ':net,'ملاحظات':net>=0?'ربح':'خسارة'});
+    return{rows,rev,cost,opex,finance,gross,operating,net,map};
+  }
+  function finPositionData(to=''){
+    const map=finMap(finUptoLines(to));
+    const rows=[],groups={'أصول متداولة':0,'أصول غير متداولة':0,'التزامات متداولة':0,'التزامات غير متداولة':0,'حقوق الملكية':0};
+    const sections={'أصول متداولة':[],'أصول غير متداولة':[],'التزامات متداولة':[],'التزامات غير متداولة':[],'حقوق الملكية':[]};
+    finCodes(map).forEach(code=>{
+      const b=finBalance(code,map),a=b.account; if(!b.count||!['أصل','التزام','حقوق ملكية'].includes(a.type)||!n(b.amount))return;
+      const g=finBalanceGroup(a); groups[g]=n((groups[g]||0)+b.amount);
+      sections[g].push({'القائمة':'قائمة المركز المالي','القسم':g,'البند':a.name,'رقم الحساب':accountCodeForDisplay(a.code),'الحساب الرئيسي':finPath(a),'مدين':b.debit,'دائن':b.credit,'المبلغ':b.amount,'ملاحظات':b.amount>=0?'رصيد طبيعي':'رصيد عكسي يحتاج مراجعة'});
+    });
+    const inc=finIncomeData('',to).net;
+    const assets=n(groups['أصول متداولة']+groups['أصول غير متداولة']);
+    const liabilities=n(groups['التزامات متداولة']+groups['التزامات غير متداولة']);
+    const equity=n(groups['حقوق الملكية']);
+    const totalLE=n(liabilities+equity+inc);
+    const diff=n(assets-totalLE);
+    ['أصول متداولة','أصول غير متداولة'].forEach(g=>{sections[g].forEach(r=>finRow(rows,r));finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'إجمالي','البند':'إجمالي '+g,'المبلغ':groups[g]||0});});
+    finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'إجمالي','البند':'إجمالي الأصول','المبلغ':assets});
+    ['التزامات متداولة','التزامات غير متداولة'].forEach(g=>{sections[g].forEach(r=>finRow(rows,r));finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'إجمالي','البند':'إجمالي '+g,'المبلغ':groups[g]||0});});
+    finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'إجمالي','البند':'إجمالي الالتزامات','المبلغ':liabilities});
+    sections['حقوق الملكية'].forEach(r=>finRow(rows,r));
+    finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'نتيجة الفترة','البند':'صافي ربح/خسارة غير مقفل حتى تاريخ القائمة','المبلغ':inc,'ملاحظات':'يعرض فقط نتيجة حسابات الإيرادات والمصروفات غير المقفلة'});
+    finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'إجمالي','البند':'إجمالي حقوق الملكية بعد نتيجة الفترة','المبلغ':n(equity+inc)});
+    finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'إجمالي','البند':'إجمالي الالتزامات وحقوق الملكية','المبلغ':totalLE});
+    finRow(rows,{'القائمة':'قائمة المركز المالي','القسم':'فرق تحقق','البند':'الأصول - الالتزامات وحقوق الملكية','المبلغ':diff,'ملاحظات':Math.abs(diff)<=0.01?'متوازن':'يوجد فرق يحتاج مراجعة القيود أو الحسابات العكسية'});
+    return{rows,assets,liabilities,equity,inc,totalLE,diff,groups};
+  }
+  function finCashData(fr='',to=''){
+    const cash=new Set(cashAccounts());
+    const begin=finOpeningAndBefore(fr).filter(l=>cash.has(level6AccountCode(l.accountCode))).reduce((s,l)=>n(s+n(l.debit)-n(l.credit)),0);
+    const buckets={تشغيلية:{in:0,out:0,net:0},استثمارية:{in:0,out:0,net:0},تمويلية:{in:0,out:0,net:0}};
+    activeEntries().filter(e=>dateIn(e.date,fr,to)&&(e.entryType||inferEntryType(e))!=='قيد افتتاحي').forEach(e=>{
+      const lines=(e.lines||[]).map(l=>({...l,accountCode:level6AccountCode(l.accountCode)}));
+      if(!lines.some(l=>cash.has(l.accountCode)))return;
+      let cls='تشغيلية';
+      const nonCash=lines.filter(l=>!cash.has(l.accountCode)).map(l=>acc(level6AccountCode(l.accountCode))).filter(Boolean);
+      if(nonCash.some(a=>String(a.code||'').startsWith('1-02')))cls='استثمارية';
+      else if(nonCash.some(a=>(a.type==='حقوق ملكية')||String(a.code||'').startsWith('2-02')||String(a.name||'').includes('قرض')))cls='تمويلية';
+      lines.forEach(l=>{if(!cash.has(l.accountCode))return; buckets[cls].in=n(buckets[cls].in+n(l.debit)); buckets[cls].out=n(buckets[cls].out+n(l.credit)); buckets[cls].net=n(buckets[cls].net+n(l.debit)-n(l.credit));});
+    });
+    const net=n(buckets['تشغيلية'].net+buckets['استثمارية'].net+buckets['تمويلية'].net),end=n(begin+net);
+    const actualEnd=finUptoLines(to).filter(l=>cash.has(level6AccountCode(l.accountCode))).reduce((s,l)=>n(s+n(l.debit)-n(l.credit)),0),diff=n(end-actualEnd);
+    const rows=[];
+    finRow(rows,{'القائمة':'قائمة التدفقات النقدية','القسم':'افتتاحي','البند':'رصيد النقد وما في حكمه أول المدة','المبلغ':begin});
+    ['تشغيلية','استثمارية','تمويلية'].forEach(k=>finRow(rows,{'القائمة':'قائمة التدفقات النقدية','القسم':k,'البند':'صافي التدفقات من الأنشطة '+k,'مدين':buckets[k].in,'دائن':buckets[k].out,'المبلغ':buckets[k].net,'ملاحظات':'الداخل = مدين النقد، الخارج = دائن النقد'}));
+    finRow(rows,{'القائمة':'قائمة التدفقات النقدية','القسم':'إجمالي','البند':'صافي التغير في النقد','المبلغ':net});
+    finRow(rows,{'القائمة':'قائمة التدفقات النقدية','القسم':'ختامي','البند':'رصيد النقد وما في حكمه آخر المدة','المبلغ':end});
+    finRow(rows,{'القائمة':'قائمة التدفقات النقدية','القسم':'فرق تحقق','البند':'فرق مطابقة الرصيد الختامي مع أرصدة النقد الفعلية','المبلغ':diff,'ملاحظات':Math.abs(diff)<=0.01?'متطابق':'راجع الحسابات النقدية أو التصنيف'});
+    return{rows,begin,buckets,net,end,actualEnd,diff};
+  }
+  function finEquityData(fr='',to=''){
+    const openMap=finMap(finOpeningAndBefore(fr)),periodMap=finMap(finPeriodLines(fr,to,false));
+    const eqCodes=finCodes(periodMap).filter(c=>accountRowInfo(c).type==='حقوق ملكية');
+    let begin=0,period=0; const rows=[];
+    finCodes(openMap).filter(c=>accountRowInfo(c).type==='حقوق ملكية').forEach(c=>{begin=n(begin+finBalance(c,openMap).amount)});
+    finRow(rows,{'القائمة':'قائمة التغيرات في حقوق الملكية','القسم':'افتتاحي','البند':'رصيد حقوق الملكية أول المدة','المبلغ':begin});
+    eqCodes.forEach(c=>{const b=finBalance(c,periodMap),a=b.account;if(!n(b.amount))return;period=n(period+b.amount);finRow(rows,{'القائمة':'قائمة التغيرات في حقوق الملكية','القسم':'حركة حقوق ملكية','البند':a.name,'رقم الحساب':accountCodeForDisplay(a.code),'الحساب الرئيسي':finPath(a),'مدين':b.debit,'دائن':b.credit,'المبلغ':b.amount,'ملاحظات':b.amount>=0?'زيادة حقوق':'نقص حقوق'});});
+    const inc=finIncomeData(fr,to).net,end=n(begin+period+inc);
+    finRow(rows,{'القائمة':'قائمة التغيرات في حقوق الملكية','القسم':'نتيجة الفترة','البند':'صافي ربح/خسارة الفترة','المبلغ':inc});
+    finRow(rows,{'القائمة':'قائمة التغيرات في حقوق الملكية','القسم':'ختامي','البند':'رصيد حقوق الملكية آخر المدة','المبلغ':end});
+    return{rows,begin,period,inc,end};
+  }
+  function finComprehensiveData(){
+    const {fr,to}=finDateRange(),inc=finIncomeData(fr,to).net,rows=[];
+    finRow(rows,{'القائمة':'قائمة الدخل الشامل','القسم':'نتيجة الفترة','البند':'صافي الربح / الخسارة','المبلغ':inc});
+    finRow(rows,{'القائمة':'قائمة الدخل الشامل','القسم':'دخل شامل آخر','البند':'بنود دخل شامل أخرى غير معرفة في النظام','المبلغ':0,'ملاحظات':'لا توجد بنود دخل شامل أخرى معرفة آليًا'});
+    finRow(rows,{'القائمة':'قائمة الدخل الشامل','القسم':'إجمالي','البند':'إجمالي الدخل الشامل','المبلغ':inc});
+    return{rows,inc};
+  }
+  incomeCalc=function(fr='',to=''){
+    const d=finIncomeData(fr,to);
+    return{rows:d.rows,rev:d.rev,cost:d.cost,exp:n(d.opex+d.finance),gross:d.gross,net:d.net,operating:d.operating,finance:d.finance};
+  };
+  incomeStatementRows=function(){const {fr,to}=finDateRange();return finIncomeData(fr,to).rows};
+  positionStatementRows=function(){const {to}=finDateRange();return finPositionData(to).rows};
+  cashflowStatementRows=function(){const {fr,to}=finDateRange();return finCashData(fr,to).rows};
+  equityStatementRows=function(){const {fr,to}=finDateRange();return finEquityData(fr,to).rows};
+  comprehensiveRows=function(){return finComprehensiveData().rows};
+  financialRows=function(){return finMode==='income'?incomeStatementRows():finMode==='position'?positionStatementRows():finMode==='cashflow'?cashflowStatementRows():finMode==='equity'?equityStatementRows():comprehensiveRows()};
+  function finSummaryHTML(){
+    const {fr,to}=finDateRange(),period=finPeriodLabel(fr,to);
+    if(finMode==='income'){
+      const d=finIncomeData(fr,to);
+      return `<div class="mini-card"><b>الفترة</b>${esc(period)}</div><div class="mini-card"><b>إجمالي الإيرادات</b>${money(d.rev)}</div><div class="mini-card"><b>تكلفة المبيعات</b>${money(d.cost)}<br><small>مجمل الربح ${money(d.gross)}</small></div><div class="mini-card"><b>إجمالي المصروفات</b>${money(n(d.opex+d.finance))}</div><div class="mini-card"><b>صافي النتيجة</b>${money(d.net)}<br><small>${d.net>=0?'ربح':'خسارة'}</small></div>`;
+    }
+    if(finMode==='position'){
+      const d=finPositionData(to);
+      return `<div class="mini-card"><b>تاريخ القائمة</b>${esc(to||'حتى آخر حركة')}</div><div class="mini-card"><b>إجمالي الأصول</b>${money(d.assets)}</div><div class="mini-card"><b>إجمالي الالتزامات</b>${money(d.liabilities)}</div><div class="mini-card"><b>حقوق الملكية + نتيجة الفترة</b>${money(n(d.equity+d.inc))}</div><div class="mini-card"><b>فرق التحقق</b><span class="${Math.abs(d.diff)<=0.01?'ok':'warn'}">${money(d.diff)}</span><br><small>${Math.abs(d.diff)<=0.01?'متوازن':'راجع القيود أو الحسابات العكسية'}</small></div>`;
+    }
+    if(finMode==='cashflow'){
+      const d=finCashData(fr,to);
+      return `<div class="mini-card"><b>الفترة</b>${esc(period)}</div><div class="mini-card"><b>رصيد أول المدة</b>${money(d.begin)}</div><div class="mini-card"><b>صافي التغير</b>${money(d.net)}</div><div class="mini-card"><b>رصيد آخر المدة</b>${money(d.end)}</div><div class="mini-card"><b>فرق المطابقة</b><span class="${Math.abs(d.diff)<=0.01?'ok':'warn'}">${money(d.diff)}</span></div>`;
+    }
+    if(finMode==='equity'){
+      const d=finEquityData(fr,to);
+      return `<div class="mini-card"><b>الفترة</b>${esc(period)}</div><div class="mini-card"><b>حقوق أول المدة</b>${money(d.begin)}</div><div class="mini-card"><b>حركة حقوق الملكية</b>${money(d.period)}</div><div class="mini-card"><b>صافي ربح/خسارة الفترة</b>${money(d.inc)}</div><div class="mini-card"><b>حقوق آخر المدة</b>${money(d.end)}</div>`;
+    }
+    const d=finComprehensiveData();
+    return `<div class="mini-card"><b>الفترة</b>${esc(period)}</div><div class="mini-card"><b>صافي الربح / الخسارة</b>${money(d.inc)}</div><div class="mini-card"><b>دخل شامل آخر</b>${money(0)}</div><div class="mini-card"><b>إجمالي الدخل الشامل</b>${money(d.inc)}</div>`;
+  }
+  renderFinancials=function(){
+    finStyle();
+    const desc={income:'قائمة دخل محسّنة تعرض التفاصيل والإجماليات والنتائج الوسيطة من القيود غير الافتتاحية فقط خلال الفترة.',position:'قائمة مركز مالي محسّنة تعرض الأصول والالتزامات وحقوق الملكية مع إجمالي كل قسم وفرق التحقق.',cashflow:'قائمة تدفقات نقدية مباشرة من حركة الصندوق والبنوك مع مطابقة الرصيد الختامي.',equity:'قائمة تغيرات حقوق الملكية تفصل رصيد أول المدة، حركة الحقوق، صافي النتيجة، ورصيد آخر المدة.',comprehensive:'قائمة دخل شامل تعتمد على صافي الربح/الخسارة، مع إظهار عدم وجود بنود دخل شامل أخرى معرفة آليًا.'}[finMode];
+    if(finDesc){finDesc.classList.add('fin-professional-summary');finDesc.innerHTML=`<div class="mini-card"><b>${esc(finTitle())}</b>${esc(desc)}</div>`+finSummaryHTML();}
+    if(financialTable)financialTable.innerHTML=tableHTML(financialRows());
+  };
+  const __finReportMetaV1520=reportMetaItems;
+  reportMetaItems=function(title){
+    const items=__finReportMetaV1520(title);
+    if(String(title).startsWith('قائمة'))items.push(['منهج القوائم المالية','v15.20 - إجماليات محدثة، استبعاد القيود الافتتاحية من حركة الفترة، ومطابقة المركز المالي والتدفقات النقدية']);
+    return items;
+  };
+})();
+
 document.addEventListener('DOMContentLoaded',async()=>{ensure();renderPermList();applyRolePreset();newEntry();bindEntryDirty();newVoucher();newPayroll();renderAll();setupReportAccountPickers();initResize();await initializeCloud()});
 </script>
 </body>

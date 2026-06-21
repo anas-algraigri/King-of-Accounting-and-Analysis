@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v15.18 - كشف حساب وأستاذ أسرع ورصيد افتتاحي مستقل</title>
+<title>مؤسسة عائش حميد القريقري للدواجن - نظام محاسبي v15.19 - حاسبة وعاء زكوي مطابقة ومنظمة</title>
 <style>
 :root{--navW:280px;--bg:#f5f7fb;--card:#ffffff;--ink:#1f2a44;--mut:#6b7280;--line:#dbe3ef;--pri:#233f6e;--pri2:#315b9b;--ok:#15803d;--red:#b91c1c;--gold:#bd7c18;--shadow:0 12px 28px rgba(20,40,80,.10);--r:16px}
 *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#f6f8fb,#eef3f8);color:var(--ink);font-size:14px;overflow-x:hidden}button,input,select,textarea{font:inherit}button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff}.secondary{background:#eef4ff;color:#244674;border:1px solid #d7e3f5}.danger{background:#fff1f0;color:#b91c1c;border:1px solid #ffd3cf}.excel{background:#edf9f0;color:#166534;border:1px solid #cdebd3}.pdf{background:#fff5eb;color:#9a4b00;border:1px solid #f1d3ad}.hidden{display:none!important}.num{text-align:left;direction:ltr}.mut{color:var(--mut)}.badge{display:inline-block;border-radius:999px;padding:3px 9px;background:#eef4ff;color:#244674;font-size:12px}.badge.ok{background:#e9f9ef;color:#166534}.badge.bad{background:#fff1f0;color:#b91c1c}.toast{position:fixed;bottom:20px;left:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:14px;z-index:9999;opacity:0;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
@@ -1215,6 +1215,222 @@ function perfReduceHeavyAttachments(){perfAttachmentInfo()}
     if(window.accSort)accSort.onchange=renderAccounts;
     setupReportAccountPickers();
   },0);
+})();
+
+
+/* v15.19: حاسبة الوعاء الزكوي وفق ضوابط اللائحة التنفيذية 1445هـ + اختبارات تحقق */
+(function(){
+  const STYLE_ID='v1519-zakat-compliance-style';
+  if(!document.getElementById(STYLE_ID)){
+    const st=document.createElement('style');
+    st.id=STYLE_ID;
+    st.textContent=`
+      .zakat-compliance-panel{background:#f8fafc;border:1px solid #dbe4ef;border-radius:16px;padding:12px;margin:12px 0;box-shadow:0 10px 24px rgba(15,23,42,.05)}
+      .zakat-compliance-panel h3{margin:0 0 8px;color:#075985;font-size:16px}
+      .zakat-compliance-panel .grid{margin-top:6px}
+      .zakat-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:10px 0}
+      .zakat-status-grid .mini-card{background:#fff;border:1px solid #e2e8f0;border-radius:13px;padding:10px;box-shadow:0 6px 18px rgba(2,6,23,.06)}
+      .zakat-status-grid b{display:block;color:#0f766e;margin-bottom:4px}
+      .zakat-warning-list{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:13px;padding:10px;margin:8px 0;line-height:1.8}
+      .zakat-ok-list{background:#ecfdf5;border:1px solid #bbf7d0;color:#166534;border-radius:13px;padding:10px;margin:8px 0;line-height:1.8}
+      .zakat-law-note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:13px;padding:10px;margin:8px 0;line-height:1.8;font-weight:800}
+      #zakatTable td,#zakatTable th{white-space:nowrap}
+    `;
+    document.head.appendChild(st);
+  }
+
+  function zEl(id){return document.getElementById(id)}
+  function zRaw(id){let e=zEl(id);return e?String(e.value??'').trim():''}
+  function zHas(id){return zRaw(id)!=='' && !Number.isNaN(Number(zRaw(id)))}
+  function zNum(id,def=0){return zHas(id)?n(zRaw(id)):def}
+  function zTxt(a){return flexText([a?.name||'',a?accountPathText(a):'',a?.notes||''].join(' '))}
+  function zDateDays(fr,to){
+    if(!fr||!to)return 354;
+    let a=new Date(fr+'T00:00:00'),b=new Date(to+'T00:00:00');
+    if(isNaN(a)||isNaN(b)||b<a)return 354;
+    return Math.max(1,Math.round((b-a)/86400000)+1);
+  }
+  function zPeriodLabel(fr,to){return (fr||'بداية النظام')+' إلى '+(to||'نهاية الحركات')}
+  function zCurrentSettings(){
+    return {
+      basis:zRaw('zakatYearBasis')||'actual',
+      days:zNum('zakatFiscalDays',zDateDays(zRaw('taxFrom'),zRaw('taxTo'))),
+      adjusted:zRaw('zakatAdjustedProfit'),
+      book:zRaw('zakatBookProfit'),
+      manualAdd:zRaw('zakatManualAdd'),
+      manualDeduct:zRaw('zakatManualDeduct')
+    };
+  }
+  function zSaveSettings(){S.zakatCompliance=zCurrentSettings();try{localSave()}catch(e){}}
+  function zApplySavedSettings(){
+    const cfg=S.zakatCompliance||{};
+    [['zakatYearBasis',cfg.basis||'actual'],['zakatFiscalDays',cfg.days||''],['zakatAdjustedProfit',cfg.adjusted||''],['zakatBookProfit',cfg.book||''],['zakatManualAdd',cfg.manualAdd||''],['zakatManualDeduct',cfg.manualDeduct||'']].forEach(([id,v])=>{let e=zEl(id);if(e&&e.value==='')e.value=v;});
+  }
+
+  function setupZakatComplianceUI(){
+    const sec=zEl('taxReports'); if(!sec||zEl('zakatComplianceControls'))return;
+    const panel=zEl('zakatSummary')?.closest('.panel')||sec.querySelectorAll('.panel')[1]||sec;
+    const box=document.createElement('div');
+    box.id='zakatComplianceControls';
+    box.className='zakat-compliance-panel';
+    box.innerHTML=`<h3>إعدادات حاسبة الوعاء الزكوي حسب لائحة جباية الزكاة 1445هـ</h3>
+      <div class="zakat-law-note">تحتسب الحاسبة الوعاء من أرصدة آخر المدة، وتفصل عناصر الإضافة والحسم، وتطبق حدًا أدنى/أعلى رقابيًا، مع إمكانية إدخال الفروقات والتعديلات اليدوية التي لا يمكن استنتاجها من القيود وحدها.</div>
+      <div class="grid three">
+        <label>طريقة احتساب النسبة<select id="zakatYearBasis"><option value="hijri">سنة هجرية كاملة 2.5%</option><option value="actual">سنة مالية بالأيام الفعلية ÷ 354</option><option value="manual">استخدام النسبة المكتوبة في خانة نسبة الزكاة</option></select></label>
+        <label>عدد أيام السنة المالية<input id="zakatFiscalDays" type="number" min="1" step="1" placeholder="يحسب تلقائيًا من التاريخ"></label>
+        <label>إضافة يدوية لعناصر الوعاء<input id="zakatManualAdd" type="number" step="0.01" placeholder="0.00"></label>
+      </div>
+      <div class="grid three">
+        <label>حسم يدوي من الوعاء<input id="zakatManualDeduct" type="number" step="0.01" placeholder="0.00"></label>
+        <label>صافي الربح/الخسارة المعدل<input id="zakatAdjustedProfit" type="number" step="0.01" placeholder="إذا ترك فارغًا يستخدم ربح النظام"></label>
+        <label>صافي الربح/الخسارة الدفتري بعد الزكاة والضريبة<input id="zakatBookProfit" type="number" step="0.01" placeholder="إذا ترك فارغًا يستخدم ربح النظام"></label>
+      </div>
+      <div id="zakatComplianceChecks"></div>`;
+    panel.insertBefore(box,zEl('zakatSummary')||panel.firstChild);
+    zApplySavedSettings();
+    const autoDays=()=>{let e=zEl('zakatFiscalDays');if(e && !String(e.value||'').trim())e.placeholder='تلقائي: '+zDateDays(zRaw('taxFrom'),zRaw('taxTo'))+' يوم'};
+    autoDays();
+    ['zakatYearBasis','zakatFiscalDays','zakatManualAdd','zakatManualDeduct','zakatAdjustedProfit','zakatBookProfit'].forEach(id=>{let e=zEl(id);if(e){e.oninput=()=>{zSaveSettings();renderTaxReports()};e.onchange=()=>{zSaveSettings();renderTaxReports()};}});
+    ['taxFrom','taxTo'].forEach(id=>{let e=zEl(id);if(e){const old=e.oninput;e.oninput=function(ev){if(typeof old==='function')old.call(this,ev);autoDays();renderTaxReports();};}});
+  }
+
+  function zAddRollup(map,line){
+    const c=core(normCode(line.accountCode)); if(!c)return;
+    const parts=String(c).split('-').filter(Boolean);
+    for(let i=1;i<=parts.length;i++){
+      const k=parts.slice(0,i).join('-'),cur=map.get(k)||{debit:0,credit:0};
+      cur.debit=n(cur.debit+n(line.debit));cur.credit=n(cur.credit+n(line.credit));map.set(k,cur);
+    }
+  }
+  function zEndRollup(to=''){
+    const map=new Map();
+    allLines().forEach(l=>{if(!to||String(l.date||'')<=to)zAddRollup(map,l)});
+    return map;
+  }
+  function zDirectCodes(to=''){
+    const set=new Set();
+    allLines().forEach(l=>{if((!to||String(l.date||'')<=to)&&(n(l.debit)||n(l.credit))){let c=core(normCode(l.accountCode));if(c)set.add(c);}});
+    return set;
+  }
+  function zEndBalance(a,map){let t=map.get(a.code)||{debit:0,credit:0};return n(n(t.debit)-n(t.credit))}
+  function zAccountingProfit(fr='',to=''){
+    let rev=0,exp=0;
+    allLines().forEach(l=>{
+      if(!dateIn(l.date,fr,to))return;
+      let a=acc(level6AccountCode(l.accountCode))||acc(core(normCode(l.accountCode))); if(!a)return;
+      if(a.type==='إيراد')rev=n(rev+n(l.credit)-n(l.debit));
+      if(a.type==='مصروف')exp=n(exp+n(l.debit)-n(l.credit));
+    });
+    return {revenue:n(rev),expenses:n(exp),profit:n(rev-exp)};
+  }
+  function zIsEquity(a){return a?.type==='حقوق ملكية'}
+  function zIsProvision(a){let t=zTxt(a);return t.includes('مخصص')||t.includes('احتياطي')||t.includes('احتياطيات')}
+  function zIsNonCurrentLiability(a){
+    if(a?.type!=='التزام')return false;
+    let t=zTxt(a);
+    return t.includes('غير متداول')||t.includes('طويل')||t.includes('قرض')||t.includes('قروض')||t.includes('صكوك')||t.includes('سندات')||t.includes('ايجار')||t.includes('إيجار')||t.includes('مؤجل');
+  }
+  function zIsDeductibleAsset(a){
+    if(a?.type!=='أصل')return false;
+    let t=zTxt(a);
+    return t.includes('ثابت')||t.includes('اصول ثابتة')||t.includes('أصول ثابتة')||t.includes('معدات')||t.includes('الات')||t.includes('آلات')||t.includes('سيارات')||t.includes('عقار')||t.includes('عقارات')||t.includes('استثمار')||t.includes('استثمارات')||t.includes('صندوق')||t.includes('صناديق')||t.includes('صكوك')||t.includes('سندات')||t.includes('وديعة نظامية')||t.includes('ودائع نظامية')||t.includes('غير ملموس')||t.includes('اصل ضريبي مؤجل')||t.includes('أصل ضريبي مؤجل')||t.includes('مواد خام')||t.includes('خام');
+  }
+  function zEffectiveRate(fr='',to=''){
+    let basis=zRaw('zakatYearBasis')||'actual',days=zNum('zakatFiscalDays',zDateDays(fr,to));
+    if(basis==='hijri')return {rate:0.025,days:354,label:'2.5% للسنة الهجرية'};
+    if(basis==='manual')return {rate:n(zNum('zakatRate',2.5)/100),days,label:'النسبة اليدوية '+money(zNum('zakatRate',2.5))+'%'};
+    return {rate:n((0.025/354)*days),days,label:'بالأيام الفعلية: '+days+' يوم ÷ 354'};
+  }
+  function zComparableAccounts(to=''){
+    const map=zEndRollup(to),direct=zDirectCodes(to),children=new Set((S.accounts||[]).filter(a=>a.active!==false&&a.parent).map(a=>a.parent));
+    return [...(S.accounts||[])].filter(a=>a.active!==false&&(a.posting||direct.has(a.code)||(!children.has(a.code)&&map.has(a.code)))).sort(accountSort).map(a=>({...a,__balance:zEndBalance(a,map)}));
+  }
+  function zComputation(){
+    setupZakatComplianceUI();
+    const fr=zRaw('taxFrom'),to=zRaw('taxTo'),profitInfo=zAccountingProfit(fr,to),acctProfit=profitInfo.profit;
+    const bookProfit=zHas('zakatBookProfit')?zNum('zakatBookProfit'):acctProfit;
+    const adjustedProfit=zHas('zakatAdjustedProfit')?zNum('zakatAdjustedProfit'):acctProfit;
+    const profitDiff=n(adjustedProfit-bookProfit);
+    const manualAdd=zNum('zakatManualAdd',0),manualDeduct=zNum('zakatManualDeduct',0),rateInfo=zEffectiveRate(fr,to);
+    let rows=[],addsAuto=0,deductAuto=0,equityLike=0,nonDeductedAssets=0,currentLiabilitiesReview=0;
+    zComparableAccounts(to).forEach(a=>{
+      const bal=n(a.__balance); if(!bal)return;
+      let add=0,deduct=0,cat='لا يدخل آليًا',basis='رصيد آخر المدة من الدليل والقيود',review='';
+      const credit=Math.max(-bal,0),debit=Math.max(bal,0);
+      if(zIsEquity(a)&&credit>0){add=credit;cat='إضافة: حقوق ملكية وما في حكمها';equityLike=n(equityLike+add)}
+      else if(zIsProvision(a)&&credit>0){add=credit;cat='إضافة: مخصصات/احتياطيات';equityLike=n(equityLike+add)}
+      else if(zIsNonCurrentLiability(a)&&credit>0){add=credit;cat='إضافة: التزامات غير متداولة/طويلة الأجل'}
+      else if(zIsDeductibleAsset(a)&&debit>0){deduct=debit;cat='حسم: أصل/استثمار قابل للحسم'}
+      else if(a.type==='أصل'&&debit>0){nonDeductedAssets=n(nonDeductedAssets+debit);cat='أصل غير محسوم للحد الأدنى'}
+      else if(a.type==='التزام'&&credit>0){currentLiabilitiesReview=n(currentLiabilitiesReview+credit);cat='التزام متداول للمراجعة';review='لا يضاف آليًا إلا وفق شروط تنسيب الالتزامات وحدود الأصول المحسومة'}
+      if(add||deduct||review||cat!=='لا يدخل آليًا'){
+        rows.push({'رقم الحساب':accountCodeForDisplay(a.code),'اسم الحساب':a.name,'الحساب الرئيسي':mainAccountName(a.code),'نوع الحساب':a.type,'رصيد آخر المدة مدين/(دائن)':bal,'تصنيف الوعاء الزكوي':cat,'إضافات الوعاء':n(add),'حسميات الوعاء':n(deduct),'أساس المعالجة':basis,'مراجعة':review});
+      }
+      addsAuto=n(addsAuto+add);deductAuto=n(deductAuto+deduct);
+    });
+    const diffAdd=Math.max(profitDiff,0),diffDed=Math.max(-profitDiff,0);
+    if(diffAdd||diffDed||zHas('zakatAdjustedProfit')||zHas('zakatBookProfit'))rows.push({'رقم الحساب':'','اسم الحساب':'فرق نتيجة النشاط المعدلة عن الدفترية','الحساب الرئيسي':'','نوع الحساب':'تعديل زكوي','رصيد آخر المدة مدين/(دائن)':profitDiff,'تصنيف الوعاء الزكوي':'إضافة/حسم نتيجة النشاط','إضافات الوعاء':diffAdd,'حسميات الوعاء':diffDed,'أساس المعالجة':'صافي الربح المعدل - صافي الربح الدفتري بعد الزكاة والضريبة','مراجعة':(!zHas('zakatAdjustedProfit')||!zHas('zakatBookProfit'))?'استخدم النظام الربح المحاسبي لعدم إدخال القيم المعدلة/الدفترية':''});
+    if(manualAdd)rows.push({'رقم الحساب':'','اسم الحساب':'إضافات يدوية مدخلة','الحساب الرئيسي':'','نوع الحساب':'تعديل يدوي','رصيد آخر المدة مدين/(دائن)':manualAdd,'تصنيف الوعاء الزكوي':'إضافة يدوية','إضافات الوعاء':manualAdd,'حسميات الوعاء':0,'أساس المعالجة':'مدخل من المستخدم لعناصر لا يمكن استنتاجها آليًا','مراجعة':'يتطلب مستند/إيضاح'});
+    if(manualDeduct)rows.push({'رقم الحساب':'','اسم الحساب':'حسميات يدوية مدخلة','الحساب الرئيسي':'','نوع الحساب':'تعديل يدوي','رصيد آخر المدة مدين/(دائن)':manualDeduct,'تصنيف الوعاء الزكوي':'حسم يدوي','إضافات الوعاء':0,'حسميات الوعاء':manualDeduct,'أساس المعالجة':'مدخل من المستخدم لعناصر لا يمكن استنتاجها آليًا','مراجعة':'يتطلب مستند/إيضاح'});
+    const additions=n(addsAuto+manualAdd+diffAdd),deductions=n(deductAuto+manualDeduct+diffDed),rawBase=n(additions-deductions);
+    const minCandidate=adjustedProfit>0?Math.max(Math.min(Math.max(n(nonDeductedAssets+profitDiff),0),adjustedProfit),0):0;
+    let afterMin=rawBase;
+    let minApplied=false,maxApplied=false;
+    if(adjustedProfit>0 && rawBase<adjustedProfit && minCandidate>rawBase){afterMin=n(minCandidate);minApplied=true;}
+    const maxCandidate=n(equityLike+profitDiff);
+    let afterMax=afterMin;
+    if(maxCandidate>0 && afterMax>maxCandidate){afterMax=maxCandidate;maxApplied=true;}
+    const base=Math.max(n(afterMax),0),zakah=n(base*rateInfo.rate);
+    const warnings=[];
+    if(!fr||!to)warnings.push('لم يتم تحديد فترة كاملة؛ استخدمت الحاسبة كل الحركات المتاحة أو افتراض 354 يومًا عند الحاجة.');
+    if(!zHas('zakatAdjustedProfit'))warnings.push('لم يتم إدخال صافي الربح/الخسارة المعدل؛ تم استخدام صافي الربح المحاسبي من النظام مؤقتًا.');
+    if(!zHas('zakatBookProfit'))warnings.push('لم يتم إدخال صافي الربح/الخسارة الدفتري بعد الزكاة والضريبة؛ تم استخدام صافي الربح المحاسبي من النظام مؤقتًا.');
+    if(currentLiabilitiesReview>0)warnings.push('توجد التزامات متداولة برصيد دائن '+money(currentLiabilitiesReview)+' لم تُضف آليًا؛ راجع شروط إضافتها وحدود تنسيب الالتزامات.');
+    if(manualAdd||manualDeduct)warnings.push('توجد تعديلات يدوية؛ يجب حفظ مستندات التأييد قبل اعتماد الإقرار.');
+    if(minApplied)warnings.push('تم تطبيق حد أدنى رقابي للوعاء عند انخفاض الوعاء عن صافي الربح المعدل.');
+    if(maxApplied)warnings.push('تم تطبيق حد أعلى رقابي للوعاء بناءً على حقوق الملكية وما في حكمها مع فرق نتيجة النشاط.');
+    if(base===0&&adjustedProfit<=0&&rawBase<0)warnings.push('نتيجة الوعاء سالبة ولا يوجد صافي ربح معدل موجب؛ أظهرت الحاسبة الوعاء صفرًا للمراجعة.');
+    return {fr,to,period:zPeriodLabel(fr,to),rows,additions,deductions,addsAuto,deductAuto,manualAdd,manualDeduct,profitInfo,bookProfit,adjustedProfit,profitDiff,rawBase,nonDeductedAssets,minCandidate,maxCandidate,base,rateInfo,zakah,warnings,currentLiabilitiesReview,minApplied,maxApplied};
+  }
+
+  zakatReportRows=function(){return zComputation().rows};
+  zakatTotals=function(){
+    const z=zComputation();
+    return {adds:z.additions,ded:z.deductions,revenue:z.profitInfo.revenue,expenses:z.profitInfo.expenses,profit:z.profitInfo.profit,bookProfit:z.bookProfit,adjustedProfit:z.adjustedProfit,profitDiff:z.profitDiff,rawBase:z.rawBase,minBase:z.minCandidate,maxBase:z.maxCandidate,base:z.base,rate:z.rateInfo.rate,zakah:z.zakah,warnings:z.warnings,days:z.rateInfo.days};
+  };
+  const __renderTaxReportsV1519=renderTaxReports;
+  renderTaxReports=function(){
+    setupZakatComplianceUI();
+    try{__renderTaxReportsV1519()}catch(e){console.warn('renderTaxReports previous layer',e)}
+    const z=zComputation();
+    if(zEl('zakatSummary')){
+      zakatSummary.innerHTML=`<div class="zakat-status-grid">
+        <div class="mini-card"><b>الفترة</b>${esc(z.period)}<br><small>${esc(z.rateInfo.label)}</small></div>
+        <div class="mini-card"><b>الإضافات</b>${money(z.additions)}<br><small>آلي: ${money(z.addsAuto)} | يدوي/فروق: ${money(n(z.manualAdd+Math.max(z.profitDiff,0)))}</small></div>
+        <div class="mini-card"><b>الحسميات</b>${money(z.deductions)}<br><small>آلي: ${money(z.deductAuto)} | يدوي/فروق: ${money(n(z.manualDeduct+Math.max(-z.profitDiff,0)))}</small></div>
+        <div class="mini-card"><b>الوعاء قبل الحدود</b>${money(z.rawBase)}<br><small>حد أدنى رقابي: ${money(z.minCandidate)} | حد أعلى رقابي: ${money(z.maxCandidate)}</small></div>
+        <div class="mini-card"><b>الوعاء النهائي</b>${money(z.base)}</div>
+        <div class="mini-card"><b>الزكاة المستحقة</b>${money(z.zakah)}<br><small>نسبة فعالة ${money(z.rateInfo.rate*100)}%</small></div>
+      </div>`;
+    }
+    const checks=zEl('zakatComplianceChecks');
+    if(checks){
+      checks.innerHTML=z.warnings.length?'<div class="zakat-warning-list"><b>تنبيهات مراجعة قبل الاعتماد:</b><br>'+z.warnings.map(x=>'• '+esc(x)).join('<br>')+'</div>':'<div class="zakat-ok-list">✓ لا توجد تنبيهات ظاهرة من بيانات الفترة الحالية، والحساب متوازن حسب المدخلات المتاحة.</div>';
+    }
+    if(zEl('zakatTable'))zakatTable.innerHTML=tableHTML(z.rows);
+  };
+  const __reportMetaV1519=reportMetaItems;
+  reportMetaItems=function(title){
+    const items=__reportMetaV1519(title);
+    if(String(title).includes('الوعاء الزكوي')){
+      const z=zComputation();
+      items.push(['منهج الحاسبة','لائحة جباية الزكاة 1445هـ - عناصر إضافة/حسم + حدود رقابية + النسبة بالأيام عند الحاجة']);
+      items.push(['النسبة الزكوية الفعالة',money(z.rateInfo.rate*100)+'%']);
+      items.push(['تنبيهات المراجعة',z.warnings.length?z.warnings.join(' | '):'لا توجد تنبيهات']);
+    }
+    return items;
+  };
+  setTimeout(()=>{setupZakatComplianceUI();['taxFrom','taxTo','zakatRate'].forEach(id=>{let e=zEl(id);if(e)e.addEventListener('input',()=>{let d=zEl('zakatFiscalDays');if(d&&!String(d.value||'').trim())d.placeholder='تلقائي: '+zDateDays(zRaw('taxFrom'),zRaw('taxTo'))+' يوم';});});},0);
 })();
 
 document.addEventListener('DOMContentLoaded',async()=>{ensure();renderPermList();applyRolePreset();newEntry();bindEntryDirty();newVoucher();newPayroll();renderAll();setupReportAccountPickers();initResize();await initializeCloud()});

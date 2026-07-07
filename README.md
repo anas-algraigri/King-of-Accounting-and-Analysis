@@ -1,2 +1,12 @@
-# King-of-Accounting-and-Analysis
-Cloud accounting system for managing poultry farms, including a chart of accounts, account tree, customers, suppliers, sales and purchase invoices, journal entries, account statements, financial reports, VAT and Zakat reports, PDF and Excel exports, plus user management and permissions.
+# v15.38 - تطبيق QR الضريبي على فاتورة المشتريات
+
+تم في هذه النسخة:
+- تطبيق QR الضريبي على فاتورة المشتريات بشكل واضح في المعاينة والطباعة والسجل.
+- في فاتورة المشتريات، يتم توليد QR من بيانات المورد كبائع: اسم المورد، الرقم الضريبي للمورد، وقت الإصدار، الإجمالي شامل الضريبة، وإجمالي VAT.
+- تظهر المؤسسة كمشتري في فاتورة المشتريات، ويظهر المورد في خانة المورد.
+- إضافة تنبيه أوضح إذا كان رقم المورد الضريبي مفقودًا أو غير مكوّن من 15 رقمًا.
+- الإبقاء على QR الضريبي في فواتير المبيعات كما هو.
+- عدم التأثير على القيود أو الضريبة أو التقارير أو الربط المحاسبي.
+
+مهم:
+لكي يظهر QR في فاتورة المشتريات كـ جاهز، أدخل الرقم الضريبي للمورد في الفاتورة أو في سجل الموردين، ويجب أن يكون 15 رقمًا.
